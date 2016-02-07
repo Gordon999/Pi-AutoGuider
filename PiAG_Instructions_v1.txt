@@ -3,7 +3,8 @@ This program can use the Raspberry Pi camera, or a compatible USB camera, to gui
 It can use the Pi GPIO (with suitable interface), relay cards on I2C/SPI or serial through the Pi USB.
 
 You need to provide the Pi to Scope interface, one example for ST-4 shown using opto-isolator,
-other interfaces possible for other scopes / mounts
+other interfaces possible for other scopes / mounts. 
+The Seeed Rspberry Pi relay card (i2c) or the PiFace Relay Plus card (SPI) can be used.
 
 Alternately you can use the usb and the Arduino Uno interface, instead of the GPIO.
 See 'Arduino-Uno-AutoGuider' on github
