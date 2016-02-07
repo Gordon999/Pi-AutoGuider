@@ -14,4 +14,4 @@ The Arduino Uno can also be controlled by a PC using software such as PHD. Detai
 
 The Pi can also control a Canon DSLR, via an interface, to allow long exposure photographs.
 
-Please take care when interfacing your telesope.
+Please take care when interfacing your telescope. At your own risk.
