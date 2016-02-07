@@ -1,0 +1,203 @@
+This program can use the Raspberry Pi camera, or a compatible USB camera, to guide.
+
+It can use the Pi GPIO (with suitable interface) or serial through the Pi USB.
+
+You need to provide the Pi to Scope interface, one example for ST-4 shown in thread using solid state relays,
+other interfaces possible for other scopes / mounts
+
+Alterately you can use the usb and the Arduino Uno interface, instead of the GPIO.
+(Ask if you want details of the Arduino Uno interface)
+
+I have it working with a NEQ6pro (ST-4) and a Meade LX10, just needs different wiring to the relay interface
+
+Remove the lens from your Pi camera and mount so it can be mounted on the scope.
+
+http://wiki.raspberrytorte.com/index.php?title=Camera_Module_Lens_Modifcation
+
+You could also use the PiNoIr camera, which is the same but has No IR filter
+
+
+Installing PiAutoguider
+-------------------------
+
+Works with a Raspberry Pi (http://www.raspberrypi.org) with 'Wheezy' using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
+
+Use the latest RPi Raspian wheezy download.
+http://www.raspberrypi.org/downloads
+
+then do 
+
+sudo apt-get update
+sudo apt-get upgrade
+
+to get the latest upgrades.
+
+
+Uses IDLE/Python 2.7 . You must start IDLE by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' at the prompt, if not the GPIO won't work
+
+Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino Uno interface if you dont use the RPI camera.
+The B+ or Pi2B now have sufficient USB ports.
+
+
+Copy the PiAGr**.py file into /home/pi, 
+
+You don't need to install any other software.
+
+In using a PAL composite monitor (as opposed to HDMI) you will need to set Display variable in the program to 1 and modify config.txt on your RPi
+remove the # from the following line:
+
+sdtv_mode=2
+
+and to centre the image you may need to remove the #'s from the following lines , and possible change the values:
+
+disable_overscan=1
+overscan_left=20
+overscan_right=12
+overscan_top=10
+overscan_bottom=10
+
+
+Running PiAutoguider 
+----------------------
+
+from the prompt type startx
+double click LXTerminal
+enter 'sudo idle' at the prompt, and press enter
+On the Python Shell choose 'File'
+Choose 'open'
+Choose 'PiAGr***.py'
+click on Open
+Choose 'Run'
+Choose 'Run Module'
+
+The RPI camera will be enabled (assumed you've installed one and have it enabled in Raspi-Config and working)
+
+To enable a usb webcam instead change the line in the PiAGr***.py program to 
+
+use_RPiwebcam = 0
+
+If the camera is not connected and you enable it the program will stop with an error.
+
+The GPIO will be enabled unless you change the line in the PiAGr***.py program to
+
+use_RPiGPIO = 0
+
+The GPIOs used are pins 22 = N, 18 = S, 24 = E, 16 =W, output to trigger external DSLR = 26
+
+You will need to provide the opto / relay interface to the scope.
+
+If you want to enable the serial comms to the Arduino Uno interface change the line in the PiAGr***.py program to
+
+serial_connected = 1
+
+If it's not connected and you enable serial comms the program will stop with an error.
+
+(note Arduino Uno connects as /dev/ttyACM0)
+
+---------------------------------------------------------------
+
+When run you will see a picture from the camera. Use the camera controls to adjuct as required ef Brigtness, Contrast, ISO, Exp Time etc
+
+At the top left and right of the picture the guide commands required to move the scope eg :Mgn0500 means Move North 500mS.
+
+If guiding the figures will be GREEN, Not guiding PURPLE and if guiding but found no star then YELLOW.
+
+Click on the star to guide with and the window will move there, adjust the window, or click A-Win to make the window enclose the star.
+
+Click on Auto-G to start guiding
+
+Adjust ScaleN/E/S/W or Scale ALL to suit your scope so it makes the right amount of correction.
+
+
+Next to the picture you will see the buttons to control the program:
+---------------------------------------------------------------
+
+AutoG (AutoGuide) - switches autoguiding mode on / off
+
+A-Win - Automatically adjusts the size of the tracking window to star size
+
+A-Thr - Automatically adjusts the Threshold level
+
+A-Int - Automatically sets the Interval time (delay between sending commands to scope)
+
+Log - will log any commands sent to the scope (in /run/shm/yymmddhhmmss.txt)
+
+Graph - will show a graph of the stars brightness, showing the max and min values and the threshold set.
+(clicking the mouse between these max and min (blue lines) levels will also set the threshold value, assuming you don't have A-Thr on)
+
+Plot - will show a plot of the movement commands required to the Scope.
+
+2x2 - This will do 2x2 binning increasing the detected image. It won't chnage the display but will be seen on the Graph.
+
+nr - Noise Reduction. Reduces the noise by averaging 2 frames.
+
+Thr (Threshold) - will show the detected area of the star (red/green/blue/yellow), adjusting threshold or enabling A-Thr will change this.
+
+NSi/EWi - inverts the required commands, use if the controls are inverted and guiding moves star away from the target rather than to it.
+
+rgbw +/- selects guide camera channel red/green/blue/white1/white2. White1 is the average of RGB, White2 is the brightest of RGB.
+
+window +/- sets the size of the guide window
+
+Threshold +/- sets the detected level (switch ON Thr to see on display)
+
+interval +/- sets the time (frames) between commands sent to the scope
+(note at times this may automatically increase as required)
+
+Zoom - will switch to from 320x240 upto max Pi camera resolution in 7 steps , and crop it to selected frame size giving some magnification. 
+
+scale N/S/E/W - sets the required movements of the scope in mSeconds/pixel. 
+
+scale all - will increment / decrement all scales together
+
+Telescope N,E,S,W will move the scope 
+c in centre will attempt to move the scope, and star, to centre the screen  
+stop - will cancel any existing move command
+
+DecN and DecS - will switch ON/OFF either of these DEC (N/S) commands to the scope. Useful to avoid switching between N and S. Determine which way the star
+is drifting in DEC and switch OFF the other command.
+
+Window N,E,S,W will move the window in small steps
+c in centre will attempt to centre the star WITHOUT moving the scope (Zoom must be > 0).
+
+CLS - Correct on Loss of Star. Simply averages the last 10 commands and contimues to send them if guide star lost
+
+scr-cap - will capture a screenshot, 
+pic-cap - will capture a full resolution picture from the RPi camera (not usb)
+con-cap - will capture every frame into /home/pi, pictures can be used by Registax etc later.
+
+PHOTO - switches ON/OFF the commands to a DSLR etc (requires interface) and counts down number of shots set. Set DSLR to Bulb setting.
+p-time - sets exposure time for DSLR
+p-count - sets numbers of shots by DSLR
+
+
+SAVE config S1/S2/S3 will save configs to file
+RELOAD config R1/R2/R3 will reload saved configs
+
+
+You will also see controls for the RPI camera if you are using that.
+
+To get started start with Zoom  at 2, get an image of the guide star on the screen, as near as possible to the centre, click on the star and the click on Autoguide.
+Adjust brightness, contrast, ISO, Exp-Time etc to get the best image.
+
+If you have interfaced a DSLR you can use PHOTO to set it to take photos. Set P-Time to required exposure in seconds (set camera to Bulb) and P-count to required
+number of shots, then press PHOTO.
+
+In the program you will see several setting you can make including
+
+camera_connected = 1
+If you set this to 0 the program will go into simulation mode and show a simulated star and you can try some of the program functions (default = 1)
+
+serial_connected = 0
+This is if you use the Arduino Uno USB interface (default = 0)
+
+use_RPiwebcam = 1
+This will make the program use the Pi camera, 0 will use a usb camera, if attached (default = 1)
+
+use_RPiGPIO = 1
+This will enable the telescope commands to be sent to the Pi GPIO outputs (default = 1)
+
+Image_window = 0
+Sets the size of the display window, 0 = 320x240, 1 = 352x288, 2 = 640x480, 3 = 800x600 (default = 2)
+
+More details and settings in the program
