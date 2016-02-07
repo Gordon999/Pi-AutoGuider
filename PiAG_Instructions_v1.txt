@@ -1,14 +1,14 @@
 This program can use the Raspberry Pi camera, or a compatible USB camera, to guide.
 
-It can use the Pi GPIO (with suitable interface) or serial through the Pi USB.
+It can use the Pi GPIO (with suitable interface), relay cards on I2C/SPI or serial through the Pi USB.
 
-You need to provide the Pi to Scope interface, one example for ST-4 shown in thread using solid state relays,
+You need to provide the Pi to Scope interface, one example for ST-4 shown using opto-isolator,
 other interfaces possible for other scopes / mounts
 
-Alterately you can use the usb and the Arduino Uno interface, instead of the GPIO.
-(Ask if you want details of the Arduino Uno interface)
+Alternately you can use the usb and the Arduino Uno interface, instead of the GPIO.
+See 'Arduino-Uno-AutoGuider' on github
 
-I have it working with a NEQ6pro (ST-4) and a Meade LX10, just needs different wiring to the relay interface
+I have it working with a NEQ6pro (ST-4) and a Meade LX10, just needs different wiring to the opto / relay interface
 
 Remove the lens from your Pi camera and mount so it can be mounted on the scope.
 
@@ -20,9 +20,9 @@ You could also use the PiNoIr camera, which is the same but has No IR filter
 Installing PiAutoguider
 -------------------------
 
-Works with a Raspberry Pi (http://www.raspberrypi.org) with 'Wheezy' using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
+Works with a Raspberry Pi (http://www.raspberrypi.org) with 'Jessie' using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
 
-Use the latest RPi Raspian wheezy download.
+Use the latest RPi Raspian Jessie download.
 http://www.raspberrypi.org/downloads
 
 then do 
@@ -30,25 +30,22 @@ then do
 sudo apt-get update
 sudo apt-get upgrade
 
-to get the latest upgrades.
-
+to get the latest upgrades if required.
 
 Uses IDLE/Python 2.7 . You must start IDLE by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' at the prompt, if not the GPIO won't work
 
-Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino Uno interface if you dont use the RPI camera.
-The B+ or Pi2B now have sufficient USB ports.
-
+Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino Uno interface if you dont use the RPI camera. The B+ or Pi2B now have sufficient USB ports.
 
 Copy the PiAGr**.py file into /home/pi, 
 
 You don't need to install any other software.
 
-In using a PAL composite monitor (as opposed to HDMI) you will need to set Display variable in the program to 1 and modify config.txt on your RPi
-remove the # from the following line:
+The software is configured for the Pi 7" Display, giving a 800x480 image. Display = 0 in the python script.
+If using 7" HDMI screen then set hdmi group = 2, hdmi mode = 14 in /boot/config.txt.
 
-sdtv_mode=2
+If using a PAL composite monitor (as opposed to HDMI) you will need to set Display variable in the program to 1 and modify config.txt on your RPi, remove the # from the following line:
 
-and to centre the image you may need to remove the #'s from the following lines , and possible change the values:
+sdtv_mode=2, and to centre the image you may need to remove the #'s from the following lines , and possible change the values:
 
 disable_overscan=1
 overscan_left=20
@@ -60,7 +57,7 @@ overscan_bottom=10
 Running PiAutoguider 
 ----------------------
 
-from the prompt type startx
+from the prompt type startx, if you don't have the Pi automatically booting to the GUI
 double click LXTerminal
 enter 'sudo idle' at the prompt, and press enter
 On the Python Shell choose 'File'
@@ -69,6 +66,8 @@ Choose 'PiAGr***.py'
 click on Open
 Choose 'Run'
 Choose 'Run Module'
+
+You can get the script to auto run at boot, see details within the pyhton script.
 
 The RPI camera will be enabled (assumed you've installed one and have it enabled in Raspi-Config and working)
 
@@ -127,7 +126,7 @@ Graph - will show a graph of the stars brightness, showing the max and min value
 
 Plot - will show a plot of the movement commands required to the Scope.
 
-2x2 - This will do 2x2 binning increasing the detected image. It won't chnage the display but will be seen on the Graph.
+2x2 - This will do 2x2 binning increasing the detected image. It won't change the display but will be seen on the Graph.
 
 nr - Noise Reduction. Reduces the noise by averaging 2 frames.
 
@@ -154,8 +153,7 @@ Telescope N,E,S,W will move the scope
 c in centre will attempt to move the scope, and star, to centre the screen  
 stop - will cancel any existing move command
 
-DecN and DecS - will switch ON/OFF either of these DEC (N/S) commands to the scope. Useful to avoid switching between N and S. Determine which way the star
-is drifting in DEC and switch OFF the other command.
+DecN and DecS - will switch ON/OFF either of these DEC (N/S) commands to the scope. Useful to avoid switching between N and S. Determine which way the star is drifting in DEC and switch OFF the other command.
 
 Window N,E,S,W will move the window in small steps
 c in centre will attempt to centre the star WITHOUT moving the scope (Zoom must be > 0).
