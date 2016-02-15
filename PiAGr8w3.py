@@ -3226,7 +3226,7 @@ while True:
       if oldescale != escale:
          keys2 (str(int(escale)),fs,3,b2x,bw,3,b2y,bh,4,3,1)
          mincor = (nscale + sscale + wscale + escale)/4
-         oldwecale = escale
+         oldescale = escale
       if oldwscale != wscale:
          keys2 (str(int(wscale)),fs,3,b2x,bw,3,b2y,bh,5,3,1)
          mincor = (nscale + sscale + wscale + escale)/4
