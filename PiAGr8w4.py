@@ -1282,9 +1282,7 @@ while True:
          if rgbw == 4:
             ima = (imrc + imgc + imbc )/3
          else:
-            ima = imrc
-            imgc = max(imgc, ima)
-            imbc = max(imbc, ima)
+            ima = max(imrc, imgc, imbc)
          mx.append(ima)
          xcounter += 3
 
