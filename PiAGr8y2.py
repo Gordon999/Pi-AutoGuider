@@ -155,10 +155,10 @@ rpired =            100 # red gain
 rpiblue =           130 # blue gain
 rpineg =              0 # negative image
 
-rpimodes = ['off', 'auto', 'night', 'night', 'sports', 'sports', 'verylong', 'verylong', 'fireworks', 'fireworks']
-rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport', 'spor2', 'vlong', 'vlon2', 'fwork', 'fwor2']
-rpiwidth = [320, 352, 640, 800, 960, 1280, 1920, 2592]
-rpiheight = [240, 288, 480, 600, 720, 960, 1440, 1944]
+rpimodes =  ['off',  'auto', 'night', 'night', 'sports', 'sports', 'verylong', 'verylong', 'fireworks', 'fireworks']
+rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport',  'spor2',  'vlong',    'vlon2',    'fwork',     'fwor2']
+rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592]
+rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944]
 rpiscalex = [1, 1.1, 1.818, 1.25, 1.2, 1.333, 1.5, 1.35]
 rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35]
 
@@ -166,48 +166,47 @@ rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35]
 
 if use_config > 0 and use_config < 4:
    z = use_config*10 + 115
-   deffile = "config" + str((z-115)/10)
-   if os.path.exists(deffile + ".txt") == True:
-      file = open(deffile + ".txt", "r")
-      inputx = file.readline()
-      file.close()
-      auto_g = int(inputx[0:1])
-      nscale = int(inputx[1:5])
-      sscale = int(inputx[5:9])
-      escale = int(inputx[9:13])
-      wscale = int(inputx[13:17])
-      ewi = int(inputx[17:18])
-      nsi = int(inputx[18:19])
-      crop = int(inputx[19:23])
-      offset3 = int(inputx[23:27])
+   deffile = "config" + str((z - 115)/10)
+   if os.path.exists(deffile + ".txt"):
+      with open(deffile + ".txt", "r") as file:
+          inputx = file.readline()
+      auto_g =              int(inputx[  0:  1])
+      nscale =              int(inputx[  1:  5])
+      sscale =              int(inputx[  5:  9])
+      escale =              int(inputx[  9: 13])
+      wscale =              int(inputx[ 13: 17])
+      ewi =                 int(inputx[ 17: 18])
+      nsi =                 int(inputx[ 18: 19])
+      crop =                int(inputx[ 19: 23])
+      offset3 =             int(inputx[ 23: 27])
+      offset5 =             int(inputx[ 27: 31])
+      offset6 =             int(inputx[ 31: 35])
+      offset4 =             int(inputx[ 35: 39])
       if offset3 > 9000:
-         offset3 = 0-(offset3-9000)
-      offset5 = int(inputx[27:31])
-      if offset5 > 9000:
-         offset5 = 0-(offset5-9000)
-      offset6 = int(inputx[31:35])
-      if offset6 > 9000:
-         offset6 = 0-(offset6-9000)
-      offset4 = int(inputx[35:39])
+         offset3 = 9000 - offset3
       if offset4 > 9000:
-         offset4 = 0-(offset4-9000)
-      Intervals = int(inputx[39:43])
-      log2 = log
-      log = int(inputx[43:44])
+         offset4 = 9000 - offset4
+      if offset5 > 9000:
+         offset5 = 9000 - offset5
+      if offset6 > 9000:
+         offset6 = 9000 - offset6
+      Intervals =           int(inputx[ 39: 43])
+      log2 =      log
+      log =                 int(inputx[ 43: 44])
       if log and not log2:
          now = datetime.datetime.now()
          timestamp = now.strftime("%y%m%d%H%M%S")
          logfile = "/tmp/" + str(timestamp) + ".txt"
-      rgbw = int(inputx[44:45])
-      threshold = int(inputx[45:49])
-      thres = int(inputx[49:50])
-      graph = int(inputx[50:51])
-      auto_i = int(inputx[51:52])
-      plot = int(inputx[52:53])
-      auto_win = int(inputx[53:54])
-      auto_t = int(inputx[54:55])
+      rgbw =                int(inputx[ 44: 45])
+      threshold =           int(inputx[ 45: 49])
+      thres =               int(inputx[ 49: 50])
+      graph =               int(inputx[ 50: 51])
+      auto_i =              int(inputx[ 51: 52])
+      plot =                int(inputx[ 52: 53])
+      auto_win =            int(inputx[ 53: 54])
+      auto_t =              int(inputx[ 54: 55])
       if camera_connected :
-         zoom = int(inputx[55:56])
+         zoom =             int(inputx[ 55: 56])
       Image_window = max(Image_window, zoom)
       if not zoom:
          w = width
@@ -236,57 +235,57 @@ if use_config > 0 and use_config < 4:
             cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
          cam.start()
       if not camera_connected:
-         zoom = int(inputx[55:56])
+         zoom =             int(inputx[ 55: 56])
          wd = 20 + zoom*4
          hd = wd
-      rpibr = int(inputx[56:60])
-      rpico = int(inputx[60:64])
+      rpibr =               int(inputx[ 56: 60])
+      rpico =               int(inputx[ 60: 64])
       if rpico > 9000:
-         rpico = 0-(rpico-9000)
-      rpiev = int(inputx[64:68])
+         rpico = 9000 - rpico
+      rpiev =               int(inputx[ 64: 68])
       if rpiev > 9000:
-         rpiev = 0-(rpiev-9000)
-      rpiss = int(inputx[68:72])*1000
-      rpiISO = int(inputx[72:76])
-      rpiexno = int(inputx[76:77])
-      rpiex = rpimodes[rpiexno]
+         rpiev = 9000 - rpiev
+      rpiss =               int(inputx[ 68: 72])*1000
+      rpiISO =              int(inputx[ 72: 76])
+      rpiexno =             int(inputx[ 76: 77])
+      rpiex =   rpimodes[rpiexno]
       rpiexa = rpimodesa[rpiexno]
       if len(inputx) > 77:
-         binn = int(inputx[77:78])
-         nr = int(inputx[78:79])
-         decN = int(inputx[79:80])
-         decS = int(inputx[80:81])
-         rpired = int(inputx[81:84])
-         rpiblue = int(inputx[84:87])
-         rpiredx = Decimal(rpired)/Decimal(100)
+         binn =             int(inputx[ 77: 78])
+         nr =               int(inputx[ 78: 79])
+         decN =             int(inputx[ 79: 80])
+         decS =             int(inputx[ 80: 81])
+         rpired =           int(inputx[ 81: 84])
+         rpiblue =          int(inputx[ 84: 87])
+         rpiredx =   Decimal(rpired)/Decimal(100)
          rpibluex = Decimal(rpiblue)/Decimal(100)
-         pcount = int(inputx[87:90])
-         ptime = int(inputx[90:93])
+         pcount =           int(inputx[ 87: 90])
+         ptime =            int(inputx[ 90: 93])
       if len(inputx) > 93:
-         camera_connected = int(inputx[93:94])
-         serial_connected = int(inputx[94:95])
-         use_Pi_Cam = int(inputx[95:96])
-         use_RPiGPIO = int(inputx[96:97])
-         photoon = (int(inputx[97:98]))
-         use_Seeed = (int(inputx[98:99]))
-         use_PiFaceRP = (int(inputx[99:100]))
-         use_config = (int(inputx[100:101]))
-         Display = (int(inputx[101:102]))
-         Disp_Width = (int(inputx[102:106]))
-         Night = (int(inputx[106:107]))
-         Image_window = (int(inputx[107:108]))
-         usb_max_res = (int(inputx[108:109]))
-         Frame = (int(inputx[109:110]))
-         bh = (int(inputx[110:112]))
-         bw = (int(inputx[112:114]))
-         N_OP = (int(inputx[114:118]))
-         S_OP = (int(inputx[118:122]))
-         E_OP = (int(inputx[122:126]))
-         W_OP = (int(inputx[126:130]))
-         C_OP = (int(inputx[130:134]))
-         AC_OP = (int(inputx[134:138]))
-         rpineg = (int(inputx[138:139]))
-         bits = (int(inputx[139:143]))
+         camera_connected = int(inputx[ 93: 94])
+         serial_connected = int(inputx[ 94: 95])
+         use_Pi_Cam =       int(inputx[ 95: 96])
+         use_RPiGPIO =      int(inputx[ 96: 97])
+         photoon =          int(inputx[ 97: 98])
+         use_Seeed =        int(inputx[ 98: 99])
+         use_PiFaceRP =     int(inputx[ 99:100])
+         use_config =       int(inputx[100:101])
+         Display =          int(inputx[101:102])
+         Disp_Width =       int(inputx[102:106])
+         Night =            int(inputx[106:107])
+         Image_window =     int(inputx[107:108])
+         usb_max_res =      int(inputx[108:109])
+         Frame =            int(inputx[109:110])
+         bh =               int(inputx[110:112])
+         bw =               int(inputx[112:114])
+         N_OP =             int(inputx[114:118])
+         S_OP =             int(inputx[118:122])
+         E_OP =             int(inputx[122:126])
+         W_OP =             int(inputx[126:130])
+         C_OP =             int(inputx[130:134])
+         AC_OP =            int(inputx[134:138])
+         rpineg =           int(inputx[138:139])
+         bits =             int(inputx[139:143])
 
 #===================================================================================
 # Seeed i2c address etc.
@@ -331,74 +330,65 @@ if photoon:
 mincor = (nscale + sscale + wscale + escale)/4
 #a_thr_scale - sets scaling factor for auto_t
 global a_thr_scale
-a_thr_scale = 3
+a_thr_scale =         3
 #a_thr_limit - sets lower limit for auto threshold to work
-a_thr_limit = 5
+a_thr_limit =         5
 #==============================================================================
 if serial_connected:
    import serial
 
-vtime = 0
-htime = 0
+vtime =  0
+htime =  0
 ptime2 = 0
 rpiex = rpimodes[rpiexno]
 rpiexa = rpimodesa[rpiexno]
 
 pygame.init()
-imu=""
-limg = 0
-Interval = Intervals
-pimg=""
-scalex = 1
-scaley = 1
-rpiredx = Decimal(rpired)/Decimal(100)
+imu =                    ""
+limg =                    0
+Interval =        Intervals
+pimg =                   ""
+scalex =                  1
+scaley =                  1
+rpiredx =  Decimal(rpired)/Decimal(100)
 rpibluex = Decimal(rpiblue)/Decimal(100)
-cls =     0
-nr =      0
-ave =     0
-aveon =   0
-avemax = 10
-photo =   0
-pcount2 = 0
-ptime2 =  0
-ptime4 =  0
-camera =  0
-ymax =    0
-z =       0
-con_cap = 0
-change =  0
-restart = 0
-fc =      0
-mxo =    []
-auto_c =  0
-fc =      0
-vt =      0
-ht =      0
-h_corr =  1
-w_corr =  1
+cls =                     0
+nr =                      0
+ave =                     0
+aveon =                   0
+avemax =                 10
+photo =                   0
+pcount2 =                 0
+ptime2 =                  0
+ptime4 =                  0
+camera =                  0
+ymax =                    0
+z =                       0
+con_cap =                 0
+change =                  0
+restart =                 0
+fc =                      0
+mxo =                    []
+auto_c =                  0
+fc =                      0
+vt =                      0
+ht =                      0
+h_corr =                  1
+w_corr =                  1
 rgb = ['X', 'R', 'G', 'B', 'W1', 'W2']
 fontObj = pygame.font.Font(None, 16)
-global greyColor
-global redColor
-global greenColor
-global blueColor
-global dgryColor
-global lgryColor
-global blackColor
-global whiteColor
-global purpleColor
-global yellowColor
-bredColor = pygame.Color(200, 0, 0)
-lgryColor = pygame.Color(192, 192, 192)
-blackColor = pygame.Color(0, 0, 0)
-whiteColor = pygame.Color(50, 20, 20) if Night else pygame.Color(200, 200, 200)
-greyColor = pygame.Color(128, 70, 70) if Night else pygame.Color(128, 128, 128)
-dgryColor = pygame.Color(0, 0, 0) if Night else pygame.Color(64, 64, 64)
-greenColor = pygame.Color(0, 128, 0) if Night else pygame.Color(0, 255, 0)
-purpleColor = pygame.Color(128, 0, 128) if Night else pygame.Color(255, 0, 255)
-yellowColor = pygame.Color(128, 128, 0) if Night else pygame.Color(255, 255, 0)
-blueColor = pygame.Color(0, 0, 150) if Night else pygame.Color(0, 0, 255)
-redColor = pygame.Color(50, 0, 0) if Night else pygame.Color(200, 0, 0)
+global greyColor, redColor, greenColor, blueColor, dgryColor, lgryColor, blackColor, whiteColor, purpleColor, yellowColor
+bredColor =   pygame.Color(200,   0,   0)
+lgryColor =   pygame.Color(192, 192, 192)
+blackColor =  pygame.Color(  0,   0,   0)
+whiteColor =  pygame.Color( 50,  20,  20) if Night else pygame.Color(200, 200, 200)
+greyColor =   pygame.Color(128,  70,  70) if Night else pygame.Color(128, 128, 128)
+dgryColor =   pygame.Color(  0,   0,   0) if Night else pygame.Color( 64,  64,  64)
+greenColor =  pygame.Color(  0, 128,   0) if Night else pygame.Color(  0, 255,   0)
+purpleColor = pygame.Color(128,   0, 128) if Night else pygame.Color(255,   0, 255)
+yellowColor = pygame.Color(128, 128,   0) if Night else pygame.Color(255, 255,   0)
+blueColor =   pygame.Color(  0,   0, 150) if Night else pygame.Color(  0,   0, 255)
+redColor =    pygame.Color( 50,   0,   0) if Night else pygame.Color(200,   0,   0)
 red =  chr(255) + chr(0)   + chr(0)
 blu =  chr(0)   + chr(0)   + chr(255)
 grn =  chr(0)   + chr(255) + chr(0)
@@ -411,17 +401,14 @@ fs = min(bh, bw)/2 - 3
 
 Image_window = max(Image_window, zoom)
 if not use_Pi_Cam and zoom > usb_max_res:
-   zoom = usb_max_res
-   Image_window = zoom
+   zoom = Image_window = usb_max_res
 
 if Display == 0:
    width = Disp_Width
-   b1x = width
-   b1y = 0 - bh
-   b2x = width
-   b2y = bh * 4
-   b3x = width
-   b3y = bh * 9
+   b1x = b2x = b3x = width
+   b1y = -bh
+   b2y = bh*4
+   b3y = bh*9
    Image_window = 2
    height = 480
    if bh <= 32:
@@ -431,16 +418,13 @@ if Display == 0:
    zoom = 2
 
 if Display == 1:
-   bh = 32
-   bw = 32
+   bh = bw = 32
    width = 352
    height = 288
    b1x = 0
-   b1y = height
+   b1y = b2y = b3y = height
    b2x = 192
-   b2y = height
    b3x = 385
-   b3y = height
    hplus = 192
    Image_window = 1
    modewidth = 640
@@ -448,14 +432,12 @@ if Display == 1:
    hplus = 192
 
 if Display > 1:
-   width = rpiwidth[Image_window]
+   width =   rpiwidth[Image_window]
    height = rpiheight[Image_window]
-   b1x = width
+   b1x = b2x = b3x = width
    b1y = -bh
-   b2x = width
-   b2y = 4*bh +1
-   b3x = width
-   b3y = 9*bh +1
+   b2y = bh*4 + 1
+   b3y = bh*9 + 1
    hplus = 0
    Disp_Width = width
 
@@ -470,11 +452,9 @@ if zoom > 0:
    escale = int(escale/scalex)
    sscale = int(sscale/scaley)
    wscale = int(wscale/scalex)
-offset5 = 0
-offset6 = 0
-offset7 = 0
-offset8 = 0
-w = rpiwidth[zoom]
+offset5 = offset6 = offset7 = offset8 = 0
+
+w =  rpiwidth[zoom]
 h = rpiheight[zoom]
 if width <= 352:
    modewidth = 640
@@ -484,53 +464,52 @@ else:
 if use_config > 0 and use_config < 4:
    z = use_config*10 + 115
    deffile = "config" + str((z-115)/10)
-   if os.path.exists(deffile + ".txt") == True:
-      file = open(deffile + ".txt", "r")
-      inputx = file.readline()
-      file.close()
-      auto_g = int(inputx[0:1])
-      nscale = int(inputx[1:5])
-      sscale = int(inputx[5:9])
-      escale = int(inputx[9:13])
-      wscale = int(inputx[13:17])
-      ewi = int(inputx[17:18])
-      nsi = int(inputx[18:19])
-      crop = int(inputx[19:23])
-      offset3 = int(inputx[23:27])
+   if os.path.exists(deffile + ".txt"):
+      with open(deffile + ".txt", "r") as file:
+         inputx = file.readline()
+      auto_g =    int(inputx[ 0: 1])
+      nscale =    int(inputx[ 1: 5])
+      sscale =    int(inputx[ 5: 9])
+      escale =    int(inputx[ 9:13])
+      wscale =    int(inputx[13:17])
+      ewi =       int(inputx[17:18])
+      nsi =       int(inputx[18:19])
+      crop =      int(inputx[19:23])
+      offset3 =   int(inputx[23:27])
+      offset5 =   int(inputx[27:31])
+      offset6 =   int(inputx[31:35])
+      offset4 =   int(inputx[35:39])
       if offset3 > 9000:
-         offset3 = 0-(offset3-9000)
-      offset5 = int(inputx[27:31])
-      if offset5 > 9000:
-         offset5 = 0-(offset5-9000)
-      offset6 = int(inputx[31:35])
-      if offset6 > 9000:
-         offset6 = 0-(offset6-9000)
-      offset4 = int(inputx[35:39])
+         offset3 = -(offset3 - 9000)
       if offset4 > 9000:
-         offset4 = 0-(offset4-9000)
+         offset4 = -(offset4 - 9000)
+      if offset5 > 9000:
+         offset5 = -(offset5 - 9000)
+      if offset6 > 9000:
+         offset6 = -(offset6 - 9000)
       Intervals = int(inputx[39:43])
-      log2 = log
-      log = int(inputx[43:44])
+      log2 =      log
+      log =       int(inputx[43:44])
       if log and not log2:
          now = datetime.datetime.now()
          timestamp = now.strftime("%y%m%d%H%M%S")
          logfile = "/tmp/" + str(timestamp) + ".txt"
-      rgbw = int(inputx[44:45])
+      rgbw =      int(inputx[44:45])
       threshold = int(inputx[45:49])
-      thres = int(inputx[49:50])
-      graph = int(inputx[50:51])
-      auto_i = int(inputx[51:52])
-      plot = int(inputx[52:53])
-      auto_win = int(inputx[53:54])
-      auto_t = int(inputx[54:55])
-      if camera_connected :
-         zoom = int(inputx[55:56])
+      thres =     int(inputx[49:50])
+      graph =     int(inputx[50:51])
+      auto_i =    int(inputx[51:52])
+      plot =      int(inputx[52:53])
+      auto_win =  int(inputx[53:54])
+      auto_t =    int(inputx[54:55])
+      if camera_connected:
+         zoom =   int(inputx[55:56])
       Image_window = max(Image_window, zoom)
       if not zoom:
          w = width
          h = height
       if zoom > 0:
-         w = rpiwidth[zoom]
+         w =  rpiwidth[zoom]
          h = rpiheight[zoom]
       if not use_Pi_Cam:
          cam.stop()
@@ -553,37 +532,37 @@ if use_config > 0 and use_config < 4:
             cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
          cam.start()
       if not camera_connected:
-         zoom = int(inputx[55:56])
+         zoom =    int(inputx[55:56])
          wd = 20 + zoom*4
          hd = wd
-      rpibr = int(inputx[56:60])
-      rpico = int(inputx[60:64])
+      rpibr =      int(inputx[56:60])
+      rpico =      int(inputx[60:64])
+      rpiev =      int(inputx[64:68])
       if rpico > 9000:
-         rpico = 0-(rpico-9000)
-      rpiev = int(inputx[64:68])
+         rpico = -(rpico - 9000)
       if rpiev > 9000:
-         rpiev = 0-(rpiev-9000)
-      rpiss = int(inputx[68:72])*1000
-      rpiISO = int(inputx[72:76])
-      rpiexno = int(inputx[76:77])
+         rpiev = -(rpiev - 9000)
+      rpiss =      int(inputx[68:72])*1000
+      rpiISO =     int(inputx[72:76])
+      rpiexno =    int(inputx[76:77])
       rpiex = rpimodes[rpiexno]
       rpiexa = rpimodesa[rpiexno]
       if len(inputx) > 77:
-         binn = int(inputx[77:78])
-         nr = int(inputx[78:79])
-         decN = int(inputx[79:80])
-         decS = int(inputx[80:81])
-         rpired = int(inputx[81:84])
+         binn =    int(inputx[77:78])
+         nr =      int(inputx[78:79])
+         decN =    int(inputx[79:80])
+         decS =    int(inputx[80:81])
+         rpired =  int(inputx[81:84])
          rpiblue = int(inputx[84:87])
-         rpiredx = Decimal(rpired)/Decimal(100)
+         rpiredx =   Decimal(rpired)/Decimal(100)
          rpibluex = Decimal(rpiblue)/Decimal(100)
-         pcount = int(inputx[87:90])
-         ptime = int(inputx[90:93])
+         pcount =  int(inputx[87:90])
+         ptime =   int(inputx[90:93])
 
-if Frame == 0:
+if not Frame:
    windowSurfaceObj = pygame.display.set_mode((modewidth, height + hplus), pygame.NOFRAME, bits)
 else:
-   windowSurfaceObj = pygame.display.set_mode((modewidth, height + hplus), 1, bits)
+   windowSurfaceObj = pygame.display.set_mode((modewidth, height + hplus), 1,              bits)
 pygame.display.set_caption('Pi AutoGuider')
 
 if camera_connected and not use_Pi_Cam:
@@ -607,32 +586,32 @@ if camera_connected and not use_Pi_Cam:
    cam.start()
    cam.set_controls(0, 0, rpibr)
 
-if use_Pi_Cam == 1 and camera_connected == 1:
-   if os.path.exists('/run/shm/test.jpg') == True:
-      os.rename('/run/shm/test.jpg','/run/shm/oldtest.jpg')
+if use_Pi_Cam and camera_connected:
+   if os.path.exists('/run/shm/test.jpg'):
+      os.rename('/run/shm/test.jpg', '/run/shm/oldtest.jpg')
 
    rpistr = "raspistill -o /run/shm/test.jpg -co " + str(rpico) + " -br " + str(rpibr)
-   if rpiexa != ' off' and rpiexa != 'nigh2' and  rpiexa != 'fwor2' and  rpiexa != 'vlon2' and  rpiexa != 'spor2':
-      rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -bm -fp -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+   if rpiexa != ' off' and rpiexa != 'nigh2' and rpiexa != 'fwor2' and rpiexa != 'vlon2' and rpiexa != 'spor2':
+      rpistr += " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -bm -fp -awb off -awbg " + str(rpiredx) + "," + str(rpibluex)
    elif rpiexa == ' off':
-      rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+      rpistr += " -t " + str(rpit) + " -tl 0 -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx) + "," + str(rpibluex)
    else:
-      rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+      rpistr += " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx) + "," + str(rpibluex)
    if rpiISO > 0:
-      rpistr = rpistr + " -ISO " + str(rpiISO)
+      rpistr += " -ISO " + str(rpiISO)
    if rpiev != 0:
-      rpistr = rpistr + " -ev " + str(rpiev)
+      rpistr += " -ev " + str(rpiev)
    off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))
    off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
-   widx = Decimal(width)/Decimal(w)
+   widx =  Decimal(width)/Decimal(w)
    heiy = Decimal(height)/Decimal(h)
-   rpistr = rpistr + " -q 100 -n -sa " + str(rpisa) + " -w " + str(width) + " -h " + str(height) + " -roi " +  str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
-   if rpineg == 1:
-      rpistr = rpistr + " -ifx negative "
-   p=subprocess.Popen(rpistr,shell=True, preexec_fn=os.setsid)
+   rpistr += " -q 100 -n -sa " + str(rpisa) + " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
+   if rpineg:
+      rpistr += " -ifx negative "
+   p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
 
 def R_ON(RD, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA):
-   if use_RPiGPIO :
+   if use_RPiGPIO:
       RE = [N_OP, S_OP, E_OP, W_OP][RD]
       GPIO.output(RE, GPIO.HIGH)
    if use_Seeed:
@@ -643,7 +622,7 @@ def R_ON(RD, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA):
    return(DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
 
 def R_OFF(RD, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA):
-   if use_RPiGPIO :
+   if use_RPiGPIO:
       RE = [N_OP, S_OP, E_OP, W_OP][RD]
       GPIO.output(RE, GPIO.LOW)
    if use_Seeed:
@@ -656,13 +635,13 @@ def R_OFF(RD, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA):
 def button2(bx1, x, by1, y, bw, z, by2, bColor):
    colors = [greyColor, dgryColor, dgryColor, redColor]
    Color = colors[bColor]
-   bx1 += 1 + (x-1)*bw
-   by1 += 1 + (y-1)*bh - 1
+   bx1 += 1 + (x - 1)*bw
+   by1 += 1 + (y - 1)*bh - 1
    bx2 = z*bw - 1
-   pygame.draw.rect(windowSurfaceObj, Color, Rect(bx1, by1, bx2, by2))
-   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1, by1), (bx1+bx2-1, by1))
-   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1+1, by1+1), (bx1+bx2-2, by1+1))
-   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1, by1), (bx1, by1 +bh))
+   pygame.draw.rect(windowSurfaceObj, Color,      Rect(bx1, by1, bx2, by2))
+   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1,   by1),   (bx1+bx2-1, by1   ))
+   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1+1, by1+1), (bx1+bx2-2, by1+1 ))
+   pygame.draw.line(windowSurfaceObj, whiteColor, (bx1,   by1),   (bx1,       by1+bh))
    return()
 
 button2(b1x, 1, b1y, 2, bw, 2, bh, auto_g)
@@ -680,6 +659,7 @@ button2(b1x, 4, b1y, 6, bw, 1, bh, ewi)
 cy = 2
 while cy <= 6:
    button2(b1x, 5, b1y, cy, bw, 2, bh, 0)
+   button2(b2x, 3, b2y, cy, bw, 2, bh, 0)
    cy += 1
 if use_Pi_Cam and camera_connected:
    cy = 3
@@ -688,10 +668,6 @@ if use_Pi_Cam and camera_connected:
       cy += 1
    button2(b1x, 1, b1y, 5, bw, 2, bh, 0)
    button2(b1x, 1, b1y, 6, bw, 2, bh, 0)
-cy = 2
-while cy <= 6:
-   button2(b2x, 3, b2y, cy, bw, 2, bh, 0)
-   cy += 1
 button2(b2x, 1, b2y, 2, bw, 2, bh, 0) # brightness
 if photoon:
    button2(b2x, 5, b2y, 2, bw, 2, bh, 0)
@@ -708,7 +684,7 @@ if decN:
    button2(b3x, 2, b3y, 2, bw, 1, bh, 0)#
 else:
    button2(b3x, 2, b3y, 2, bw, 1, bh, 1)
-if decS ==1:
+if decS:
    button2(b3x, 2, b3y, 4, bw, 1, bh, 0)#
 else:
    button2(b3x, 2, b3y, 4, bw, 1, bh, 1)
@@ -726,217 +702,217 @@ button2(b3x, 4, b3y, 6, bw, 1, bh, 0)
 button2(b3x, 5, b3y, 6, bw, 1, bh, 0)
 button2(b3x, 6, b3y, 6, bw, 1, bh, 0)
 
-def keys2(msg,fsize,fcolor,fx,bw,hp,fy,bh,vp,vo,upd):
-   fy = fy + 2 + ((vp-1)*bh) + (vo)*(bh/6)
-   fx = fx + 2 + (hp*bw)
+def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
+   fy += 2 + (vp - 1)*bh + vo*bh/6
+   fx += 2 + hp*bw
    if msg == "Exp Time" or msg == "     eV":
-      pygame.draw.rect(windowSurfaceObj,greyColor,Rect(fx,fy+1,(bw*2)-3,bh/2.4))
+      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(fx,        fy+1, bw*2 - 3, bh/2.4))
    if vo == 3:
-      pygame.draw.rect(windowSurfaceObj,greyColor,Rect(fx-2-(bw/2),fy, bw+4,bh/2.2))
-      fx = fx - 2-((len(msg)*fsize)/4)
-   if vo == 4:
-      fy = fy-2
-   colors = [dgryColor,greenColor,yellowColor,redColor,greenColor,blueColor,whiteColor,greyColor,blackColor,purpleColor]
-   color = colors[fcolor]
-   fontObj = pygame.font.Font('freesansbold.ttf',fsize)
-   msgSurfaceObj = fontObj.render(msg, False,color)
-   msgRectobj = msgSurfaceObj.get_rect()
-   msgRectobj.topleft =(fx,fy)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(fx-2-bw/2, fy,   bw+4,     bh/2.2))
+      fx -= 2 - (len(msg)*fsize)/4
+   elif vo == 4:
+      fy -= 2
+   colors =        [dgryColor, greenColor, yellowColor, redColor, greenColor, blueColor, whiteColor, greyColor, blackColor, purpleColor]
+   color =         colors[fcolor]
+   fontObj =       pygame.font.Font('freesansbold.ttf', fsize)
+   msgSurfaceObj = fontObj.render(msg, False, color)
+   msgRectobj =    msgSurfaceObj.get_rect()
+   msgRectobj.topleft = (fx, fy)
    windowSurfaceObj.blit(msgSurfaceObj, msgRectobj)
-   if upd ==1:
-      pygame.display.update(pygame.Rect(int(fx/bw)*bw,int(fy/bh)*bh,bw*3,bh))
+   if upd:
+      pygame.display.update(pygame.Rect(int(fx/bw)*bw, int(fy/bh)*bh, bw*3, bh))
    return()
 
-keys2(str(int(nscale)), fs, 3, b2x, bw, 3, b2y, bh, 2, 3, 0)
-keys2(str(int(sscale)), fs, 3, b2x, bw, 3, b2y, bh, 3, 3, 0)
-keys2(str(int(escale)), fs, 3, b2x, bw, 3, b2y, bh, 4, 3, 0)
-keys2(str(int(wscale)), fs, 3, b2x, bw, 3, b2y, bh, 5, 3, 0)
-keys2(str(threshold), fs, 3, b1x, bw, 5, b1y, bh, 4, 3, 0)
-keys2(str(Interval), fs, 3, b1x, bw, 5, b1y, bh, 5, 3, 0)
-keys2(str(zoom), fs, 3, b1x, bw, 5, b1y, bh, 6, 3, 0)
-keys2(str(rpibr), fs, 3, b2x, bw, 1, b2y, bh, 2, 3, 0)
+keys2(str(int(nscale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 2, 3, 0)
+keys2(str(int(sscale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 3, 3, 0)
+keys2(str(int(escale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 4, 3, 0)
+keys2(str(int(wscale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 5, 3, 0)
+keys2(str(threshold),             fs,       3,        b1x,         bw,   5,     b1y, bh, 4, 3, 0)
+keys2(str(Interval),              fs,       3,        b1x,         bw,   5,     b1y, bh, 5, 3, 0)
+keys2(str(zoom),                  fs,       3,        b1x,         bw,   5,     b1y, bh, 6, 3, 0)
+keys2(str(rpibr),                 fs,       3,        b2x,         bw,   1,     b2y, bh, 2, 3, 0)
 
 msg = rgb[rgbw]
 if rgbw < 5:
-   keys2(msg, fs, rgbw + 2, b1x, bw, 5, b1y, bh, 2, 3, 0)
+   keys2(msg,                     fs,  rgbw+2,        b1x,         bw,   5,     b1y, bh, 2, 3, 0)
 else:
-   keys2(msg, fs, rgbw + 1, b1x, bw, 5, b1y, bh, 2, 3, 0)
+   keys2(msg,                     fs,  rgbw+1,        b1x,         bw,   5,     b1y, bh, 2, 3, 0)
 if crop != maxwin:
-   keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 0)
+   keys2(str(crop),               fs,       3,        b1x,         bw,   5,     b1y, bh, 3, 3, 0)
 else:
-   keys2("max", fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 0)
-keys2("A-Win", fs, auto_win, b1x, bw, 2, b1y, bh, 3, 1, 0)
-keys2("W", fs, 5, b1x+fs, bw, 2, b1y, bh, 3, 1, 0)
-keys2("A-Thr", fs, auto_t, b1x, bw, 2, b1y, bh, 4, 1, 0)
-keys2("T", fs, 5, b1x+fs, bw, 2, b1y, bh, 4, 1, 0)
-keys2("AutoG", fs, auto_g, b1x, bw, 0, b1y, bh, 2, 1, 0)
-keys2("A", fs, 5, b1x, bw, 0, b1y, bh, 2, 1, 0)
-keys2("2x2", fs, binn, b1x, bw, 2, b1y, bh, 2, 1, 0)
-keys2("x", fs, 5, b1x+fs/2, bw, 2, b1y, bh, 2, 1, 0)
-keys2("Log", fs, log, b1x, bw, 0, b1y, bh, 4, 1, 0)
-keys2("L", fs, 5, b1x, bw, 0, b1y, bh, 4, 1, 0)
-keys2("Gph", fs, graph, b1x, bw, 1, b1y, bh, 3, 1, 0)
-keys2("G", fs, 5, b1x, bw, 1, b1y, bh, 3, 1, 0)
-keys2("Plot", fs, plot, b1x, bw, 0, b1y, bh, 3, 1, 0)
-keys2("P", fs, 5, b1x, bw, 0, b1y, bh, 3, 1, 0)
-keys2("Thr", fs, thres, b1x, bw, 1, b1y, bh, 4, 1, 0)
-keys2("h", fs, 5, b1x+fs/1.5, bw, 1, b1y, bh, 4, 1, 0)
-keys2("NSi", fs, nsi, b1x, bw, 2, b1y, bh, 6, 1, 0)
-keys2("N", fs, 5, b1x, bw, 2, b1y, bh, 6, 1, 0)
-keys2("EWi", fs, ewi, b1x, bw, 3, b1y, bh, 6, 1, 0)
-keys2("E", fs, 5, b1x, bw, 3, b1y, bh, 6, 1, 0)
-keys2("A-Int", fs, auto_i, b1x, bw, 2, b1y, bh, 5, 1, 0)
-keys2("I", fs, 5, b1x+fs, bw, 2, b1y, bh, 5, 1, 0)
-keys2("rgbw", fs, 6, b1x, bw, 4, b1y, bh, 2, 0, 0)
-keys2("b", fs, 5, b1x+fs, bw, 4, b1y, bh, 2, 0, 0)
-keys2(" <", fs, 6, b1x, bw, 4, b1y, bh, 2, 4, 0)
-keys2(">", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 2, 4, 0)
-keys2("window", fs, 6, b1x, bw, 4, b1y, bh, 3, 0, 0)
-keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 3, 4, 0)
-keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 3, 4, 0)
-keys2("threshold", fs-1, 6, b1x, bw, 4, b1y, bh, 4, 0, 0)
-keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 4, 4, 0)
-keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 4, 4, 0)
-keys2("interval", fs, 6, b1x, bw, 4, b1y, bh, 5, 0, 0)
-keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 5, 4, 0)
-keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 5, 4, 0)
-keys2("Zoom", fs, 6, b1x, bw, 4, b1y, bh, 6, 0, 0)
-keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 6, 4, 0)
-keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 6, 4, 0)
-keys2("scale N", fs, 6, b2x, bw, 2, b2y, bh, 2, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 2, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 2, 4, 0)
-keys2("scale S", fs, 6, b2x, bw, 2, b2y, bh, 3, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 3, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 3, 4, 0)
-keys2("scale E", fs, 6, b2x, bw, 2, b2y, bh, 4, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 4, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 4, 4, 0)
-keys2("scale W", fs, 6, b2x, bw, 2, b2y, bh, 5, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 5, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 5, 4, 0)
-keys2("scale all", fs, 6, b2x, bw, 2, b2y, bh, 6, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 6, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 6, 4, 0)
-keys2("Brightness", fs-2, 6, b2x, bw, 0, b2y, bh, 2, 0, 0)
-keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 2, 4, 0)
-keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 2, 4, 0)
+   keys2("max",                   fs,       3,        b1x,         bw,   5,     b1y, bh, 3, 3, 0)
+keys2("A-Win",                    fs,       auto_win, b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+keys2("W",                        fs,       5,        b1x+fs,      bw,   2,     b1y, bh, 3, 1, 0)
+keys2("A-Thr",                    fs,       auto_t,   b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+keys2("T",                        fs,       5,        b1x+fs,      bw,   2,     b1y, bh, 4, 1, 0)
+keys2("AutoG",                    fs,       auto_g,   b1x,         bw,   0,     b1y, bh, 2, 1, 0)
+keys2("A",                        fs,       5,        b1x,         bw,   0,     b1y, bh, 2, 1, 0)
+keys2("2x2",                      fs,       binn,     b1x,         bw,   2,     b1y, bh, 2, 1, 0)
+keys2("x",                        fs,       5,        b1x+fs/2,    bw,   2,     b1y, bh, 2, 1, 0)
+keys2("Log",                      fs,       log,      b1x,         bw,   0,     b1y, bh, 4, 1, 0)
+keys2("L",                        fs,       5,        b1x,         bw,   0,     b1y, bh, 4, 1, 0)
+keys2("Gph",                      fs,       graph,    b1x,         bw,   1,     b1y, bh, 3, 1, 0)
+keys2("G",                        fs,       5,        b1x,         bw,   1,     b1y, bh, 3, 1, 0)
+keys2("Plot",                     fs,       plot,     b1x,         bw,   0,     b1y, bh, 3, 1, 0)
+keys2("P",                        fs,       5,        b1x,         bw,   0,     b1y, bh, 3, 1, 0)
+keys2("Thr",                      fs,       thres,    b1x,         bw,   1,     b1y, bh, 4, 1, 0)
+keys2("h",                        fs,       5,        b1x+fs/1.5,  bw,   1,     b1y, bh, 4, 1, 0)
+keys2("NSi",                      fs,       nsi,      b1x,         bw,   2,     b1y, bh, 6, 1, 0)
+keys2("N",                        fs,       5,        b1x,         bw,   2,     b1y, bh, 6, 1, 0)
+keys2("EWi",                      fs,       ewi,      b1x,         bw,   3,     b1y, bh, 6, 1, 0)
+keys2("E",                        fs,       5,        b1x,         bw,   3,     b1y, bh, 6, 1, 0)
+keys2("A-Int",                    fs,       auto_i,   b1x,         bw,   2,     b1y, bh, 5, 1, 0)
+keys2("I",                        fs,       5,        b1x+fs,      bw,   2,     b1y, bh, 5, 1, 0)
+keys2("rgbw",                     fs,       6,        b1x,         bw,   4,     b1y, bh, 2, 0, 0)
+keys2("b",                        fs,       5,        b1x+fs,      bw,   4,     b1y, bh, 2, 0, 0)
+keys2(" <",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 2, 4, 0)
+keys2(">",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 2, 4, 0)
+keys2("window",                   fs,       6,        b1x,         bw,   4,     b1y, bh, 3, 0, 0)
+keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 3, 4, 0)
+keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 3, 4, 0)
+keys2("threshold",                fs-1,     6,        b1x,         bw,   4,     b1y, bh, 4, 0, 0)
+keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 4, 4, 0)
+keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 4, 4, 0)
+keys2("interval",                 fs,       6,        b1x,         bw,   4,     b1y, bh, 5, 0, 0)
+keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 5, 4, 0)
+keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 5, 4, 0)
+keys2("Zoom",                     fs,       6,        b1x,         bw,   4,     b1y, bh, 6, 0, 0)
+keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 6, 4, 0)
+keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 6, 4, 0)
+keys2("scale N",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 2, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 2, 4, 0)
+keys2("scale S",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 3, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 3, 4, 0)
+keys2("scale E",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 4, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 4, 4, 0)
+keys2("scale W",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 5, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 5, 4, 0)
+keys2("scale all",                fs,       6,        b2x,         bw,   2,     b2y, bh, 6, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 6, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 6, 4, 0)
+keys2("Brightness",               fs-2,     6,        b2x,         bw,   0,     b2y, bh, 2, 0, 0)
+keys2(" -",                       fs,       6,        b2x,         bw,   0,     b2y, bh, 2, 4, 0)
+keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   1,     b2y, bh, 2, 4, 0)
 
 if use_Pi_Cam and camera_connected:
-   keys2(str(rpico), fs, 3, b2x, bw, 1, b2y, bh, 3, 3, 0)
+   keys2(str(rpico),              fs,       3,        b2x,         bw,   1,     b2y, bh, 3, 3, 0)
    rpiexa = rpimodesa[rpiexno]
-   if rpiexa == ' off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2':
-      keys2(str(int(rpiss/1000)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 0)
+   if rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2':
+      keys2(str(int(rpiss/1000)), fs,       3,        b2x,         bw,   1,     b2y, bh, 4, 3, 0)
    else:
-      keys2(str(int(rpiev)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 0)
-   keys2((rpimodesa[rpiexno]), fs, 3, b2x, bw, 1, b2y, bh, 5, 3, 0)
-   keys2(str(rpiISO), fs, 3, b2x, bw, 1, b2y, bh, 6, 3, 0)
+      keys2(str(int(rpiev)),      fs,       3,        b2x,         bw,   1,     b2y, bh, 4, 3, 0)
+   keys2((rpimodesa[rpiexno]),    fs,       3,        b2x,         bw,   1,     b2y, bh, 5, 3, 0)
+   keys2(str(rpiISO),             fs,       3,        b2x,         bw,   1,     b2y, bh, 6, 3, 0)
    if not rpiISO:
-      keys2('auto', fs, 3, b2x, bw, 1, b2y, bh, 6, 3, 0)
-   keys2("Contrast", fs, 6, b2x, bw, 0, b2y, bh, 3, 0, 0)
-   keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 3, 4, 0)
-   keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 3, 4, 0)
-   if rpiex == 'off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2':
-      keys2("Exp Time", fs-1, 6, b2x, bw, 0, b2y, bh, 4, 0, 0)
+      keys2('auto',               fs,       3,        b2x,         bw,   1,     b2y, bh, 6, 3, 0)
+   keys2("Contrast",              fs,       6,        b2x,         bw,   0,     b2y, bh, 3, 0, 0)
+   keys2(" -",                    fs,       6,        b2x,         bw,   0,     b2y, bh, 3, 4, 0)
+   keys2("+",                     fs,       6,        b2x+bw-fs,   bw,   1,     b2y, bh, 3, 4, 0)
+   if rpiex == 'off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2':
+      keys2("Exp Time",           fs-1,     6,        b2x,         bw,   0,     b2y, bh, 4, 0, 0)
    else:
-      keys2("     eV", fs, 6, b2x, bw, 0, b2y, bh, 4, 0, 0)
-   keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 4, 4, 0)
-   keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 4, 4, 0)
-   keys2("ISO", fs, 6, b2x, bw*2, 0, b2y, bh, 6, 0, 0)
-   keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 6, 4, 0)
-   keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 6, 4, 0)
-   keys2("Exp Mode", fs-1, 6, b2x, bw, 0, b2y, bh, 5, 0, 0)
-   keys2(" <", fs, 6, b2x, bw, 0, b2y, bh, 5, 4, 0)
-   keys2(">", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 5, 4, 0)
-   keys2("Adj Red", fs, 6, b1x, bw, 0, b1y, bh, 5, 0, 0)
-   keys2(" -", fs, 6, b1x, bw, 0, b1y, bh, 5, 4, 0)
-   keys2("+", fs, 6, b1x+bw-fs, bw, 1, b1y, bh, 5, 4, 0)
-   keys2("Adj Blue", fs, 6, b1x, bw, 0, b1y, bh, 6, 0, 0)
-   keys2(" -", fs, 6, b1x, bw, 0, b1y, bh, 6, 4, 0)
-   keys2("+", fs, 6, b1x+bw-fs, bw, 1, b1y, bh, 6, 4, 0)
-   rpiredx = Decimal(rpired)/Decimal(100)
+      keys2("     eV",            fs,       6,        b2x,         bw,   0,     b2y, bh, 4, 0, 0)
+   keys2(" -",                    fs,       6,        b2x,         bw,   0,     b2y, bh, 4, 4, 0)
+   keys2("+",                     fs,       6,        b2x+bw-fs,   bw,   1,     b2y, bh, 4, 4, 0)
+   keys2("ISO",                   fs,       6,        b2x,         bw*2, 0,     b2y, bh, 6, 0, 0)
+   keys2(" -",                    fs,       6,        b2x,         bw,   0,     b2y, bh, 6, 4, 0)
+   keys2("+",                     fs,       6,        b2x+bw-fs,   bw,   1,     b2y, bh, 6, 4, 0)
+   keys2("Exp Mode",              fs-1,     6,        b2x,         bw,   0,     b2y, bh, 5, 0, 0)
+   keys2(" <",                    fs,       6,        b2x,         bw,   0,     b2y, bh, 5, 4, 0)
+   keys2(">",                     fs,       6,        b2x+bw-fs,   bw,   1,     b2y, bh, 5, 4, 0)
+   keys2("Adj Red",               fs,       6,        b1x,         bw,   0,     b1y, bh, 5, 0, 0)
+   keys2(" -",                    fs,       6,        b1x,         bw,   0,     b1y, bh, 5, 4, 0)
+   keys2("+",                     fs,       6,        b1x+bw-fs,   bw,   1,     b1y, bh, 5, 4, 0)
+   keys2("Adj Blue",              fs,       6,        b1x,         bw,   0,     b1y, bh, 6, 0, 0)
+   keys2(" -",                    fs,       6,        b1x,         bw,   0,     b1y, bh, 6, 4, 0)
+   keys2("+",                     fs,       6,        b1x+bw-fs,   bw,   1,     b1y, bh, 6, 4, 0)
+   rpiredx =   Decimal(rpired)/Decimal(100)
    rpibluex = Decimal(rpiblue)/Decimal(100)
-   keys2(str(rpiredx), fs, 3, b1x, bw, 1, b1y, bh, 5, 3, 0)
-   keys2(str(rpibluex), fs, 3, b1x, bw, 1, b1y, bh, 6, 3, 0)
+   keys2(str(rpiredx),            fs,       3,        b1x,         bw,   1,     b1y, bh, 5, 3, 0)
+   keys2(str(rpibluex),           fs,       3,        b1x,         bw,   1,     b1y, bh, 6, 3, 0)
 
 hor = 0
 while hor < 4:
-   keys2("N", fs, 6, b3x, bw, 1+hor, b3y, bh, 2, 2, 0)
-   keys2("E", fs, 6, b3x, bw, 2+hor, b3y, bh, 3, 2, 0)
-   keys2("S", fs, 6, b3x, bw, 1+hor, b3y, bh, 4, 2, 0)
-   keys2("W", fs, 6, b3x, bw, 0+hor, b3y, bh, 3, 2, 0)
+   keys2("N",                     fs,       6,        b3x,         bw,   1+hor, b3y, bh, 2, 2, 0)
+   keys2("E",                     fs,       6,        b3x,         bw,   2+hor, b3y, bh, 3, 2, 0)
+   keys2("S",                     fs,       6,        b3x,         bw,   1+hor, b3y, bh, 4, 2, 0)
+   keys2("W",                     fs,       6,        b3x,         bw,   hor,   b3y, bh, 3, 2, 0)
    hor += 3
-keys2("Esc", fs, 5, b3x, bw, 2, b3y, bh, 2, 2, 0)
-keys2("DEC", fs-1, decN, b3x, bw, 0, b3y, bh, 2, 0, decN)
-keys2("  N", fs-1, decN, b3x, bw, 0, b3y, bh, 2, 2, decN)
-keys2("nr", fs, nr, b1x, bw, 3, b1y, bh, 2, 1, nr)
-keys2("DEC", fs-1, decS, b3x, bw, 0, b3y, bh, 4, 0, decS)
-keys2("  S", fs-1, decS, b3x, bw, 0, b3y, bh, 4, 2, decS)
-keys2(" R1", fs, 6, b3x, bw, 0, b3y, bh, 6, 1, 0)
-keys2("1", fs, 5, b3x+fs, bw, 0, b3y, bh, 6, 1, 1)
-keys2(" R2", fs, 6, b3x, bw, 1, b3y, bh, 6, 1, 0)
-keys2("2", fs, 5, b3x+fs, bw, 1, b3y, bh, 6, 1, 0)
-keys2(" R3", fs, 6, b3x, bw, 2, b3y, bh, 6, 1, 0)
-keys2("3", fs, 5, b3x+fs, bw, 2, b3y, bh, 6, 1, 0)
-keys2(" S1", fs, 6, b3x, bw, 3, b3y, bh, 6, 1, 0)
-keys2(" S2", fs, 6, b3x, bw, 4, b3y, bh, 6, 1, 0)
-keys2(" S3", fs, 6, b3x, bw, 5, b3y, bh, 6, 1, 0)
-keys2("RELOAD cfg", fs-2, 7, b3x+bw/2, bw, 0, b3y, bh, 5, 4, 0)
-keys2(" SAVE cfg", fs-2, 7, b3x+bw/2, bw, 3, b3y, bh, 5, 4, 0)
+keys2("Esc",                      fs,       5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
+keys2("DEC",                      fs-1,     decN,     b3x,         bw,   0,     b3y, bh, 2, 0, decN)
+keys2("  N",                      fs-1,     decN,     b3x,         bw,   0,     b3y, bh, 2, 2, decN)
+keys2("nr",                       fs,       nr,       b1x,         bw,   3,     b1y, bh, 2, 1, nr)
+keys2("DEC",                      fs-1,     decS,     b3x,         bw,   0,     b3y, bh, 4, 0, decS)
+keys2("  S",                      fs-1,     decS,     b3x,         bw,   0,     b3y, bh, 4, 2, decS)
+keys2(" R1",                      fs,       6,        b3x,         bw,   0,     b3y, bh, 6, 1, 0)
+keys2("1",                        fs,       5,        b3x+fs,      bw,   0,     b3y, bh, 6, 1, 1)
+keys2(" R2",                      fs,       6,        b3x,         bw,   1,     b3y, bh, 6, 1, 0)
+keys2("2",                        fs,       5,        b3x+fs,      bw,   1,     b3y, bh, 6, 1, 0)
+keys2(" R3",                      fs,       6,        b3x,         bw,   2,     b3y, bh, 6, 1, 0)
+keys2("3",                        fs,       5,        b3x+fs,      bw,   2,     b3y, bh, 6, 1, 0)
+keys2(" S1",                      fs,       6,        b3x,         bw,   3,     b3y, bh, 6, 1, 0)
+keys2(" S2",                      fs,       6,        b3x,         bw,   4,     b3y, bh, 6, 1, 0)
+keys2(" S3",                      fs,       6,        b3x,         bw,   5,     b3y, bh, 6, 1, 0)
+keys2("RELOAD cfg",               fs-2,     7,        b3x+bw/2,    bw,   0,     b3y, bh, 5, 4, 0)
+keys2(" SAVE cfg",                fs-2,     7,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 4, 0)
 if Night:
-   keys2("D", fs-2, 7, b3x+(bw/2), bw, 5, b3y, bh, 5, 4, 0)
+   keys2("D",                     fs-2,     7,        b3x+bw/2,    bw,   5,     b3y, bh, 5, 4, 0)
 else:
-   keys2("N", fs-2, 7, b3x+(bw/2), bw, 5, b3y, bh, 5, 4, 0)
+   keys2("N",                     fs-2,     7,        b3x+bw/2,    bw,   5,     b3y, bh, 5, 4, 0)
 
-keys2("TELESCOPE", fs, 1, b3x+bw/2, bw, 0, b3y, bh, 5, 0, 0)
-keys2(" WINDOW", fs, 1, b3x+bw/2, bw, 3, b3y, bh, 5, 0, 0)
-keys2("Stop", fs, 7, b3x, bw, 2, b3y, bh, 4, 1, 0)
-keys2("cen", fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 0)
-keys2(" tre", fs, 7, b3x, bw, 1, b3y, bh, 3, 2, 0)
-keys2("cen", fs, 7, b3x, bw, 4, b3y, bh, 3, 0, 0)
-keys2(" tre", fs, 7, b3x, bw, 4, b3y, bh, 3, 2, 0)
-keys2("con", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 0, 0)
-keys2("cap", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 2, 0)
+keys2("TELESCOPE",                fs,       1,        b3x+bw/2,    bw,   0,     b3y, bh, 5, 0, 0)
+keys2(" WINDOW",                  fs,       1,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 0, 0)
+keys2("Stop",                     fs,       7,        b3x,         bw,   2,     b3y, bh, 4, 1, 0)
+keys2("cen",                      fs,       7,        b3x,         bw,   1,     b3y, bh, 3, 0, 0)
+keys2(" tre",                     fs,       7,        b3x,         bw,   1,     b3y, bh, 3, 2, 0)
+keys2("cen",                      fs,       7,        b3x,         bw,   4,     b3y, bh, 3, 0, 0)
+keys2(" tre",                     fs,       7,        b3x,         bw,   4,     b3y, bh, 3, 2, 0)
+keys2("con",                      fs,       con_cap,  b2x,         bw,   5,     b2y, bh, 6, 0, 0)
+keys2("cap",                      fs,       con_cap,  b2x,         bw,   5,     b2y, bh, 6, 2, 0)
 
 if use_Pi_Cam:
-   keys2("i", fs-2, 7, b3x+(bw*1.25), bw, 2, b3y, bh, 5, 4, 0)
-   keys2("pic", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 0)
-   keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 0)
-keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 0)
-keys2("s", fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
-keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 0)
+   keys2("i",                     fs-2,     7,        b3x+bw*1.25, bw,   2,     b3y, bh, 5, 4, 0)
+   keys2("pic",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
+   keys2("cap",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
+keys2("scr",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+keys2("s",                        fs,       5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+keys2("cap",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
 if photoon:
-    keys2("PHOTO", fs, photo, b2x, bw, 4, b2y, bh, 2, 0, 0)
-    keys2("O", fs, 5, b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 0)
-    keys2("P-Time", fs, 6, b2x, bw, 4, b2y, bh, 3, 0, 0)
-    keys2(" -", fs, 6, b2x, bw, 4, b2y, bh, 3, 4, 0)
-    keys2("+", fs, 6, b2x+bw-fs, bw, 5, b2y, bh, 3, 4, 0)
-    keys2(str(ptime), fs, 3, b2x, bw, 5, b2y, bh, 3, 3, 0)
-    keys2("P-Count", fs, 6, b2x, bw, 4, b2y, bh, 4, 0, 0)
-    keys2(" -", fs, 6, b2x, bw, 4, b2y, bh, 4, 4, 0)
-    keys2("+", fs, 6, b2x+bw-fs, bw, 5, b2y, bh, 4, 4, 0)
-    keys2(str(pcount), fs, 3, b2x, bw, 5, b2y, bh, 4, 3, 0)
+    keys2("PHOTO",                fs,       photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
+    keys2("O",                    fs,       5,        b2x+fs*1.5,  bw,   4,     b2y, bh, 2, 0, 0)
+    keys2("P-Time",               fs,       6,        b2x,         bw,   4,     b2y, bh, 3, 0, 0)
+    keys2(" -",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 3, 4, 0)
+    keys2("+",                    fs,       6,        b2x+bw-fs,   bw,   5,     b2y, bh, 3, 4, 0)
+    keys2(str(ptime),             fs,       3,        b2x,         bw,   5,     b2y, bh, 3, 3, 0)
+    keys2("P-Count",              fs,       6,        b2x,         bw,   4,     b2y, bh, 4, 0, 0)
+    keys2(" -",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 4, 4, 0)
+    keys2("+",                    fs,       6,        b2x+bw-fs,   bw,   5,     b2y, bh, 4, 4, 0)
+    keys2(str(pcount),            fs,       3,        b2x,         bw,   5,     b2y, bh, 4, 3, 0)
 
 
 button2(b2x, 5, b2y, 6, bw, 1, bh, cls)
-keys2("CLS", fs, cls, b2x, bw, 4, b2y, bh, 6, 1, 0)
-keys2("C", fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 0)
+keys2("CLS",                      fs,       cls,      b2x,         bw,   4,     b2y, bh, 6, 1, 0)
+keys2("C",                        fs,       5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
 use_config = 0
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 15,(bh * 10)+(bh/3)+10),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 5,(bh * 10)+(bh/3)+5),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 10 ,(bh * 10)+(bh/3)),2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
 
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 5,(bh * 10)+(bh/3)+10),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 15,(bh * 10)+(bh/3)+5),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 10,(bh * 10)+(bh/3)+0),2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
 
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 5,(bh * 12) +(bh/3)),(width + (bw*5) + (bw/4) + 15,(bh * 12)+(bh/3)+10),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 12) +(bh/3)+10),(width + (bw*5) + (bw/4) + 15,(bh * 12)+(bh/3)+5),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 12) +(bh/3)+10),(width + (bw*5) + (bw/4) + 10,(bh * 12)+(bh/3)+10),2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
 
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 15,(bh * 12) +(bh/3)),(width + (bw*3 ) + (bw/4) + 5,(bh * 12)+(bh/3)+10),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 12) +(bh/3)+10),(width + (bw*3 ) + (bw/4) + 5,(bh * 12)+(bh/3)+5),2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 12) +(bh/3)+10),(width + (bw*3 ) + (bw/4) + 10,(bh * 12)+(bh/3)+10),2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
+pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10) ,2)
 
 pygame.display.update()
 
@@ -946,7 +922,7 @@ def demo(width, height, posx, posy, blankline, wd, hd):
    bd = height
    imu = ""
    height = 1
-   line =""
+   line = ""
    while height < posy:
       line += blankline
       height += 1
@@ -956,24 +932,23 @@ def demo(width, height, posx, posy, blankline, wd, hd):
       byte = blankline[0:((posx-1)*3)]
       imu += byte
       width = posx
-      while width < posx + wd :
+      while width < posx + wd:
          cd = width - posx
          if cd <= wd/2:
              fd = cd + 2
-         if cd > wd/2 :
+         else:
              fd = wd - cd + 2
          dd = height - posy
          if dd<= hd/2:
              l = dd + 2
-         if dd > hd/2 :
+         else:
              l = hd - dd + 2
          fe = fd * l
-         if fe > 255:
-            fe = 255
-         byte = chr(fe)+chr(fe)+chr(fe)
+         fe = min(fe, 255)
+         byte = chr(fe) + chr(fe) + chr(fe)
          imu += byte
          width += 1
-      byte = blankline[0:((ad+1)-width)*3]
+      byte = blankline[0:(ad+1-width)*3]
       imu += byte
       height += 1
    height = posy + hd
@@ -993,7 +968,7 @@ def commands(nscale, escale, sscale, wscale, ewi, nsi, acorrect, bcorrect, minco
       dirn = 's'
       nsscale = int(sscale)
       lcorrect = int((acorrect * nsscale)/100)
-   if lcorrect <=0:
+   if lcorrect <= 0:
       dirn = 's'
       nsscale = int(sscale)
       lcorrect = int((acorrect * nsscale)/100)
@@ -1001,19 +976,18 @@ def commands(nscale, escale, sscale, wscale, ewi, nsi, acorrect, bcorrect, minco
          dirn = 'n'
          nsscale = int(nscale)
          lcorrect = int((acorrect * nsscale)/100)
-      lcorrect = 0-lcorrect
-   if lcorrect > 9999:
-      lcorrect = 9999
-   if lcorrect < mincor :
+      lcorrect = -lcorrect
+   lcorrect = min(lcorrect, 9999)
+   if lcorrect < mincor:
       lcorrect = 0
    Vcorrect = lcorrect
    Vcorlen = len(str(Vcorrect))
    ime = 1
-   Vcorr =""
+   Vcorr = ""
    while ime <= (4-Vcorlen):
       Vcorr += '0'
       ime += 1
-   Vcorrt =':Mg'+dirn+Vcorr+str(Vcorrect)
+   Vcorrt = ':Mg' + dirn + Vcorr + str(Vcorrect)
 
    dirn = 'e'
    ewscale = int(wscale)
@@ -1022,7 +996,7 @@ def commands(nscale, escale, sscale, wscale, ewi, nsi, acorrect, bcorrect, minco
       dirn = 'w'
       ewscale = int(escale)
       ccorrect = int((bcorrect * ewscale)/100)
-   if ccorrect <=0:
+   if ccorrect <= 0:
       dirn = 'w'
       ewscale = int(escale)
       ccorrect = int((bcorrect * ewscale)/100)
@@ -1030,166 +1004,115 @@ def commands(nscale, escale, sscale, wscale, ewi, nsi, acorrect, bcorrect, minco
          dirn = 'e'
          ewscale = int(wscale)
          ccorrect = int((bcorrect * ewscale)/100)
-      ccorrect = 0-ccorrect
-   if ccorrect > 9999:
-      ccorrect = 9999
-   if ccorrect < mincor :
+      ccorrect = -ccorrect
+   ccorrect = min(ccorrect, 9999)
+   if ccorrect < mincor:
       ccorrect = 0
    Hcorrect = ccorrect
    Hcorlen = len(str(Hcorrect))
    ime = 1
-   Hcorr=""
+   Hcorr= ""
    while ime <= (4-Hcorlen):
       Hcorr += '0'
       ime += 1
-   Hcorrt =':Mg'+dirn+Hcorr+str(Hcorrect)
+   Hcorrt = ':Mg' + dirn + Hcorr + str(Hcorrect)
    return Vcorrt, Hcorrt, ewi, nsi
 
 def lx200(Vcorrt, Hcorrt, decN, decS):
-   if serial_connected ==1:
+   if serial_connected:
       ser.write(bytes(Vcorrt.encode('ascii')))
       time.sleep(0.5)
       ser.write(bytes(Hcorrt.encode('ascii')))
    return
 
-oldnscale = nscale
-oldescale = escale
-oldsscale = sscale
-oldwscale = wscale
-oldcrop  = crop
-oldauto_g = auto_g
-oldInterval = Interval
-oldlog = log
-oldrgbw = rgbw
-oldthreshold = threshold
-oldgraph = graph
-oldthres = thres
-oldauto_i = auto_i
-oldplot = plot
-oldauto_win = auto_win
-oldauto_t = auto_t
-oldzoom = zoom
-oldrpibr = rpibr
-oldrpico = rpico
-oldrpiss = rpiss
-oldrpiexno = rpiexno
-oldrpiISO = rpiISO
-oldrpiev = rpiev
-oldcls = cls
-oldave = ave
-oldcon_cap = con_cap
-oldphoto = photo
-oldptime = ptime
-oldpcount = pcount
-oldrpired = rpired
-oldrpiblue = rpiblue
-oldbinn = binn
-oldnr = nr
-olddecN = decN
-olddecS = decS
-oldnsi = nsi
-oldewi = ewi
+oldnscale, oldescale, oldsscale, oldwscale, oldcrop, oldauto_g, oldInterval, oldlog, oldrgbw, oldthreshold, oldgraph, oldthres, oldauto_i, oldplot, oldauto_win, oldauto_t, oldzoom, oldrpibr, oldrpico, oldrpiss, oldrpiexno, oldrpiISO, oldrpiev, oldcls, oldave, oldcon_cap, oldphoto, oldptime, oldpcount, oldrpired, oldrpiblue, oldbinn, oldnr, olddecN, olddecS, oldnsi, oldewi = nscale, escale, sscale, wscale, crop, auto_g, Interval, log, rgbw, threshold, graph, thres, auto_i, plot, auto_win, auto_t, zoom, rpibr, rpico, rpiss, rpiexno, rpiISO, rpiev, cls, ave, con_cap, photo, ptime, pcount, rpired, rpiblue, binn, nr, decN, decS, nsi, ewi
 
-
-arv = {}
-arh = {}
-arp = {}
-count = 0
-crop  = crop
-posx = width/2
+arv =        {}
+arh =        {}
+arp =        {}
+count =       0
+crop  =    crop
+posx =  width/2
 posy = height/2
-posxi = -1
-posxj = 1
-posyi = -1
-posyj = 1
-poss = 3
-cycle = 0
-wd = 20
-hd = 20
-pct = 1
-pcu = 1
-
+posxi =      -1
+posxj =       1
+posyi =      -1
+posyj =       1
+poss =        3
+cycle =       0
+wd =         20
+hd =         20
+pct =         1
+pcu =         1
 
 wz = 1
-blankline = chr(3)+ chr(3)+ chr(3)
+blankline =     chr(  3) + chr(  3) + chr(  3)
 while wz < width:
-   blankline += chr(3)+ chr(3)+ chr(3)
+   blankline += chr(  3) + chr(  3) + chr(  3)
    wz += 1
 wz = 1
-redline = chr(128)+ chr(0)+ chr(0)
+redline =       chr(128) + chr(  0) + chr(  0)
+bluline =       chr(  0) + chr(  0) + chr(128)
+greline =       chr(  0) + chr( 64) + chr(  0)
+gryline =       chr(128) + chr(128) + chr(128)
+dgryline =      chr(128) + chr( 70) + chr( 70)
 while wz < 50:
-   redline += chr(128)+ chr(0)+ chr(0)
+   redline +=   chr(128) + chr(  0) + chr(  0)
+   bluline +=   chr(  0) + chr(  0) + chr(128)
+   greline +=   chr(  0) + chr( 64) + chr(  0)
+   gryline +=   chr(128) + chr(128) + chr(128)
+   dgryline +=  chr(128) + chr( 70) + chr( 70)
    wz += 1
-wz=1
-bluline = chr(0)+ chr(0)+ chr(128)
-while wz < 50:
-   bluline += chr(0)+ chr(0)+ chr(128)
-   wz += 1
-wz=1
-greline = chr(0)+ chr(64)+ chr(0)
-while wz < 50:
-   greline += chr(0)+ chr(64)+ chr(0)
-   wz += 1
-wz=1
-gryline = chr(128)+ chr(128)+ chr(128)
-while wz < 50:
-   gryline += chr(128)+ chr(128)+ chr(128)
-   wz += 1
-wz=1
-dgryline = chr(128)+ chr(70)+ chr(70)
-while wz < 50:
-   dgryline += chr(128)+ chr(70)+ chr(70)
-   wz += 1
-if serial_connected ==1:
+if serial_connected:
    ser = serial.Serial('/dev/ttyACM0', 9600)
 start = time.time()
-start2 = start
-totvcor = 0
-tothcor = 0
-avevcor = 0
-avehcor = 0
-xcount = 0
-xycle = 0
-xvcor = {}
-xhcor = {}
-count = 1
-ycount = 0
-xvcor = [0] * 11
-xhcor = [0] * 11
-filno = 1
+start2 =   start
+totvcor =      0
+tothcor =      0
+avevcor =      0
+avehcor =      0
+xcount =       0
+xycle =        0
+xvcor =       {}
+xhcor =       {}
+count =        1
+ycount =       0
+xvcor =   [0]*11
+xhcor =   [0]*11
+filno =        1
 
 while True:
    xycle += 1
 
 # demo(set camera_connected = 0 to use)
    if not camera_connected:
-      posxa =  random.randrange(posxi, posxj)
-      posya =  random.randrange(posyi, posyj)
+      posxa = random.randrange(posxi, posxj)
+      posya = random.randrange(posyi, posyj)
       posx = int(posx + posxa)
       if posx > (width-50):
           posxi = -2
-          posxj = 0
+          posxj =  0
       if posx < 50:
-          posxi = 0
-          posxj = 2
+          posxi =  0
+          posxj =  2
       posy = int(posy + posya)
       if posy > (height-50):
           posyi = -2
-          posyj = 0
+          posyj =  0
       if posy < 50:
-          posyj = 2
-          posyi = 0
-      if(time.time() - start) >= Interval - 0.2 and not serial_connected:
+          posyj =  2
+          posyi =  0
+      if (time.time() - start) >= Interval - 0.2 and not serial_connected:
          if auto_g and (bcorrect/100 * escale) > mincor:
             posx = int(posx - bcorrect/100)
             start = time.time()
          if auto_g and (acorrect/100 * nscale) > mincor:
             posy = int(posy - acorrect/100)
             start = time.time()
-         if auto_g and 0-(bcorrect/100 * escale) > mincor:
+         if auto_g and -(bcorrect/100 * escale) > mincor:
             posx = int(posx - bcorrect/100)
             start = time.time()
-         if auto_g and 0-(acorrect/100 * nscale) > mincor:
+         if auto_g and -(acorrect/100 * nscale) > mincor:
             posy = int(posy - acorrect/100)
             start = time.time()
       imu = demo(width, height, posx, posy, blankline, wd, hd)
@@ -1201,14 +1124,14 @@ while True:
       if not zoom:
          offset5 = offset3
          offset6 = offset4
-         if offset5 > 0 and offset5 >= w/2-width/2:
-            offset5 = w/2-width/2
-         if offset5 < 0 and offset5 <= 0-(w/2-width/2):
-            offset5 = 0-(w/2-width/2)
-         if offset6 > 0 and offset6 >= h/2-height/2:
-            offset6 = h/2-height/2
-         if offset6 < 0 and offset6 <= 0-(h/2-height/2):
-            offset6 = 0-(h/2-height/2)
+         if offset5 > 0 and offset5 >= w/2 - width/2:
+            offset5 = w/2 - width/2
+         if offset5 < 0 and offset5 <= width/2 - w/2:
+            offset5 = width/2 - w/2
+         if offset6 > 0 and offset6 >= h/2 - height/2:
+            offset6 = h/2 - height/2
+         if offset6 < 0 and offset6 <= height/2 - h/2:
+            offset6 = height/2 - h/2
       if zoom > 0 and zoom != Image_window:
          strim1 = pygame.image.tostring(image, "RGB", 1)
          x = (h/2-height/2) - offset6
@@ -1231,9 +1154,9 @@ while True:
             timestamp = now.strftime("%y%m%d%H%M%S")
             fname = '/home/pi/pic' + str(timestamp) + "_" + str(filno) + '.jpg'
             pygame.image.save(image, fname)
-
       except OSError:
          pass
+
       if not fc:
          # crop webcam picture to suit Display Width
          cropped = pygame.Surface((Disp_Width, height))
@@ -1241,34 +1164,34 @@ while True:
          catSurfaceObj = cropped
          windowSurfaceObj.blit(catSurfaceObj, (0, 0))
       strim = pygame.image.tostring(image, "RGB", 1)
-      t3=time.time()
+      t3 = time.time()
       if vtime < t3:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t3:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
       if photo:
          ptime3 = int(ptime2 - t3) + 1
          if ptime3 != ptime4:
-            keys2(str(ptime3), fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
+            keys2(str(ptime3),               fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
             ptime4 = ptime3
       if ptime2 < t3 and photo and camera:
          pcount2 -= 1
-         keys2(str((pcount + 1) - pcount2), fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+         keys2(str((pcount + 1) - pcount2),  fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
          if not pcount2:
             photo = 0
             camera = 0
-            keys2("PHOTO", fs, photo, b2x, bw, 4, b2y, bh, 2, 0, 1)
-            keys2("O", fs, 5, b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-            keys2("", fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
-            keys2("", fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
+            keys2("PHOTO",                   fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
+            keys2("O",                       fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
+            keys2("",                        fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2("",                        fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.LOW)
          else:
@@ -1278,30 +1201,30 @@ while True:
       if ptime2 < t3 and photo and not camera:
          camera = 1
          ptime2 = time.time() + ptime
-         keys2(str((pcount + 1) - pcount2), fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
-         if use_RPiGPIO  or photoon:
+         keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+         if use_RPiGPIO or photoon:
             GPIO.output(C_OP, GPIO.HIGH)
 
    # load Pi Camera picture
    if camera_connected and use_Pi_Cam:
       rpistopNS = 0
       rpistopEW = 0
-      mkey = 0
-      while os.path.exists('/run/shm/test.jpg') == False and not mkey:
-         t2=time.time()
+      mkey =      0
+      while not os.path.exists('/run/shm/test.jpg') and not mkey:
+         t2 = time.time()
          if vtime < t2 and not rpistopNS:
             if use_RPiGPIO or use_Seeed:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-            keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+            keys2("N",                       fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+            keys2("S",                       fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
             rpistopNS = 1
          if htime < t2 and not rpistopEW:
             if use_RPiGPIO or use_Seeed:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-            keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+            keys2("W",                       fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+            keys2("E",                       fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
             rpistopEW = 1
 
          for event in pygame.event.get():
@@ -1321,37 +1244,37 @@ while True:
          image = pygame.image.load(imagefile)
       windowSurfaceObj.blit(image, (0, 0))
 
-      t3=time.time()
+      t3 = time.time()
       if vtime < t3 and not rpistopNS:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
          rpistopNS = 1
       if htime < t3 and not rpistopEW:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
          rpistopEW = 1
 
       if photo:
          ptime3 = int(ptime2 - t3) + 1
          if ptime3 != ptime4:
-            keys2(str(ptime3), fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
+            keys2(str(ptime3),               fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
             ptime4 = ptime3
          if ptime2 < t3 and camera:
             pcount2 -= 1
-            keys2(str((pcount + 1) - pcount2), fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
             if not pcount2:
                photo = 0
                camera = 0
-               keys2("PHOTO", fs, photo, b2x, bw, 4, b2y, bh, 2, 0, 1)
-               keys2("O", fs, 5, b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-               keys2("", fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
-               keys2("", fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
+               keys2("PHOTO",                fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
+               keys2("O",                    fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
+               keys2("",                     fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+               keys2("",                     fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
                if use_RPiGPIO or photoon:
                   GPIO.output(C_OP, GPIO.LOW)
             else:
@@ -1361,7 +1284,7 @@ while True:
          if ptime2 < t3 and photo and not camera:
             camera = 1
             ptime2 = time.time() + ptime
-            keys2(str((pcount + 1) - pcount2), fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.HIGH)
 
@@ -1372,11 +1295,10 @@ while True:
             now = datetime.datetime.now()
             timestamp = now.strftime("%y%m%d%H%M%S")
             fname = '/home/pi/con' + str(timestamp)+ "_" + str(filno) + '.jpg'
-            if os.path.exists('/run/shm/test.jpg') == True:
+            if os.path.exists('/run/shm/test.jpg'):
                shutil.copy('/run/shm/test.jpg', fname)
-         if os.path.exists('/run/shm/test.jpg') == True:
+         if os.path.exists('/run/shm/test.jpg'):
             os.rename('/run/shm/test.jpg', '/run/shm/oldtest.jpg')
-
       except OSError:
          pass
 
@@ -1386,55 +1308,55 @@ while True:
       catSurfaceObj = image
       windowSurfaceObj.blit(catSurfaceObj, (0, 0))
       imb = imu
-      t2=time.time()
+      t2 = time.time()
       if vtime < t2:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t2:
          if use_RPiGPIO or use_Seeed:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
 
 # crop picture
    if crop == maxwin:
       cropped = pygame.transform.scale(image, [crop, crop])
-      w_corr = Decimal(width) / Decimal(crop)
-      h_corr = Decimal(height) / Decimal(crop)
+      w_corr =  Decimal(width)/Decimal(crop)
+      h_corr = Decimal(height)/Decimal(crop)
       offset3 = 0
       offset4 = 0
    else:
       cropped = pygame.Surface((crop, crop))
-      cropped.blit(image, (0, 0), (((width/2 - crop/2)+offset3), ((height/2-crop/2) + offset4), crop, crop))
+      cropped.blit(image, (0, 0), (width/2 - crop/2 + offset3, height/2 - crop/2 + offset4, crop, crop))
    if bits < 24:
       pygame.image.save(cropped, '/run/shm/cropped.jpg')
       cropped = pygame.image.load('/run/shm/cropped.jpg')
    imb = pygame.image.tostring(cropped, "RGB", 1)
 
 # initialise arrays
-   ars = {}
-   art = {}
-   arp = {}
-   mx = []
-   arp = [0] * 260
+   ars =      {}
+   art =      {}
+   arp =      {}
+   mx =       []
+   arp = [0]*260
 
    if rgbw < 4:
-      imc = imb[rgbw-1:crop*crop*3:3]
+      imc = imb[rgbw - 1:crop*crop*3:3]
       mx = [ord(i) for i in imc]
    else:
       xcounter = 0
       while xcounter < (crop*crop*3):
-         imrc = ord(imb[xcounter:xcounter+1])
-         imgc = ord(imb[xcounter+1:xcounter+2])
-         imbc = ord(imb[xcounter+2:xcounter+3])
+         imrc = ord(imb[xcounter    :xcounter + 1])
+         imgc = ord(imb[xcounter + 1:xcounter + 2])
+         imbc = ord(imb[xcounter + 2:xcounter + 3])
          if rgbw == 4:
-            ima = (imrc + imgc + imbc )/3
+            ima = (imrc + imgc + imbc)/3
          else:
-            ima = max(imrc,imgc,imbc)
+            ima = max(imrc, imgc, imbc)
          mx.append(ima)
          xcounter += 3
 
@@ -1444,13 +1366,13 @@ while True:
       while cy < crop-1:
          cx = 0
          while cx < crop-1:
-            tot = (sum(mx[(cy*crop)+cx:(cy*crop)+cx+2]) + sum(mx[crop +(cy*crop)+cx:(cy*crop)+cx+2+crop]))
+            tot = sum(mx[cy*crop + cx:cy*crop + cx + 2]) + sum(mx[crop + cy*crop + cx:cy*crop + cx + 2 + crop])
             if tot > 255:
                tot = 255
-            mx[(cy*crop)+cx] = tot
-            mx[(cy*crop)+cx+1] = tot
-            mx[(cy*crop)+cx+crop] = tot
-            mx[(cy*crop)+cx+crop+1] = tot
+            mx[cy*crop + cx] =            tot
+            mx[cy*crop + cx + 1] =        tot
+            mx[cy*crop + cx + crop] =     tot
+            mx[cy*crop + cx + crop + 1] = tot
             cx += 2
          cy += 2
 
@@ -1463,19 +1385,19 @@ while True:
    ct = 0
    ste = int(crop/50) + 1
    while ct < crop * crop:
-      arp[mx[ct]+1] += 1
+      arp[mx[ct] + 1] += 1
       ct += ste
 
-   count = 1
+   count =  1
    mintot = 0
    maxtot = 0
-   totm = 0
+   totm =   0
    while count <= 255:
       val = arp[count]
       totm += val
-      if totm < (crop * crop)/ste * 0.02:
+      if totm < (crop*crop)/ste*0.02:
          mintot = count
-      if totm < (crop * crop)/ste - 11 :
+      if totm < (crop*crop)/ste - 11:
          maxtot = count
       count += 1
    if not auto_t:
@@ -1494,21 +1416,21 @@ while True:
    mz = numpy.array(mx)
    if pcont < mintot:
       pcont = maxtot + 5
-   mz[mz < pcont] = 0
+   mz[mz <  pcont] = 0
    mz[mz >= pcont] = 1
    ttot = numpy.sum(mz)
    if ttot < 1:
       ttot = 1
 
 # display Threshold if enabled
-   pic =""
+   pic = ""
    counter = 0
 
    if thres:
-      while counter < crop*crop :
+      while counter < crop*crop:
          ima = mz[counter]
          if ima < 1:
-            pic += imb[counter*3:(counter*3)+3]
+            pic += imb[counter*3:counter*3 + 3]
          else:
             if rgbw == 1:
                pic += red
@@ -1522,7 +1444,7 @@ while True:
       imagep = pygame.image.fromstring(pic, (crop, crop), "RGB", 1)
       if crop != maxwin:
          catSurfaceObj = imagep
-         windowSurfaceObj.blit(catSurfaceObj, (width/2-crop/2+offset3, height/2-crop/2+offset4))
+         windowSurfaceObj.blit(catSurfaceObj, (width/2 - crop/2 + offset3, height/2 - crop/2 + offset4))
       else:
          imagep = pygame.transform.scale(imagep, [width, height])
          catSurfaceObj = imagep
@@ -1534,7 +1456,7 @@ while True:
       lcounter = 0
       while lcounter < crop:
          loc = lcounter * crop
-         ars[lcounter]= sum(mz[loc:loc+crop])
+         ars[lcounter]= sum(mz[loc:loc + crop])
          art[lcounter]= sum(mz[lcounter:crop*crop:crop])
          lcounter += 1
 
@@ -1556,16 +1478,10 @@ while True:
          bcorrect += 1
       bcorrect -= ((Decimal(ctot)-(Decimal(ttot)/Decimal(2)))/Decimal(col))
 
-      if acorrect < crop/2:
-         acorrect = 100 * (0-(crop/2 - acorrect))
-      else:
-         acorrect = 100 * (acorrect - crop/2)
-      if bcorrect < crop/2:
-         bcorrect = 100 * (0-(crop/2 - bcorrect))
-      else:
-         bcorrect = 100 * (bcorrect - crop/2)
+      acorrect = 100 * (acorrect - crop/2)
+      bcorrect = 100 * (bcorrect - crop/2)
 
-   if not pcont or ttot == 1 :
+   if not pcont or ttot == 1:
       acorrect = 1
       bcorrect = 1
 
@@ -1585,7 +1501,7 @@ while True:
             auto_win = 0
             crop = ocrop
             change = 1
-            keys2("cen", fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 1)
+            keys2("cen",  fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 1)
             keys2(" tre", fs, 7, b3x, bw, 1, b3y, bh, 3, 2, 1)
 
       else:
@@ -1593,32 +1509,29 @@ while True:
          auto_win = 0
          crop = ocrop
          change = 1
-         keys2("cen", fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 1)
-         keys2(" tre", fs, 7, b3x, bw, 1, b3y, bh, 3, 2, 1)
+         keys2("cen",     fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 1)
+         keys2(" tre",    fs, 7, b3x, bw, 1, b3y, bh, 3, 2, 1)
 
 # set auto window
    if auto_win:
       if ttot > 1 and ars[3]< 2 and ars[crop-2] < 2 and art[3] < 2 and art[crop-2] < 2:
          crop -= 1
-         if crop < minwin :
-            crop = minwin
-      if ttot > 1 and(ars[2] > 1 or ars[crop-2] > 1 or art[2] > 1 or art[crop-2] > 1):
+         crop = max(crop, minwin)
+      if ttot > 1 and (ars[2] > 1 or ars[crop-2] > 1 or art[2] > 1 or art[crop-2] > 1):
          crop += 1
-         if crop > maxwin -1 :
-            crop = maxwin -1
-         if(width/2 + crop/2 + offset3 > width) or(width/2 + offset3 - crop/2 ) <=1 or(height/2 + offset4 - crop/2 ) >= height or(height/2 - offset4 - crop/2 ) <=1:
+         crop = min(crop, maxwin - 1)
+         if (width/2 + crop/2 + offset3 > width) or (width/2 + offset3 - crop/2) <= 1 or (height/2 + offset4 - crop/2) >= height or (height/2 - offset4 - crop/2) <= 1:
             crop -= 2
       if ttot == 1 and auto_wlos:
          crop += 1
-         if crop > maxwin -1:
-            crop = maxwin -1
-         if(width/2 + offset3 + crop/2 ) >= width:
+         crop = min(crop, maxwin - 1)
+         if (width/2 + offset3 + crop/2) >= width:
             crop -= 1
-         elif(width/2 + offset3 - crop/2 ) <=1:
+         elif (width/2 + offset3 - crop/2) <= 1:
             crop -= 1
-         if(height/2 + offset4 + crop/2 ) >= height:
+         if (height/2 + offset4 + crop/2) >= height:
             crop -= 1
-         elif(height/2 + offset4 - crop/2 ) <=1:
+         elif (height/2 + offset4 - crop/2) <= 1:
             crop -= 1
       keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 1)
 
@@ -1626,13 +1539,13 @@ while True:
       acorrect = Decimal(acorrect) * Decimal(h_corr)
       bcorrect = Decimal(bcorrect) * Decimal(w_corr)
 
-   if(auto_g and ttot < 5  and cls and ymax == avemax):
+   if auto_g and ttot < 5 and cls and ymax == avemax:
       acorrect = avevcor
       bcorrect = avehcor
       auto_win = 1
       change = 1
 
-   if auto_g and ttot < 5  and cls:
+   if auto_g and ttot < 5 and cls:
       keys2("CLS", fs, 2, b2x, bw, 4, b2y, bh, 6, 1, 1)
       keys2("C", fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 1)
    elif auto_g and ttot > 4 and cls:
@@ -1645,7 +1558,7 @@ while True:
    if xycle >= Interval:
       xycle = 0
 
-      if auto_g :
+      if auto_g:
          xcount += 1
          ycount += 1
          zcount = ycount
@@ -1659,9 +1572,9 @@ while True:
          elif cls and zcount < avemax:
             keys2("CLS", fs, 2, b2x, bw, 4, b2y, bh, 6, 1, 1)
             keys2("C", fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 1)
-         if ycount > avemax :
+         if ycount > avemax:
             ycount = 1
-         if ttot > 1 :
+         if ttot > 1:
             xvcor[ycount] = acorrect
             xhcor[ycount] = bcorrect
             totvcor = 0
@@ -1719,7 +1632,7 @@ while True:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
             keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
-         if serial_connected ==1:
+         if serial_connected:
             if decN and vdir == "n":
                ser.write(bytes(Vcorrt.encode('ascii')))
             if decS == 1 and vdir == "s":
@@ -1744,12 +1657,12 @@ while True:
          if acor >= bcor and acor > 0:
             Interval = acor/300 + 2
             rpiexa = rpimodesa[rpiexno]
-            if use_Pi_Cam and(rpiexa == " off"  or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2'):
+            if use_Pi_Cam and (rpiexa == " off" or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2'):
                Interval += (rpiss/1000000)*4
          if bcor > acor and bcor > 0:
             Interval = bcor/300 + 2
             rpiexa = rpimodesa[rpiexno]
-            if use_Pi_Cam and(rpiexa == " off"   or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2'):
+            if use_Pi_Cam and (rpiexa == " off" or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2'):
                Interval += (rpiss/1000000)*4
          if not use_Pi_Cam and camera_connected:
             Interval *= 3
@@ -1763,8 +1676,8 @@ while True:
          pox = width - 110
       else:
          pox = width + 10
-      poy = 20
-      pov = 50
+      poy =  20
+      pov =  50
       pol = 256
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
       limg += 1
@@ -1773,39 +1686,35 @@ while True:
       if acorrect >= 0:
          val2 = pov/2 + int(math.sqrt(acorrect))/4
       else:
-         val2 = pov/2 - int(math.sqrt(0-acorrect))/4
+         val2 = pov/2 - int(math.sqrt(-acorrect))/4
       if bcorrect >= 0:
          val3 = pov/2 + int(math.sqrt(bcorrect))/4
       else:
-         val3 = pov/2 - int(math.sqrt(0-bcorrect))/4
+         val3 = pov/2 - int(math.sqrt(-bcorrect))/4
       if val2 < val3:
-         rimg = blankline[0:(val2)*3]
+         rimg = blankline[0:val2*3]
          if not Night:
             rimg += red
-         else:
-            rimg += dred
-         rimg += blankline[(val2)*3:(val3)*3]
-         if not Night:
             rimg += grn
          else:
+            rimg += dred
             rimg += dgrn
+         rimg += blankline[val2*3:val3*3]
          rimg += blankline
          pimg += rimg[0:pov*3]
       else:
-         rimg = blankline[0:(val3)*3]
+         rimg = blankline[0:val3*3]
          if not Night:
             rimg += grn
-         else:
-            rimg += dgrn
-         rimg += blankline[(val3)*3:(val2)*3]
-         if not Night:
             rimg += red
          else:
+            rimg += dgrn
             rimg += dred
+         rimg += blankline[val3*3:val2*3]
          rimg += blankline
          pimg += rimg[0:pov*3]
       if limg > pol:
-         yt = (limg-pol)*pov*3
+         yt = (limg - pol)*pov*3
          yu = limg*pov*3
          pimg = pimg[yt:yu]
          limg = pol
@@ -1814,10 +1723,10 @@ while True:
          imageg.set_alpha(127)
       windowSurfaceObj.blit(imageg, (pox, poy))
 
-   w2 = width/2 + offset3
+   w2 =  width/2 + offset3
    h2 = height/2 + offset4
-   c1 = crop /2
-   c2 = crop /2
+   c1 = crop/2
+   c2 = crop/2
 
 #display graph if enabled
    if graph > 0:
@@ -1833,24 +1742,22 @@ while True:
       while count < 256:
          if count != maxtot and count != mintot and count != pcont:
             val = arp[count+1]
-            val2 = int((30 * math.log10(val + 10))-29)
-            if val2 > 49:
-               val2 = 49
-            elif val2 < 1:
-               val2 = 1
+            val2 = int(30*math.log10(val + 10) - 29)
+            val2 = min(val2, 49)
+            val2 = max(val2, 1)
             if val2 <= 1:
                byte = blankline[0:pov*3]
             if val2 > 1:
                if rgbw == 1 and not Night:
-                  byte = redline[0:(val2)*3]
+                  byte = redline[0:val2*3]
                elif rgbw == 2 and not Night:
-                  byte = greline[0:(val2)*3]
+                  byte = greline[0:val2*3]
                elif rgbw == 3 and not Night:
-                  byte = bluline[0:(val2)*3]
+                  byte = bluline[0:val2*3]
                elif rgbw > 3 and not Night:
-                  byte = gryline[0:(val2)*3]
+                  byte = gryline[0:val2*3]
                elif Night:
-                  byte = dgryline[0:(val2)*3]
+                  byte = dgryline[0:val2*3]
                byte += blankline[0:(pov-val2)*3]
             img += byte
          if count == maxtot or count == mintot:
@@ -1858,50 +1765,50 @@ while True:
             while mcount < pov:
                img += " zz"
                mcount += 1
-         if count == pcont :
+         if count == pcont:
             mcount = 0
             while mcount < pov:
                img += "zz "
                mcount += 1
          count += 1
       if len(img) > (pov*256*3):
-         img = img[0:(pov*256*3)]
+         img = img[0:pov*256*3]
       imageg = pygame.image.fromstring(img, (pov, 256), "RGB", 1)
       if graph == 1:
          imageg.set_alpha(127)
       windowSurfaceObj.blit(imageg, (pox, poy))
 
    if not auto_g:
-      pygame.draw.line(windowSurfaceObj, purpleColor, (w2+bcorrect/100-5, h2-acorrect/100-5), (w2+bcorrect/100+5, h2-acorrect/100+5))
-      pygame.draw.line(windowSurfaceObj, purpleColor, (w2+bcorrect/100+5, h2-acorrect/100-5), (w2+bcorrect/100-5, h2-acorrect/100+5))
+      pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+      pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
    else:
       if ttot > 1:
-         pygame.draw.line(windowSurfaceObj, greenColor, (w2 +bcorrect/100-5, h2-acorrect/100-5), (w2+bcorrect/100+5, h2-acorrect/100+5))
-         pygame.draw.line(windowSurfaceObj, greenColor, (w2 +bcorrect/100+5, h2-acorrect/100-5), (w2+bcorrect/100-5, h2-acorrect/100+5))
+         pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+         pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
       else:
-         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 +bcorrect/100-5, h2-acorrect/100-5), (w2+bcorrect/100+5, h2-acorrect/100+5))
-         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 +bcorrect/100+5, h2-acorrect/100-5), (w2+bcorrect/100-5, h2-acorrect/100+5))
+         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
 
    if not fc or use_Pi_Cam or not camera_connected or thres:
       if maxwin != crop:
-         pygame.draw.rect(windowSurfaceObj, bredColor, Rect(w2-c1, h2-c2, crop, crop), 1)
-      pygame.draw.line(windowSurfaceObj, bredColor, (w2-4, h2), (w2+4, h2))
-      pygame.draw.line(windowSurfaceObj, bredColor, (w2, h2-4), (w2, h2+4))
+         pygame.draw.rect(windowSurfaceObj, bredColor, Rect(w2 - c1, h2 - c2, crop, crop), 1)
+      pygame.draw.line(windowSurfaceObj,    bredColor, (w2 - 4, h2),     (w2 + 4, h2))
+      pygame.draw.line(windowSurfaceObj,    bredColor, (w2,     h2 - 4), (w2,     h2 + 4))
       if not auto_g:
-         keys2(Vcorrt, 16, 9, 0, 0, 0, 0, 0, 0, 0, 0)
-         keys2(Hcorrt, 16, 9, width-80, 0, 0, 0, 0, 0, 0, 0)
+         keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+         keys2(Hcorrt,    16, 9, width - 80, 0, 0, 0, 0, 0, 0, 0)
       else:
          if ttot > 1:
-            keys2(Vcorrt, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 1, width-80, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Vcorrt, 16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Hcorrt, 16, 1, width - 80, 0, 0, 0, 0, 0, 0, 0)
          else:
-            keys2(Vcorrt, 16, 2, 0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 2, width-80, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Vcorrt, 16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Hcorrt, 16, 2, width - 80, 0, 0, 0, 0, 0, 0, 0)
 
    if Display == 1:
       pygame.display.update(0, 0, width + 150, height)
    else:
-      pygame.display.update(0, 0, width, height)
+      pygame.display.update(0, 0, width,       height)
 
 # read mouse or keyboard
 
@@ -1914,14 +1821,14 @@ while True:
 
        elif event.type == MOUSEBUTTONUP or event.type == KEYDOWN:
           start = time.time()
-          xcount = 0
-          ycount = 0
-          ymax = 0
-          totvcor = 0
-          tothcor = 0
-          count = 1
-          xvcor = [0] * 11
-          xhcor = [0] * 11
+          xcount =     0
+          ycount =     0
+          ymax =       0
+          totvcor =    0
+          tothcor =    0
+          count =      1
+          xvcor = [0]*11
+          xhcor = [0]*11
           keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
           keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
           if use_RPiGPIO or use_Seeed:
@@ -1933,7 +1840,7 @@ while True:
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
           restart = 0
-          z = 0
+          z =  0
           kz = 0
           if event.type == KEYDOWN:
              kz = event.key
@@ -1949,45 +1856,44 @@ while True:
                 if mousex > width:
                    if mousey < bh * 5:
                       x = int((mousex - width)/bw)
-                      y = int(mousey/bh)+1
+                      y = int(mousey/bh) + 1
                       z = 10*x + y
                    if mousey > bh*5 and mousey < bh*10:
-                      x = int((mousex - width)/bw)+6
-                      y = int((mousey-5*bh)/bh)+1
+                      x = int((mousex - width)/bw) + 6
+                      y = int((mousey - 5*bh)/bh) + 1
                       z = 10*x + y
                    if mousey > bh*10:
-                      x = int((mousex - width)/bw)+12
-                      y = int((mousey-10*bh)/bh)+1
+                      x = int((mousex - width)/bw) + 12
+                      y = int((mousey - 10*bh)/bh) + 1
                       z = 10*x + y
-             if((Display != 1 and mousex > (width - 55)) or(Display == 1 and mousex > width + 60)) and((Display != 1 and mousex <  (width - 5)) or(Display == 1 and mousex < width +110)) and mousey > 20 and mousey < 276 and graph > 0:
-                if((Display != 1 and mousex >  (width - 55)) or(Display == 1 and mousex > width + 60))and((Display != 1 and mousex <  (width - 5)) or(Display == 1 and mousex < width +110)) and mousey > (256 - maxtot) and mousey < 276 :
+             if ((Display != 1 and mousex > (width - 55)) or (Display == 1 and mousex > width + 60)) and ((Display != 1 and mousex < (width - 5)) or (Display == 1 and mousex < width +110)) and mousey > 20 and mousey < 276 and graph > 0:
+                if ((Display != 1 and mousex > (width - 55)) or (Display == 1 and mousex > width + 60)) and ((Display != 1 and mousex < (width - 5)) or (Display == 1 and mousex < width +110)) and mousey > (256 - maxtot) and mousey < 276:
                    level = 276 - mousey
                    threshold = maxtot - level
-                   if threshold < 1:
-                      threshold = 1
+                   threshold = max(threshold, 1)
              else:
-                if mousex < width and mousey < height :
+                if mousex < width and mousey < height:
                    start = time.time()
-                   xcount = 0
-                   ycount = 0
+                   xcount =  0
+                   ycount =  0
                    totvcor = 0
                    tothcor = 0
-                   count = 1
+                   count =   1
                    while count <= 10:
                       xvcor[count] = 0
                       xhcor[count] = 0
                       count += 1
                    offset3o = offset3
                    offset4o = offset4
-                   offset3 = 0-(width/2- mousex)
-                   offset4 = 0-(height/2 - mousey)
-                   if(width/2 + offset3 + crop/2 ) >= width or(width/2 + offset3 - crop/2 ) <=1:
+                   offset3 = mousex - width/2
+                   offset4 = mousey - height/2
+                   if (width/2 + offset3 + crop/2) >= width or (width/2 + offset3 - crop/2) <= 1:
                       offset3 = offset3o
                       offset4 = offset4o
-                   if(height/2 + offset4 + crop/2 ) >= height or(height/2 + offset4 - crop/2 ) <=1:
+                   if (height/2 + offset4 + crop/2) >= height or (height/2 + offset4 - crop/2) <= 1:
                       offset3 = offset3o
                       offset4 = offset4o
-          if((z > 60 and z < 76) or z == 5 or z == 4 or z == 15 or z == 14 or z == 154) and use_Pi_Cam and camera_connected:
+          if ((z > 60 and z < 76) or z == 5 or z == 4 or z == 15 or z == 14 or z == 154) and use_Pi_Cam and camera_connected:
              os.killpg(p.pid, signal.SIGTERM)
           if z == 115 or kz == 304 or kz == 303:
              con_cap += 1
@@ -2013,9 +1919,9 @@ while True:
           elif z == 114 or kz == K_s:
              keys2("scr", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
              keys2("cap", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
-             pygame.image.save(windowSurfaceObj, 'scr_pic' + str(pct)+'.jpg')
+             pygame.image.save(windowSurfaceObj, 'scr_pic' + str(pct) + '.jpg')
              keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
-             keys2("s", fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
+             keys2("s",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
              keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
              pct += 1
           elif z == 104 and use_Pi_Cam and camera_connected:
@@ -2041,106 +1947,106 @@ while True:
              keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 1)
              pcu += 1
              restart = 1
-          elif(z == 151 or z == 161 or z == 171 or kz == K_0) and zoom == Image_window:
+          elif (z == 151 or z == 161 or z == 171 or kz == K_0) and zoom == Image_window:
              offset4 -= 5
-             if((height/2 + offset4 + crop/2 ) >= height) or((height/2 + offset4 - crop/2 ) <=1):
+             if ((height/2 + offset4 + crop/2) >= height) or ((height/2 + offset4 - crop/2) <= 1):
                 offset4 += 5
              if z == 151:
                 offset3 -= 5
-                if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+                if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 += 5
              if z == 171:
                 offset3 += 5
-                if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+                if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 -= 5
-          elif( z == 153 or z == 163 or z == 173 or kz == K_9) and zoom == Image_window:
+          elif (z == 153 or z == 163 or z == 173 or kz == K_9) and zoom == Image_window:
              offset4 += 5
-             if((height/2 + offset4 + crop/2 ) >= height) or((height/2 + offset4 - crop/2 ) <=1):
+             if ((height/2 + offset4 + crop/2) >= height) or ((height/2 + offset4 - crop/2) <= 1):
                 offset4 -= 5
              if z == 153:
                 offset3 -= 5
-                if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+                if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 += 5
              if z == 173:
                 offset3 += 5
-                if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+                if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 -= 5
-          elif(z == 172 or kz == K_8) and zoom == Image_window:
+          elif (z == 172 or kz == K_8) and zoom == Image_window:
              offset3 += 5
-             if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+             if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                 offset3 -= 5
-          elif(z == 152 or kz == K_7)  and zoom == Image_window:
+          elif (z == 152 or kz == K_7) and zoom == Image_window:
              offset3 -= 5
-             if((width/2 + offset3 + crop/2 ) >= width) or((width/2 + offset3 - crop/2 ) <=1):
+             if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                 offset3 += 5
 
-          elif(z == 151 or z == 161 or z == 171) and zoom > Image_window:
+          elif (z == 151 or z == 161 or z == 171) and zoom > Image_window:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
                 restart = 1
              offset6 -= 5
-             if offset6 > 0 and offset6 >= h/2-height/2:
+             if offset6 > 0 and offset6 >= h/2 - height/2:
                 offset6 += 5
-             if offset6 < 0 and offset6 <= 0-(h/2-height/2):
+             if offset6 < 0 and offset6 <= height/2 - h/2:
                 offset6 += 5
              if z == 151:
                 offset5 -= 5
-                if offset5 > 0 and offset5 >= w/2-width/2:
+                if offset5 > 0 and offset5 >= w/2 - width/2:
                    offset5 += 5
-                if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+                if offset5 < 0 and offset5 <= width/2 - w/2:
                    offset5 += 5
              if z == 171:
                 offset5 += 5
-                if offset5 > 0 and offset5 >= w/2-width/2:
+                if offset5 > 0 and offset5 >= w/2 - width/2:
                    offset5 -= 5
-                if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+                if offset5 < 0 and offset5 <= width/2 - w/2:
                    offset5 -= 5
-          elif( z == 153 or z == 163 or z == 173) and zoom > Image_window:
+          elif (z == 153 or z == 163 or z == 173) and zoom > Image_window:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
                 restart = 1
              offset6 += 5
-             if offset6 > 0 and offset6 >= h/2-height/2:
+             if offset6 > 0 and offset6 >= h/2 - height/2:
                 offset6 -= 5
-             if offset6 < 0 and offset6 <= 0-(h/2-height/2):
+             if offset6 < 0 and offset6 <= height/2 - h/2:
                 offset6 -= 5
              if z == 173:
                 offset5 += 5
-                if offset5 > 0 and offset5 >= w/2-width/2:
+                if offset5 > 0 and offset5 >= w/2 - width/2:
                    offset5 -= 5
-                if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+                if offset5 < 0 and offset5 <= width/2 - w/2:
                    offset5 -= 5
              if z == 153:
                 offset5 -= 5
-                if offset5 > 0 and offset5 >= w/2-width/2:
+                if offset5 > 0 and offset5 >= w/2 - width/2:
                    offset5 += 5
-                if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+                if offset5 < 0 and offset5 <= width/2 - w/2:
                    offset5 += 5
           elif z == 172 and zoom > Image_window:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
                 restart = 1
              offset5 += 5
-             if offset5 > 0 and offset5 >= w/2-width/2:
+             if offset5 > 0 and offset5 >= w/2 - width/2:
                 offset5 -= 5
-             if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+             if offset5 < 0 and offset5 <= width/2 - w/2:
                 offset5 -= 5
           elif z == 152 and zoom > Image_window:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
                 restart = 1
              offset5 -= 5
-             if offset5 > 0 and offset5 >= w/2-width/2:
+             if offset5 > 0 and offset5 >= w/2 - width/2:
                 offset5 += 5
-             if offset5 < 0 and offset5 <= 0-(w/2-width/2):
+             if offset5 < 0 and offset5 <= width/2 - w/2:
                 offset5 += 5
           elif z == 162 and zoom > Image_window:
              offset6a = offset6
              offtry = 0
-             while offtry < 10 and(offset6a == offset6):
-                offset4a = int(offset4 * (1-offtry/10))
+             while offtry < 10 and (offset6a == offset6):
+                offset4a = int(offset4 * (1 - offtry/10))
                 offset6a = offset6 + offset4a
-                if(offset6a > 0 and offset6a >= h/2-height/2) or(offset6a < 0 and offset6a <= 0-(h/2-height/2)):
+                if (offset6a > 0 and offset6a >= h/2 - height/2) or (offset6a < 0 and offset6a <= height/2 - h/2):
                    offset6a -= offset4a
                 offtry += 1
              if offtry < 10:
@@ -2148,10 +2054,10 @@ while True:
                 offset4 -= offset4a
              offset5a = offset5
              offtry = 1
-             while offtry < 10 and(offset5a == offset5):
+             while offtry < 10 and (offset5a == offset5):
                 offset3a = int(offset3/offtry)
                 offset5a = offset5 + offset3a
-                if(offset5a > 0 and offset5a >= w/2-width/2) or(offset5a < 0 and offset5a <= 0-(w/2-width/2)):
+                if (offset5a > 0 and offset5a >= w/2 - width/2) or (offset5a < 0 and offset5a <= width/2 - w/2):
                    offset5a -= offset3a
                 offtry += 1
              if offtry < 10:
@@ -2177,35 +2083,31 @@ while True:
                 Intervals = Interval
              change = 1
 
-          elif z == 71 :
+          elif z == 71:
              rpibr += 2
-             if rpibr >= 100:
-                rpibr = 100
+             rpibr = min(rpibr, 100)
              if camera_connected and not use_Pi_Cam:
                 cam.set_controls(0, 0, rpibr)
              restart = 1
              change = 1
-          elif z == 61 :
+          elif z == 61:
              rpibr -= 2
-             if rpibr <= 0:
-                rpibr = 0
+             rpibr = max(rpibr, 0)
              if camera_connected and not use_Pi_Cam:
                 cam.set_controls(0, 0, rpibr)
              restart = 1
              change = 1
-          elif z == 62 and use_Pi_Cam :
+          elif z == 62 and use_Pi_Cam:
              rpico -= 5
-             if rpico <= -100:
-                rpico = -100
+             rpico = max(rpico, -100)
              restart = 1
              change = 1
-          elif z == 72 and use_Pi_Cam  :
+          elif z == 72 and use_Pi_Cam:
              rpico += 5
-             if rpico >= 100:
-                rpico = 100
+             rpico = min(rpico, 100)
              restart = 1
              change = 1
-          elif z == 63 and use_Pi_Cam and(rpiexa == ' off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2'):
+          elif z == 63 and use_Pi_Cam and (rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2'):
              if rpiss < 20000:
                 rpiss -= 1000
              if rpiss >= 20000 and rpiss <= 490000:
@@ -2216,7 +2118,7 @@ while True:
                 rpiss = 1000
              restart = 1
              change = 1
-          elif z == 73 and use_Pi_Cam  and(rpiexa == ' off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2'):
+          elif z == 73 and use_Pi_Cam and (rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2'):
              if rpiss < 20000:
                 rpiss += 1000
              if rpiss >= 20000 and rpiss <= 490000:
@@ -2228,89 +2130,78 @@ while True:
              restart = 1
              change = 1
 
-          elif z == 63 and use_Pi_Cam and rpiexa != ' off' and  rpiexa != 'nigh2' and  rpiexa != 'fwor2' and  rpiexa != 'vlon2' and rpiexa != 'spor2':
+          elif z == 63 and use_Pi_Cam and rpiexa != ' off' and rpiexa != 'nigh2' and rpiexa != 'fwor2' and rpiexa != 'vlon2' and rpiexa != 'spor2':
              if rpiev >= -9:
                 rpiev -= 1
              restart = 1
              change = 1
-          elif z == 73 and use_Pi_Cam  and rpiexa != ' off' and  rpiexa != 'nigh2' and  rpiexa != 'fwor2' and  rpiexa != 'vlon2' and rpiexa != 'spor2':
+          elif z == 73 and use_Pi_Cam and rpiexa != ' off' and rpiexa != 'nigh2' and rpiexa != 'fwor2' and rpiexa != 'vlon2' and rpiexa != 'spor2':
              if rpiev <= 9:
                 rpiev += 1
              restart = 1
              change = 1
 
-          elif z == 65 and use_Pi_Cam  :
+          elif z == 65 and use_Pi_Cam:
              if rpiISO > 0:
                 rpiISO -= 100
              restart = 1
              change = 1
-          elif z == 75 and use_Pi_Cam  :
+          elif z == 75 and use_Pi_Cam:
              if rpiISO < 800:
                 rpiISO += 100
              restart = 1
              change = 1
           elif z == 132:
              auto_c += 1
-             auto_g = 1
+             auto_g =   1
              auto_win = 1
              ocrop = crop
              if auto_c > 1:
-                auto_c = 0
+                auto_c =   0
                 auto_win = 0
                 crop = ocrop
-             keys2("cen", fs, auto_c, b3x, bw, 1, b3y, bh, 3, 0, 1)
+             keys2("cen",  fs, auto_c, b3x, bw, 1, b3y, bh, 3, 0, 1)
              keys2(" tre", fs, auto_c, b3x, bw, 1, b3y, bh, 3, 2, 1)
 
           elif z == 121:
-             decN += 1
-             if decN > 1:
-                decN = 0
+             decN = not decN
              change = 1
           elif z == 123:
-             decS += 1
-             if decS > 1:
-                decS = 0
+             decS = not decS
              change = 1
           elif z == 31 or kz == K_r:
-             nr += 1
-             if nr > 1:
-                nr = 0
+             nr = not nr
              change = 1
-          elif(z == 105 or kz == K_c) and auto_g:
-             cls += 1
-             if cls > 1:
-                cls = 0
+          elif (z == 105 or kz == K_c) and auto_g:
+             cls = not cls
              change = 1
 
           elif z == 52 or kz == K_f:
-             auto_win =  0
+             auto_win = 0
              crop += 5
-             if crop  > maxwin:
-                crop  = maxwin
-             if(width/2 + offset3 + crop/2 ) >= width:
+             crop = min(crop, maxwin)
+             if (width/2 + offset3 + crop/2) >= width:
                 crop -= 5
-             if(width/2 + offset3 - crop/2 ) <=1:
+             if (width/2 + offset3 - crop/2) <= 1:
                 crop -= 5
-             if(height/2 + offset4 + crop/2 ) >= height:
+             if (height/2 + offset4 + crop/2) >= height:
                 crop -= 5
-             if(height/2 + offset4 - crop/2 ) <=1:
+             if (height/2 + offset4 - crop/2) <= 1:
                 crop -= 5
              change = 1
 
-          elif z == 42  or kz == K_d:
+          elif z == 42 or kz == K_d:
              auto_win = 0
              crop -= 5
-             if crop  < minwin:
-                crop  = minwin
+             crop = max(crop, minwin)
              change = 1
 
-          elif(z == 101 or z == 111 or kz == K_o) and photoon:
-             photo += 1
-             if photo > 1:
-                photo = 0
+          elif (z == 101 or z == 111 or kz == K_o) and photoon:
+             photo = not photo
+             if not photo:
                 camera = 0
-                keys2("", fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
-                keys2("", fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
+                keys2("",  fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+                keys2("",  fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
                 if use_RPiGPIO or photoon:
                    GPIO.output(C_OP, GPIO.LOW)
              if photo:
@@ -2323,91 +2214,71 @@ while True:
              change = 1
           elif z == 112 and photoon and not photo:
              ptime += 10
-             if ptime > 990:
-                ptime = 990
+             ptime = min(ptime, 990)
              change = 1
           elif z == 102 and photoon and not photo:
              ptime -= 10
-             if ptime < 10:
-                ptime = 10
+             ptime = max(ptime, 10)
              change = 1
           elif z == 113 and photoon and not photo:
              pcount += 1
-             if pcount > 90:
-                pcount = 90
+             pcount = min(pcount, 90)
              change = 1
           elif z == 103 and photoon and not photo:
              pcount -= 1
-             if pcount < 0:
-                pcount = 0
+             pcount = max(pcount, 0)
              change = 1
           elif z == 91:
              nscale += 10
-             if nscale > 800:
-                nscale = 800
+             nscale = min(nscale, 800)
              change = 1
           elif z == 81:
              nscale -= 10
-             if nscale < 10:
-                nscale = 10
+             nscale = max(nscale, 10)
              change = 1
           elif z == 93:
              escale += 10
-             if escale > 800:
-                escale = 800
+             escale = min(escale, 800)
              change = 1
           elif z == 83:
              escale -= 10
-             if escale < 10:
-                escale = 10
+             escale = max(escale, 10)
              change = 1
           elif z == 92:
              sscale += 10
-             if sscale > 800:
-                sscale = 800
+             sscale = min(sscale, 800)
              change = 1
           elif z == 82:
              sscale -= 10
-             if sscale < 10:
-                sscale = 10
+             sscale = max(sscale, 10)
              change = 1
           elif z == 94:
              wscale += 10
-             if wscale > 800:
-                wscale = 800
+             wscale = min(wscale, 800)
              change = 1
           elif z == 84:
              wscale -= 10
-             if wscale < 10:
-                wscale = 10
+             wscale = max(wscale, 10)
              change = 1
           elif z == 95:
              nscale += 10
-             if nscale > 800:
-                nscale = 800
+             nscale = min(nscale, 800)
              wscale += 10
-             if wscale > 800:
-                wscale = 800
+             wscale = min(wscale, 800)
              sscale += 10
-             if sscale > 800:
-                sscale = 800
+             sscale = min(sscale, 800)
              escale += 10
-             if escale > 800:
-                escale = 800
+             escale = min(escale, 800)
              change = 1
           elif z == 85:
              wscale -= 10
-             if wscale < 10:
-                wscale = 10
+             wscale = max(wscale, 10)
              escale -= 10
-             if escale < 10:
-                escale = 10
+             escale = max(escale, 10)
              sscale -= 10
-             if sscale < 10:
-                sscale = 10
+             sscale = max(sscale, 10)
              nscale -= 10
-             if nscale < 10:
-                nscale = 10
+             nscale = max(nscale, 10)
              change = 1
           elif z == 51 or kz == K_b:
              rgbw += 1
@@ -2421,19 +2292,17 @@ while True:
              change = 1
           elif z == 43:
              threshold -= 1
+             threshold = max(threshold, 1)
              auto_t = 0
-             if threshold < 1:
-                threshold = 1
              change = 1
           elif z == 53:
              threshold += 1
+             threshold = min(threshold, 100)
              auto_t = 0
-             if threshold > 100:
-                threshold = 100
              change = 1
           elif z == 133 or kz == K_DOWN:
              if serial_connected:
-                tim = mincor * 10
+                tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgs' + blan[(len(blan))-4:len(blan)]
                 keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
@@ -2442,7 +2311,7 @@ while True:
              if use_RPiGPIO or use_Seeed:
                 keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 time.sleep(mincor/100)
                 keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
@@ -2451,7 +2320,7 @@ while True:
 
           elif z == 131 or kz == K_UP:
              if serial_connected:
-                tim = mincor * 10
+                tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgn' + blan[(len(blan))-4:len(blan)]
                 keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
@@ -2460,7 +2329,7 @@ while True:
              if use_RPiGPIO or use_Seeed:
                 keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 time.sleep(mincor/100)
                 keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
@@ -2469,7 +2338,7 @@ while True:
 
           elif z == 122 or kz == K_LEFT:
              if serial_connected:
-                tim = mincor * 10
+                tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgw' + blan[(len(blan))-4:len(blan)]
                 keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
@@ -2478,7 +2347,7 @@ while True:
              if use_RPiGPIO or use_Seeed:
                 keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
                 keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
@@ -2487,7 +2356,7 @@ while True:
 
           elif z == 142 or kz == K_RIGHT:
              if serial_connected:
-                tim = mincor * 10
+                tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mge' + blan[(len(blan))-4:len(blan)]
                 keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
@@ -2496,14 +2365,14 @@ while True:
              if use_RPiGPIO or use_Seeed:
                 keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
                 keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              change = 1
 
-          elif z == 143  or kz == K_END :
+          elif z == 143 or kz == K_END:
              auto_g = 0
              if serial_connected:
                 lx200(':Q#', ':Q#', decN, decS)
@@ -2519,19 +2388,15 @@ while True:
              change = 1
 
           elif z == 24 or z == 34 or kz == K_i:
-                auto_i += 1
-                if auto_i > 1:
-                   auto_i = 0
+                auto_i = not auto_i
                 change = 1
 
           elif z == 21 or kz == K_x:
-                binn += 1
-                if binn > 1:
-                   binn = 0
+                binn = not binn
                 change = 1
 
           elif z == 1 or z == 11 or kz == K_a:
-             auto_g += 1
+             auto_g = not auto_g
              if auto_g:
                 start = time.time()
                 xcount = 0
@@ -2545,47 +2410,42 @@ while True:
                    xvcor[count] = 0
                    xhcor[count] = 0
                    count += 1
-             if auto_g > 1:
-                auto_g = 0
+             else:
                 log = 0
                 cls = 0
                 ave = 0
              change = 1
 
-          elif z == 4 :
+          elif z == 4:
              if rpired > 50:
                 rpired -= 1
                 rpiredx = Decimal(rpired)/Decimal(100)
              restart = 1
              change = 1
-          elif z == 14 :
+          elif z == 14:
              if rpired < 200:
                 rpired += 1
                 rpiredx = Decimal(rpired)/Decimal(100)
              restart = 1
              change = 1
-          elif z == 5 :
+          elif z == 5:
              if rpiblue > 50:
                 rpiblue -= 1
                 rpibluex = Decimal(rpiblue)/Decimal(100)
              restart = 1
              change = 1
-          elif z == 15 :
+          elif z == 15:
              if rpiblue < 200:
                 rpiblue += 1
                 rpibluex = Decimal(rpiblue)/Decimal(100)
              restart = 1
              change = 1
           elif z == 154 or kz == K_i:
-             rpineg += 1
-             if rpineg > 1:
-                rpineg = 0
+             rpineg = not rpineg
              restart = 1
           #   change = 1
           elif z == 13 or kz == K_h:
-             thres += 1
-             if thres > 1:
-                thres = 0
+             thres = not thres
              change = 1
           elif z == 12 or kz == K_g:
              graph += 1
@@ -2598,26 +2458,22 @@ while True:
                 plot = 0
              change = 1
 
-          elif z == 22 or z == 32  or kz == K_w:
-             auto_win += 1
-             if auto_win > 1:
-                auto_win = 0
+          elif z == 22 or z == 32 or kz == K_w:
+             auto_win = not auto_win
                 change = 1
              change = 1
           elif z == 23 or z == 33 or kz == K_t:
-             auto_t += 1
-             if auto_t > 1:
-                auto_t = 0
+             auto_t = not auto_t
                 change = 1
              change = 1
-          elif z == 74 and use_Pi_Cam :
+          elif z == 74 and use_Pi_Cam:
              if rpiexno < 9:
                 rpiexno += 1
-                rpiex = rpimodes[rpiexno]
+                rpiex =   rpimodes[rpiexno]
                 rpiexa = rpimodesa[rpiexno]
              restart = 1
              change = 1
-          elif kz == K_m and use_Pi_Cam :
+          elif kz == K_m and use_Pi_Cam:
              rpiexno += 1
              if rpiexno > 9:
                 rpiexno = 0
@@ -2625,7 +2481,7 @@ while True:
 
              restart = 1
              change = 1
-          elif z == 64 and use_Pi_Cam :
+          elif z == 64 and use_Pi_Cam:
              if rpiexno > 0:
                 rpiexno -= 1
                 rpiex = rpimodes[rpiexno]
@@ -2633,10 +2489,8 @@ while True:
 
              restart = 1
              change = 1
-          elif(z == 3 or kz == K_l) and auto_g:
-             log += 1
-             if log > 1:
-                log = 0
+          elif (z == 3 or kz == K_l) and auto_g:
+             log = not log
              if log:
                 now = datetime.datetime.now()
                 timestamp = now.strftime("%y%m%d%H%M%S")
@@ -2645,7 +2499,7 @@ while True:
           elif z == 55 or kz == K_z:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
-             if(not use_Pi_Cam and zoom < usb_max_res) or(use_Pi_Cam and zoom < 7):
+             if (not use_Pi_Cam and zoom < usb_max_res) or (use_Pi_Cam and zoom < 7):
                 zoom += 1
                 if camera_connected:
                    w = rpiwidth[zoom]
@@ -2656,16 +2510,16 @@ while True:
                    escale /= scalex
                    sscale /= scaley
                    wscale /= scalex
-                   offset5 = int((offset5 + offset3) * scalex)
-                   offset6 = int((offset6 + offset4) * scaley)
-                   if offset5 > 0 and offset5 >= w/2-width/2:
-                      offset5 = w/2-width/2
-                   if offset5 < 0 and offset5 <= 0-(w/2-width/2):
-                      offset5 = 0-(w/2-width/2)
-                   if offset6 > 0 and offset6 >= h/2-height/2:
-                      offset6 = h/2-height/2
-                   if offset6 < 0 and offset6 <= 0-(h/2-height/2):
-                      offset6 = 0-(h/2-height/2)
+                   offset5 = int((offset5 + offset3)*scalex)
+                   offset6 = int((offset6 + offset4)*scaley)
+                   if offset5 > 0 and offset5 >= w/2 - width/2:
+                      offset5 = w/2 - width/2
+                   if offset5 < 0 and offset5 <= width/2 - w/2:
+                      offset5 = width/2 - w/2
+                   if offset6 > 0 and offset6 >= h/2 - height/2:
+                      offset6 = h/2 - height/2
+                   if offset6 < 0 and offset6 <= height/2 - h/2:
+                      offset6 = height/2 - h/2
                    offset3 = 0
                    offset4 = 0
                    if not use_Pi_Cam and camera_connected:
@@ -2710,16 +2564,16 @@ while True:
                    escale *= scalex
                    sscale *= scaley
                    wscale *= scalex
-                   offset5 = int((offset5 + offset3) / scalex)
-                   offset6 = int((offset6 + offset4) / scaley)
-                   if offset5 > 0 and offset5 >= w/2-width/2:
-                      offset5 = w/2-width/2
-                   if offset5 < 0 and offset5 <= 0-(w/2-width/2):
-                      offset5 = 0-(w/2-width/2)
-                   if offset6 > 0 and offset6 >= h/2-height/2:
-                      offset6 = h/2-height/2
-                   if offset6 < 0 and offset6 <= 0-(h/2-height/2):
-                      offset6 = 0-(h/2-height/2)
+                   offset5 = int((offset5 + offset3)/scalex)
+                   offset6 = int((offset6 + offset4)/scaley)
+                   if offset5 > 0 and offset5 >= w/2 - width/2:
+                      offset5 = w/2 - width/2
+                   if offset5 < 0 and offset5 <= width/2 - w/2:
+                      offset5 = width/2 - w/2
+                   if offset6 > 0 and offset6 >= h/2 - height/2:
+                      offset6 = h/2 - height/2
+                   if offset6 < 0 and offset6 <= height/2 - h/2:
+                      offset6 = height/2 - h/2
                    offset3 = 0
                    offset4 = 0
                    if not use_Pi_Cam:
@@ -2750,284 +2604,278 @@ while True:
                    hd = wd
              restart = 1
              change = 1
-          elif z == 25  or kz == K_n:
+          elif z == 25 or kz == K_n:
              nsi += 1
              if nsi > 1:
                 nsi = 0
              change = 1
           elif z == 174:
-             Night += 1
-             if Night > 1:
-                Night = 0
-                redColor = pygame.Color(255, 0, 0)
-                greenColor = pygame.Color(0, 255, 0)
-                blueColor = pygame.Color(0, 0, 255)
-                greyColor = pygame.Color(128, 128, 128)
-                dgryColor = pygame.Color(64, 64, 64)
-                lgryColor = pygame.Color(192, 192, 192)
-                blackColor = pygame.Color(0, 0, 0)
-                whiteColor = pygame.Color(200, 200, 200)
-                purpleColor = pygame.Color(255, 0, 255)
-                yellowColor = pygame.Color(255, 255, 0)
-             if Night:
-                whiteColor = pygame.Color(50, 20, 20)
-                greyColor = pygame.Color(128, 70, 70)
-                dgryColor = pygame.Color(0, 0, 0)
-                greenColor = pygame.Color(0, 128, 0)
-                purpleColor = pygame.Color(128, 0, 128)
-                yellowColor = pygame.Color(128, 128, 0)
-                blueColor = pygame.Color(0, 0, 150)
-                redColor = pygame.Color(0, 0, 0)
-             button2(b1x, 1, b1y, 2, bw, 2, bh, auto_g)
-             button2(b1x, 3, b1y, 2, bw, 1, bh, binn)
-             button2(b1x, 4, b1y, 2, bw, 1, bh, nr)
-             button2(b1x, 1, b1y, 3, bw, 1, bh, plot)
-             button2(b1x, 1, b1y, 4, bw, 1, bh, log)
-             button2(b1x, 2, b1y, 3, bw, 1, bh, graph)
-             button2(b1x, 2, b1y, 4, bw, 1, bh, thres)
-             button2(b1x, 3, b1y, 3, bw, 2, bh, auto_win)
-             button2(b1x, 3, b1y, 4, bw, 2, bh, auto_t)
-             button2(b1x, 3, b1y, 5, bw, 2, bh, auto_i)
-             button2(b1x, 3, b1y, 6, bw, 1, bh, nsi)
-             button2(b1x, 4, b1y, 6, bw, 1, bh, ewi)
+             Night = not Night
+             if not Night:
+                redColor =    pygame.Color(255,   0,   0)
+                greenColor =  pygame.Color(  0, 255,   0)
+                blueColor =   pygame.Color(  0,   0, 255)
+                greyColor =   pygame.Color(128, 128, 128)
+                dgryColor =   pygame.Color( 64,  64,  64)
+                lgryColor =   pygame.Color(192, 192, 192)
+                blackColor =  pygame.Color(  0,   0,   0)
+                whiteColor =  pygame.Color(200, 200, 200)
+                purpleColor = pygame.Color(255,   0, 255)
+                yellowColor = pygame.Color(255, 255,   0)
+             else:
+                whiteColor =  pygame.Color( 50,  20,  20)
+                greyColor =   pygame.Color(128,  70,  70)
+                dgryColor =   pygame.Color(  0,   0,   0)
+                greenColor =  pygame.Color(  0, 128,   0)
+                purpleColor = pygame.Color(128,   0, 128)
+                yellowColor = pygame.Color(128, 128,   0)
+                blueColor =   pygame.Color(  0,   0, 150)
+                redColor =    pygame.Color(  0,   0,   0)
+             button2(      b1x, 1,          b1y, 2,  bw, 2, bh, auto_g)
+             button2(      b1x, 3,          b1y, 2,  bw, 1, bh, binn)
+             button2(      b1x, 4,          b1y, 2,  bw, 1, bh, nr)
+             button2(      b1x, 1,          b1y, 3,  bw, 1, bh, plot)
+             button2(      b1x, 1,          b1y, 4,  bw, 1, bh, log)
+             button2(      b1x, 2,          b1y, 3,  bw, 1, bh, graph)
+             button2(      b1x, 2,          b1y, 4,  bw, 1, bh, thres)
+             button2(      b1x, 3,          b1y, 3,  bw, 2, bh, auto_win)
+             button2(      b1x, 3,          b1y, 4,  bw, 2, bh, auto_t)
+             button2(      b1x, 3,          b1y, 5,  bw, 2, bh, auto_i)
+             button2(      b1x, 3,          b1y, 6,  bw, 1, bh, nsi)
+             button2(      b1x, 4,          b1y, 6,  bw, 1, bh, ewi)
              cy = 2
              while cy <= 6:
-                button2(b1x, 5, b1y, cy, bw, 2, bh, 0)
+                button2(   b1x, 5,          b1y, cy, bw, 2, bh, 0)
+                button2(   b2x, 3,          b2y, cy, bw, 2, bh, 0)
                 cy += 1
              if use_Pi_Cam and camera_connected:
                 cy = 3
                 while cy <= 6:
-                   button2(b2x, 1, b2y, cy, bw, 2, bh, 0)
+                   button2(b2x, 1,          b2y, cy, bw, 2, bh, 0)
                    cy += 1
-                button2(b1x, 1, b1y, 5, bw, 2, bh, 0)
-                button2(b1x, 1, b1y, 6, bw, 2, bh, 0)
-             cy = 2
-             while cy <= 6:
-                button2(b2x, 3, b2y, cy, bw, 2, bh, 0)
-                cy += 1
-             button2(b2x, 1, b2y, 2, bw, 2, bh, 0)
+                button2(   b1x, 1,          b1y, 5,  bw, 2, bh, 0)
+                button2(   b1x, 1,          b1y, 6,  bw, 2, bh, 0)
+             button2(      b2x, 1,          b2y, 2,  bw, 2, bh, 0)
              if photoon:
-                button2(b2x, 5, b2y, 2, bw, 2, bh, 0)
-                button2(b2x, 5, b2y, 3, bw, 2, bh, 0)
-                button2(b2x, 5, b2y, 4, bw, 2, bh, 0)
+                button2(   b2x, 5,          b2y, 2,  bw, 2, bh, 0)
+                button2(   b2x, 5,          b2y, 3,  bw, 2, bh, 0)
+                button2(   b2x, 5,          b2y, 4,  bw, 2, bh, 0)
              if use_Pi_Cam:
-                button2(b2x, 5, b2y, 5, bw, 1, bh, 0)
-             button2(b2x, 6, b2y, 5, bw, 1, bh, 0)
-             button2(b2x, 6, b2y, 6, bw, 1, bh, con_cap)
-             button2(b3x, 1, b3y, 3, bw, 1, bh, 0)
-             button2(b3x, 1, b3y, 2, bw, 1, bh, decN)
-             button2(b3x, 1, b3y, 4, bw, 1, bh, decS)
+                button2(   b2x, 5,          b2y, 5,  bw, 1, bh, 0)
+             button2(      b2x, 6,          b2y, 5,  bw, 1, bh, 0)
+             button2(      b2x, 6,          b2y, 6,  bw, 1, bh, con_cap)
+             button2(      b3x, 1,          b3y, 3,  bw, 1, bh, 0)
+             button2(      b3x, 1,          b3y, 2,  bw, 1, bh, decN)
+             button2(      b3x, 1,          b3y, 4,  bw, 1, bh, decS)
              if decN:
-                button2(b3x, 2, b3y, 2, bw, 1, bh, 0)
+                button2(   b3x, 2,          b3y, 2,  bw, 1, bh, 0)
              else:
-                button2(b3x, 2, b3y, 2, bw, 1, bh, 1)
-             if decS ==1:
-                button2(b3x, 2, b3y, 4, bw, 1, bh, 0)
+                button2(   b3x, 2,          b3y, 2,  bw, 1, bh, 1)
+             if decS:
+                button2(   b3x, 2,          b3y, 4,  bw, 1, bh, 0)
              else:
-                button2(b3x, 2, b3y, 4, bw, 1, bh, 1)
-             button2(b3x, 3, b3y, 3, bw, 1, bh, 0)
-             button2(b3x, 5, b3y, 2, bw, 1, bh, 0)
-             button2(b3x, 5, b3y, 4, bw, 1, bh, 0)
-             button2(b3x, 4, b3y, 3, bw, 1, bh, 0)
-             button2(b3x, 6, b3y, 3, bw, 1, bh, 0)
-             button2(b3x, 1, b3y, 6, bw, 1, bh, 0)
-             button2(b3x, 2, b3y, 6, bw, 1, bh, 0)
-             button2(b3x, 3, b3y, 6, bw, 1, bh, 0)
+                button2(   b3x, 2,          b3y, 4,  bw, 1, bh, 1)
+             button2(      b3x, 3,          b3y, 3,  bw, 1, bh, 0)
+             button2(      b3x, 5,          b3y, 2,  bw, 1, bh, 0)
+             button2(      b3x, 5,          b3y, 4,  bw, 1, bh, 0)
+             button2(      b3x, 4,          b3y, 3,  bw, 1, bh, 0)
+             button2(      b3x, 6,          b3y, 3,  bw, 1, bh, 0)
+             button2(      b3x, 1,          b3y, 6,  bw, 1, bh, 0)
+             button2(      b3x, 2,          b3y, 6,  bw, 1, bh, 0)
+             button2(      b3x, 3,          b3y, 6,  bw, 1, bh, 0)
              if use_config > 0:
-                button2(b3x, use_config, b3y, 6, bw, 1, bh, 3)
-             button2(b3x, 4, b3y, 6, bw, 1, bh, 0)
-             button2(b3x, 5, b3y, 6, bw, 1, bh, 0)
-             button2(b3x, 6, b3y, 6, bw, 1, bh, 0)
-             keys2(str(int(nscale)), fs, 3, b2x, bw, 3, b2y, bh, 2, 3, 0)
-             keys2(str(int(sscale)), fs, 3, b2x, bw, 3, b2y, bh, 3, 3, 0)
-             keys2(str(int(escale)), fs, 3, b2x, bw, 3, b2y, bh, 4, 3, 0)
-             keys2(str(int(wscale)), fs, 3, b2x, bw, 3, b2y, bh, 5, 3, 0)
-             keys2(str(threshold), fs, 3, b1x, bw, 5, b1y, bh, 4, 3, 0)
-             keys2(str(Interval), fs, 3, b1x, bw, 5, b1y, bh, 5, 3, 0)
-             keys2(str(zoom), fs, 3, b1x, bw, 5, b1y, bh, 6, 3, 0)
-             keys2(str(rpibr), fs, 3, b2x, bw, 1, b2y, bh, 2, 3, 0)
+                button2(   b3x, use_config, b3y, 6,  bw, 1, bh, 3)
+             button2(      b3x, 4,          b3y, 6,  bw, 1, bh, 0)
+             button2(      b3x, 5,          b3y, 6,  bw, 1, bh, 0)
+             button2(      b3x, 6,          b3y, 6,  bw, 1, bh, 0)
+             keys2(str(int(nscale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 2, 3, 0)
+             keys2(str(int(sscale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 3, 3, 0)
+             keys2(str(int(escale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 4, 3, 0)
+             keys2(str(int(wscale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 5, 3, 0)
+             keys2(str(threshold),             fs,   3,        b1x,         bw,   5,     b1y, bh, 4, 3, 0)
+             keys2(str(Interval),              fs,   3,        b1x,         bw,   5,     b1y, bh, 5, 3, 0)
+             keys2(str(zoom),                  fs,   3,        b1x,         bw,   5,     b1y, bh, 6, 3, 0)
+             keys2(str(rpibr),                 fs,   3,        b2x,         bw,   1,     b2y, bh, 2, 3, 0)
 
              msg = rgb[rgbw]
              if rgbw < 5:
-                keys2(msg, fs, rgbw + 2, b1x, bw, 5, b1y, bh, 2, 3, 0)
+                keys2(msg,                     fs,   rgbw+2,   b1x,         bw,   5,     b1y, bh, 2, 3, 0)
              else:
-                keys2(msg, fs, rgbw + 1, b1x, bw, 5, b1y, bh, 2, 3, 0)
-             keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 0)
-             keys2("A-Win", fs, auto_win, b1x, bw, 2, b1y, bh, 3, 1, 0)
-             keys2("W", fs, 5, b1x+fs, bw, 2, b1y, bh, 3, 1, 0)
-             keys2("A-Thr", fs, auto_t, b1x, bw, 2, b1y, bh, 4, 1, 0)
-             keys2("T", fs, 5, b1x+fs, bw, 2, b1y, bh, 4, 1, 0)
-             keys2("AutoG", fs, auto_g, b1x, bw, 0, b1y, bh, 2, 1, 0)
-             keys2("A", fs, 5, b1x, bw, 0, b1y, bh, 2, 1, 0)
-             keys2("2x2", fs, binn, b1x, bw, 2, b1y, bh, 2, 1, 0)
-             keys2("x", fs, 5, b1x+fs/2, bw, 2, b1y, bh, 2, 1, 0)
-             keys2("Log", fs, log, b1x, bw, 0, b1y, bh, 4, 1, 0)
-             keys2("L", fs, 5, b1x, bw, 0, b1y, bh, 4, 1, 0)
-             keys2("Gph", fs, graph, b1x, bw, 1, b1y, bh, 3, 1, 0)
-             keys2("G", fs, 5, b1x, bw, 1, b1y, bh, 3, 1, 0)
-             keys2("Plot", fs, plot, b1x, bw, 0, b1y, bh, 3, 1, 0)
-             keys2("P", fs, 5, b1x, bw, 0, b1y, bh, 3, 1, 0)
-             keys2("Thr", fs, thres, b1x, bw, 1, b1y, bh, 4, 1, 0)
-             keys2("h", fs, 5, b1x+fs/1.5, bw, 1, b1y, bh, 4, 1, 0)
-             keys2("NSi", fs, nsi, b1x, bw, 2, b1y, bh, 6, 1, 0)
-             keys2("N", fs, 5, b1x, bw, 2, b1y, bh, 6, 1, 0)
-             keys2("EWi", fs, ewi, b1x, bw, 3, b1y, bh, 6, 1, 0)
-             keys2("E", fs, 5, b1x, bw, 3, b1y, bh, 6, 1, 0)
-             keys2("A-Int", fs, auto_i, b1x, bw, 2, b1y, bh, 5, 1, 0)
-             keys2("I", fs, 5, b1x+fs, bw, 2, b1y, bh, 5, 1, 0)
-             keys2("rgbw", fs, 6, b1x, bw, 4, b1y, bh, 2, 0, 0)
-             keys2("b", fs, 5, b1x+fs, bw, 4, b1y, bh, 2, 0, 0)
-             keys2(" <", fs, 6, b1x, bw, 4, b1y, bh, 2, 4, 0)
-             keys2(">", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 2, 4, 0)
-             keys2("window", fs, 6, b1x, bw, 4, b1y, bh, 3, 0, 0)
-             keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 3, 4, 0)
-             keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 3, 4, 0)
-             keys2("threshold", fs-1, 6, b1x, bw, 4, b1y, bh, 4, 0, 0)
-             keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 4, 4, 0)
-             keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 4, 4, 0)
-             keys2("interval", fs, 6, b1x, bw, 4, b1y, bh, 5, 0, 0)
-             keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 5, 4, 0)
-             keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 5, 4, 0)
-             keys2("Zoom", fs, 6, b1x, bw, 4, b1y, bh, 6, 0, 0)
-             keys2(" -", fs, 6, b1x, bw, 4, b1y, bh, 6, 4, 0)
-             keys2("+", fs, 6, b1x+bw-fs, bw, 5, b1y, bh, 6, 4, 0)
-             keys2("scale N", fs, 6, b2x, bw, 2, b2y, bh, 2, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 2, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 2, 4, 0)
-             keys2("scale S", fs, 6, b2x, bw, 2, b2y, bh, 3, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 3, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 3, 4, 0)
-             keys2("scale E", fs, 6, b2x, bw, 2, b2y, bh, 4, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 4, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 4, 4, 0)
-             keys2("scale W", fs, 6, b2x, bw, 2, b2y, bh, 5, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 5, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 5, 4, 0)
-             keys2("scale all", fs, 6, b2x, bw, 2, b2y, bh, 6, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 2, b2y, bh, 6, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 3, b2y, bh, 6, 4, 0)
-             keys2("Brightness", fs-2, 6, b2x, bw, 0, b2y, bh, 2, 0, 0)
-             keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 2, 4, 0)
-             keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 2, 4, 0)
+                keys2(msg,                     fs,   rgbw+1,   b1x,         bw,   5,     b1y, bh, 2, 3, 0)
+             keys2(str(crop),                  fs,   3,        b1x,         bw,   5,     b1y, bh, 3, 3, 0)
+             keys2("A-Win",                    fs,   auto_win, b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+             keys2("W",                        fs,   5,        b1x+fs,      bw,   2,     b1y, bh, 3, 1, 0)
+             keys2("A-Thr",                    fs,   auto_t,   b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+             keys2("T",                        fs,   5,        b1x+fs,      bw,   2,     b1y, bh, 4, 1, 0)
+             keys2("AutoG",                    fs,   auto_g,   b1x,         bw,   0,     b1y, bh, 2, 1, 0)
+             keys2("A",                        fs,   5,        b1x,         bw,   0,     b1y, bh, 2, 1, 0)
+             keys2("2x2",                      fs,   binn,     b1x,         bw,   2,     b1y, bh, 2, 1, 0)
+             keys2("x",                        fs,   5,        b1x+fs/2,    bw,   2,     b1y, bh, 2, 1, 0)
+             keys2("Log",                      fs,   log,      b1x,         bw,   0,     b1y, bh, 4, 1, 0)
+             keys2("L",                        fs,   5,        b1x,         bw,   0,     b1y, bh, 4, 1, 0)
+             keys2("Gph",                      fs,   graph,    b1x,         bw,   1,     b1y, bh, 3, 1, 0)
+             keys2("G",                        fs,   5,        b1x,         bw,   1,     b1y, bh, 3, 1, 0)
+             keys2("Plot",                     fs,   plot,     b1x,         bw,   0,     b1y, bh, 3, 1, 0)
+             keys2("P",                        fs,   5,        b1x,         bw,   0,     b1y, bh, 3, 1, 0)
+             keys2("Thr",                      fs,   thres,    b1x,         bw,   1,     b1y, bh, 4, 1, 0)
+             keys2("h",                        fs,   5,        b1x+fs/1.5,  bw,   1,     b1y, bh, 4, 1, 0)
+             keys2("NSi",                      fs,   nsi,      b1x,         bw,   2,     b1y, bh, 6, 1, 0)
+             keys2("N",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 6, 1, 0)
+             keys2("EWi",                      fs,   ewi,      b1x,         bw,   3,     b1y, bh, 6, 1, 0)
+             keys2("E",                        fs,   5,        b1x,         bw,   3,     b1y, bh, 6, 1, 0)
+             keys2("A-Int",                    fs,   auto_i,   b1x,         bw,   2,     b1y, bh, 5, 1, 0)
+             keys2("I",                        fs,   5,        b1x+fs,      bw,   2,     b1y, bh, 5, 1, 0)
+             keys2("rgbw",                     fs,   6,        b1x,         bw,   4,     b1y, bh, 2, 0, 0)
+             keys2("b",                        fs,   5,        b1x+fs,      bw,   4,     b1y, bh, 2, 0, 0)
+             keys2(" <",                       fs,   6,        b1x,         bw,   4,     b1y, bh, 2, 4, 0)
+             keys2(">",                        fs,   6,        b1x+bw-fs,   bw,   5,     b1y, bh, 2, 4, 0)
+             keys2("window",                   fs,   6,        b1x,         bw,   4,     b1y, bh, 3, 0, 0)
+             keys2(" -",                       fs,   6,        b1x,         bw,   4,     b1y, bh, 3, 4, 0)
+             keys2("+",                        fs,   6,        b1x+bw-fs,   bw,   5,     b1y, bh, 3, 4, 0)
+             keys2("threshold",                fs-1, 6,        b1x,         bw,   4,     b1y, bh, 4, 0, 0)
+             keys2(" -",                       fs,   6,        b1x,         bw,   4,     b1y, bh, 4, 4, 0)
+             keys2("+",                        fs,   6,        b1x+bw-fs,   bw,   5,     b1y, bh, 4, 4, 0)
+             keys2("interval",                 fs,   6,        b1x,         bw,   4,     b1y, bh, 5, 0, 0)
+             keys2(" -",                       fs,   6,        b1x,         bw,   4,     b1y, bh, 5, 4, 0)
+             keys2("+",                        fs,   6,        b1x+bw-fs,   bw,   5,     b1y, bh, 5, 4, 0)
+             keys2("Zoom",                     fs,   6,        b1x,         bw,   4,     b1y, bh, 6, 0, 0)
+             keys2(" -",                       fs,   6,        b1x,         bw,   4,     b1y, bh, 6, 4, 0)
+             keys2("+",                        fs,   6,        b1x+bw-fs,   bw,   5,     b1y, bh, 6, 4, 0)
+             keys2("scale N",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 2, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 2, 4, 0)
+             keys2("scale S",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 3, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 3, 4, 0)
+             keys2("scale E",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 4, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 4, 4, 0)
+             keys2("scale W",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 5, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 5, 4, 0)
+             keys2("scale all",                fs,   6,        b2x,         bw,   2,     b2y, bh, 6, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 6, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 6, 4, 0)
+             keys2("Brightness",               fs-2, 6,        b2x,         bw,   0,     b2y, bh, 2, 0, 0)
+             keys2(" -",                       fs,   6,        b2x,         bw,   0,     b2y, bh, 2, 4, 0)
+             keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   1,     b2y, bh, 2, 4, 0)
 
              if use_Pi_Cam and camera_connected:
-                keys2(str(rpico), fs, 3, b2x, bw, 1, b2y, bh, 3, 3, 0)
+                keys2(str(rpico),              fs,   3,        b2x,         bw,   1,     b2y, bh, 3, 3, 0)
                 rpiexa = rpimodesa[rpiexno]
-                if rpiexa == ' off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2':
-                   keys2(str(int(rpiss/1000)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 0)
+                if rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2':
+                   keys2(str(int(rpiss/1000)), fs,   3,        b2x,         bw,   1,     b2y, bh, 4, 3, 0)
                 else:
-                   keys2(str(int(rpiev)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 0)
-                keys2((rpimodesa[rpiexno]), fs, 3, b2x, bw, 1, b2y, bh, 5, 3, 0)
-                keys2(str(rpiISO), fs, 3, b2x, bw, 1, b2y, bh, 6, 3, 0)
+                   keys2(str(int(rpiev)),      fs,   3,        b2x,         bw,   1,     b2y, bh, 4, 3, 0)
+                keys2((rpimodesa[rpiexno]),    fs,   3,        b2x,         bw,   1,     b2y, bh, 5, 3, 0)
+                keys2(str(rpiISO),             fs,   3,        b2x,         bw,   1,     b2y, bh, 6, 3, 0)
                 if not rpiISO:
-                   keys2('auto', fs, 3, b2x, bw, 1, b2y, bh, 6, 3, 0)
-                keys2("Contrast", fs, 6, b2x, bw, 0, b2y, bh, 3, 0, 0)
-                keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 3, 4, 0)
-                keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 3, 4, 0)
-                if rpiex == 'off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2':
-                   keys2("Exp Time", fs-1, 6, b2x, bw, 0, b2y, bh, 4, 0, 0)
+                   keys2('auto',               fs,   3,        b2x,         bw,   1,     b2y, bh, 6, 3, 0)
+                keys2("Contrast",              fs,   6,        b2x,         bw,   0,     b2y, bh, 3, 0, 0)
+                keys2(" -",                    fs,   6,        b2x,         bw,   0,     b2y, bh, 3, 4, 0)
+                keys2("+",                     fs,   6,        b2x+bw-fs,   bw,   1,     b2y, bh, 3, 4, 0)
+                if rpiex == 'off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2':
+                   keys2("Exp Time",           fs-1, 6,        b2x,         bw,   0,     b2y, bh, 4, 0, 0)
                 else:
-                   keys2("     eV", fs, 6, b2x, bw, 0, b2y, bh, 4, 0, 0)
-                keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 4, 4, 0)
-                keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 4, 4, 0)
-                keys2("ISO", fs, 6, b2x, bw*2, 0, b2y, bh, 6, 0, 0)
-                keys2(" -", fs, 6, b2x, bw, 0, b2y, bh, 6, 4, 0)
-                keys2("+", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 6, 4, 0)
-                keys2("Exp Mode", fs-1, 6, b2x, bw, 0, b2y, bh, 5, 0, 0)
-                keys2(" <", fs, 6, b2x, bw, 0, b2y, bh, 5, 4, 0)
-                keys2(">", fs, 6, b2x+bw-fs, bw, 1, b2y, bh, 5, 4, 0)
-                keys2("Adj Red", fs, 6, b1x, bw, 0, b1y, bh, 5, 0, 0)
-                keys2(" -", fs, 6, b1x, bw, 0, b1y, bh, 5, 4, 0)
-                keys2("+", fs, 6, b1x+bw-fs, bw, 1, b1y, bh, 5, 4, 0)
-                keys2("Adj Blue", fs, 6, b1x, bw, 0, b1y, bh, 6, 0, 0)
-                keys2(" -", fs, 6, b1x, bw, 0, b1y, bh, 6, 4, 0)
-                keys2("+", fs, 6, b1x+bw-fs, bw, 1, b1y, bh, 6, 4, 0)
+                   keys2("     eV",            fs,   6,        b2x,         bw,   0,     b2y, bh, 4, 0, 0)
+                keys2(" -",                    fs,   6,        b2x,         bw,   0,     b2y, bh, 4, 4, 0)
+                keys2("+",                     fs,   6,        b2x+bw-fs,   bw,   1,     b2y, bh, 4, 4, 0)
+                keys2("ISO",                   fs,   6,        b2x,         bw*2, 0,     b2y, bh, 6, 0, 0)
+                keys2(" -",                    fs,   6,        b2x,         bw,   0,     b2y, bh, 6, 4, 0)
+                keys2("+",                     fs,   6,        b2x+bw-fs,   bw,   1,     b2y, bh, 6, 4, 0)
+                keys2("Exp Mode",              fs-1, 6,        b2x,         bw,   0,     b2y, bh, 5, 0, 0)
+                keys2(" <",                    fs,   6,        b2x,         bw,   0,     b2y, bh, 5, 4, 0)
+                keys2(">",                     fs,   6,        b2x+bw-fs,   bw,   1,     b2y, bh, 5, 4, 0)
+                keys2("Adj Red",               fs,   6,        b1x,         bw,   0,     b1y, bh, 5, 0, 0)
+                keys2(" -",                    fs,   6,        b1x,         bw,   0,     b1y, bh, 5, 4, 0)
+                keys2("+",                     fs,   6,        b1x+bw-fs,   bw,   1,     b1y, bh, 5, 4, 0)
+                keys2("Adj Blue",              fs,   6,        b1x,         bw,   0,     b1y, bh, 6, 0, 0)
+                keys2(" -",                    fs,   6,        b1x,         bw,   0,     b1y, bh, 6, 4, 0)
+                keys2("+",                     fs,   6,        b1x+bw-fs,   bw,   1,     b1y, bh, 6, 4, 0)
                 rpiredx = Decimal(rpired)/Decimal(100)
                 rpibluex = Decimal(rpiblue)/Decimal(100)
-                keys2(str(rpiredx), fs, 3, b1x, bw, 1, b1y, bh, 5, 3, 0)
-                keys2(str(rpibluex), fs, 3, b1x, bw, 1, b1y, bh, 6, 3, 0)
+                keys2(str(rpiredx),            fs,   3,        b1x,         bw,   1,     b1y, bh, 5, 3, 0)
+                keys2(str(rpibluex),           fs,   3,        b1x,         bw,   1,     b1y, bh, 6, 3, 0)
              hor = 0
              while hor < 4:
-                keys2("N", fs, 6, b3x, bw, 1+hor, b3y, bh, 2, 2, 0)
-                keys2("E", fs, 6, b3x, bw, 2+hor, b3y, bh, 3, 2, 0)
-                keys2("S", fs, 6, b3x, bw, 1+hor, b3y, bh, 4, 2, 0)
-                keys2("W", fs, 6, b3x, bw, 0+hor, b3y, bh, 3, 2, 0)
+                keys2("N",                     fs,   6,        b3x,         bw,   1+hor, b3y, bh, 2, 2, 0)
+                keys2("E",                     fs,   6,        b3x,         bw,   2+hor, b3y, bh, 3, 2, 0)
+                keys2("S",                     fs,   6,        b3x,         bw,   1+hor, b3y, bh, 4, 2, 0)
+                keys2("W",                     fs,   6,        b3x,         bw,   hor,   b3y, bh, 3, 2, 0)
                 hor += 3
-             keys2("Esc", fs, 5, b3x, bw, 2, b3y, bh, 2, 2, 0)
-             keys2("DEC", fs-1, decN, b3x, bw, 0, b3y, bh, 2, 0, decN)
-             keys2("  N", fs-1, decN, b3x, bw, 0, b3y, bh, 2, 2, decN)
-             keys2("nr", fs, nr, b1x, bw, 3, b1y, bh, 2, 1, nr)
-             keys2("DEC", fs-1, decS, b3x, bw, 0, b3y, bh, 4, 0, decS)
-             keys2("  S", fs-1, decS, b3x, bw, 0, b3y, bh, 4, 2, decS)
-             keys2(" R1", fs, 6, b3x, bw, 0, b3y, bh, 6, 1, 0)
-             keys2("1", fs, 5, b3x+fs, bw, 0, b3y, bh, 6, 1, 1)
-             keys2(" R2", fs, 6, b3x, bw, 1, b3y, bh, 6, 1, 0)
-             keys2("2", fs, 5, b3x+fs, bw, 1, b3y, bh, 6, 1, 0)
-             keys2(" R3", fs, 6, b3x, bw, 2, b3y, bh, 6, 1, 0)
-             keys2("3", fs, 5, b3x+fs, bw, 2, b3y, bh, 6, 1, 0)
-             keys2(" S1", fs, 6, b3x, bw, 3, b3y, bh, 6, 1, 0)
-             keys2(" S2", fs, 6, b3x, bw, 4, b3y, bh, 6, 1, 0)
-             keys2(" S3", fs, 6, b3x, bw, 5, b3y, bh, 6, 1, 0)
-             keys2("RELOAD cfg", fs-2, 7, b3x+bw/2, bw, 0, b3y, bh, 5, 4, 0)
-             keys2(" SAVE cfg", fs-2, 7, b3x+bw/2, bw, 3, b3y, bh, 5, 4, 0)
-             pygame.draw.rect(windowSurfaceObj, blackColor, Rect(b3x+(bw/2)+(bw*5), b3y+(bh/2)+(bh*4), fs+2, fs+2))
+             keys2("Esc",                      fs,   5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
+             keys2("DEC",                      fs-1, decN,     b3x,         bw,   0,     b3y, bh, 2, 0, decN)
+             keys2("  N",                      fs-1, decN,     b3x,         bw,   0,     b3y, bh, 2, 2, decN)
+             keys2("nr",                       fs,   nr,       b1x,         bw,   3,     b1y, bh, 2, 1, nr)
+             keys2("DEC",                      fs-1, decS,     b3x,         bw,   0,     b3y, bh, 4, 0, decS)
+             keys2("  S",                      fs-1, decS,     b3x,         bw,   0,     b3y, bh, 4, 2, decS)
+             keys2(" R1",                      fs,   6,        b3x,         bw,   0,     b3y, bh, 6, 1, 0)
+             keys2("1",                        fs,   5,        b3x+fs,      bw,   0,     b3y, bh, 6, 1, 1)
+             keys2(" R2",                      fs,   6,        b3x,         bw,   1,     b3y, bh, 6, 1, 0)
+             keys2("2",                        fs,   5,        b3x+fs,      bw,   1,     b3y, bh, 6, 1, 0)
+             keys2(" R3",                      fs,   6,        b3x,         bw,   2,     b3y, bh, 6, 1, 0)
+             keys2("3",                        fs,   5,        b3x+fs,      bw,   2,     b3y, bh, 6, 1, 0)
+             keys2(" S1",                      fs,   6,        b3x,         bw,   3,     b3y, bh, 6, 1, 0)
+             keys2(" S2",                      fs,   6,        b3x,         bw,   4,     b3y, bh, 6, 1, 0)
+             keys2(" S3",                      fs,   6,        b3x,         bw,   5,     b3y, bh, 6, 1, 0)
+             keys2("RELOAD cfg",               fs-2, 7,        b3x+bw/2,    bw,   0,     b3y, bh, 5, 4, 0)
+             keys2(" SAVE cfg",                fs-2, 7,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 4, 0)
+             pygame.draw.rect(windowSurfaceObj, blackColor, Rect(b3x + bw/2 + bw*5, b3y + bh/2 + bh*4, fs + 2, fs + 2))
              if Night:
-                keys2("D", fs-2, 7, b3x+(bw/2), bw, 5, b3y, bh, 5, 4, 0)
+                keys2("D",                     fs-2, 7,        b3x+bw/2,    bw,   5,     b3y, bh, 5, 4, 0)
              else:
-                keys2("N", fs-2, 7, b3x+(bw/2), bw, 5, b3y, bh, 5, 4, 0)
-             keys2("TELESCOPE", fs, 1, b3x+bw/2, bw, 0, b3y, bh, 5, 0, 0)
-             keys2(" WINDOW", fs, 1, b3x+bw/2, bw, 3, b3y, bh, 5, 0, 0)
-             keys2("Stop", fs, 7, b3x, bw, 2, b3y, bh, 4, 1, 0)
-             keys2("cen", fs, 7, b3x, bw, 1, b3y, bh, 3, 0, 0)
-             keys2(" tre", fs, 7, b3x, bw, 1, b3y, bh, 3, 2, 0)
-             keys2("cen", fs, 7, b3x, bw, 4, b3y, bh, 3, 0, 0)
-             keys2(" tre", fs, 7, b3x, bw, 4, b3y, bh, 3, 2, 0)
-             keys2("con", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 0, 0)
-             keys2("cap", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 2, 0)
+                keys2("N",                     fs-2, 7,        b3x+bw/2,    bw,   5,     b3y, bh, 5, 4, 0)
+             keys2("TELESCOPE",                fs,   1,        b3x+bw/2,    bw,   0,     b3y, bh, 5, 0, 0)
+             keys2(" WINDOW",                  fs,   1,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 0, 0)
+             keys2("Stop",                     fs,   7,        b3x,         bw,   2,     b3y, bh, 4, 1, 0)
+             keys2("cen",                      fs,   7,        b3x,         bw,   1,     b3y, bh, 3, 0, 0)
+             keys2(" tre",                     fs,   7,        b3x,         bw,   1,     b3y, bh, 3, 2, 0)
+             keys2("cen",                      fs,   7,        b3x,         bw,   4,     b3y, bh, 3, 0, 0)
+             keys2(" tre",                     fs,   7,        b3x,         bw,   4,     b3y, bh, 3, 2, 0)
+             keys2("con",                      fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 0, 0)
+             keys2("cap",                      fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 2, 0)
              if use_Pi_Cam:
-                keys2("i", fs-2, 7, b3x+(bw*1.25), bw, 2, b3y, bh, 5, 4, 0)
-                keys2("pic", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 0)
-                keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 0)
-             keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 0)
-             keys2("s", fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
-             keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 0)
+                keys2("i",                     fs-2, 7,        b3x+bw*1.25, bw,   2,     b3y, bh, 5, 4, 0)
+                keys2("pic",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
+                keys2("cap",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
+             keys2("scr",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+             keys2("s",                        fs,   5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+             keys2("cap",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
              if photoon:
-                 keys2("PHOTO", fs, photo, b2x, bw, 4, b2y, bh, 2, 0, 0)
-                 keys2("O", fs, 5, b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 0)
-                 keys2("P-Time", fs, 6, b2x, bw, 4, b2y, bh, 3, 0, 0)
-                 keys2(" -", fs, 6, b2x, bw, 4, b2y, bh, 3, 4, 0)
-                 keys2("+", fs, 6, b2x+bw-fs, bw, 5, b2y, bh, 3, 4, 0)
-                 keys2(str(ptime), fs, 3, b2x, bw, 5, b2y, bh, 3, 3, 0)
-                 keys2("P-Count", fs, 6, b2x, bw, 4, b2y, bh, 4, 0, 0)
-                 keys2(" -", fs, 6, b2x, bw, 4, b2y, bh, 4, 4, 0)
-                 keys2("+", fs, 6, b2x+bw-fs, bw, 5, b2y, bh, 4, 4, 0)
-                 keys2(str(pcount), fs, 3, b2x, bw, 5, b2y, bh, 4, 3, 0)
+                 keys2("PHOTO",                fs,   photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
+                 keys2("O",                    fs,   5,        b2x+fs*1.5,  bw,   4,     b2y, bh, 2, 0, 0)
+                 keys2("P-Time",               fs,   6,        b2x,         bw,   4,     b2y, bh, 3, 0, 0)
+                 keys2(" -",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 3, 4, 0)
+                 keys2("+",                    fs,   6,        b2x+bw-fs,   bw,   5,     b2y, bh, 3, 4, 0)
+                 keys2(str(ptime),             fs,   3,        b2x,         bw,   5,     b2y, bh, 3, 3, 0)
+                 keys2("P-Count",              fs,   6,        b2x,         bw,   4,     b2y, bh, 4, 0, 0)
+                 keys2(" -",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 4, 4, 0)
+                 keys2("+",                    fs,   6,        b2x+bw-fs,   bw,   5,     b2y, bh, 4, 4, 0)
+                 keys2(str(pcount),            fs,   3,        b2x,         bw,   5,     b2y, bh, 4, 3, 0)
              button2(b2x, 5, b2y, 6, bw, 1, bh, cls)
-             keys2("CLS", fs, cls, b2x, bw, 4, b2y, bh, 6, 1, 0)
-             keys2("C", fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 0)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 15,(bh * 10)+(bh/3)+10),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 5,(bh * 10)+(bh/3)+5),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 10) +(bh/3)),(width + (bw*3 ) + (bw/4) + 10 ,(bh * 10)+(bh/3)),2)
-
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 5,(bh * 10)+(bh/3)+10),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 15,(bh * 10)+(bh/3)+5),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 10) +(bh/3)),(width + (bw*5 ) + (bw/4) + 10,(bh * 10)+(bh/3)+0),2)
-
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 5,(bh * 12) +(bh/3)),(width + (bw*5) + (bw/4) + 15,(bh * 12)+(bh/3)+10),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 12) +(bh/3)+10),(width + (bw*5) + (bw/4) + 15,(bh * 12)+(bh/3)+5),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*5 ) + (bw/4) + 15,(bh * 12) +(bh/3)+10),(width + (bw*5) + (bw/4) + 10,(bh * 12)+(bh/3)+10),2)
-
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 15,(bh * 12) +(bh/3)),(width + (bw*3 ) + (bw/4) + 5,(bh * 12)+(bh/3)+10),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 12) +(bh/3)+10),(width + (bw*3 ) + (bw/4) + 5,(bh * 12)+(bh/3)+5),2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + (bw*3 ) + (bw/4) + 5,(bh * 12) +(bh/3)+10),(width + (bw*3 ) + (bw/4) + 10,(bh * 12)+(bh/3)+10),2)
+             keys2("CLS",                      fs,   cls,      b2x,         bw,   4,     b2y, bh, 6, 1, 0)
+             keys2("C",                        fs,   5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
+                                                                                                                                                 
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
+                                                                                                                                                 
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
+                                                                                                                                                    
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
+             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
              pygame.display.update()
              change = 1
-          elif z == 35  or kz == K_e:
-             ewi += 1
-             if ewi > 1:
-                ewi = 0
+          elif z == 35 or kz == K_e:
+             ewi = not ewi
              change = 1
-          elif(z == 155 or z == 165 or z == 175 or kz == K_4 or kz == K_5 or kz == K_6):
+          elif (z == 155 or z == 165 or z == 175 or kz == K_4 or kz == K_5 or kz == K_6):
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
              if kz == K_4 or z == 154:
@@ -3038,38 +2886,38 @@ while True:
                 z = 175
              deffile = "config" + str((z-145)/10)
              if z == 155:
-                keys2(" S1", fs, 1, b3x, bw, 3, b3y, bh, 6, 1, 1)
+                keys2(" S1",                   fs,   1,        b3x,         bw,   3,     b3y, bh, 6, 1, 1)
              elif z == 165:
-                keys2(" S2", fs, 1, b3x, bw, 4, b3y, bh, 6, 1, 1)
+                keys2(" S2",                   fs,   1,        b3x,         bw,   4,     b3y, bh, 6, 1, 1)
              elif z == 175:
-                keys2(" S3", fs, 1, b3x, bw, 5, b3y, bh, 6, 1, 1)
+                keys2(" S3",                   fs,   1,        b3x,         bw,   5,     b3y, bh, 6, 1, 1)
              fil = "0000"
              timp = str(auto_g) + fil[len(str(int(nscale))):len(str(int(nscale)))+4] + str(int(nscale)) + fil[len(str(int(sscale))):len(str(int(sscale)))+4] + str(int(sscale))
              timp += fil[len(str(int(escale))):len(str(int(escale)))+4] + str(int(escale)) + fil[len(str(int(wscale))):len(str(int(wscale)))+4] +str(int(wscale)) + str(ewi)
              timp += str(nsi) +fil[len(str(crop)):len(str(crop))+4] + str(crop)
              if offset3 < 0:
-                offset3a = 0-int(offset3)
+                offset3a = -int(offset3)
                 timp += "9"
              else:
                 offset3a = int(offset3)
                 timp += "0"
              timp += fil[len(str(offset3a))+1:len(str(offset3a))+4] + str(offset3a)
              if offset5 < 0:
-                offset5a = 0-int(offset5)
+                offset5a = -int(offset5)
                 timp += "9"
              else:
                 offset5a = int(offset5)
                 timp += "0"
              timp += fil[len(str(offset5a))+1:len(str(offset5a))+4] + str(offset5a)
              if offset6 < 0:
-                offset6a = 0-int(offset6)
+                offset6a = -int(offset6)
                 timp += "9"
              else:
                 offset6a = int(offset6)
                 timp += "0"
              timp += fil[len(str(offset6a))+1:len(str(offset6a))+4] + str(offset6a)
              if offset4 < 0:
-                offset4a = 0-int(offset4)
+                offset4a = -int(offset4)
                 timp += "9"
              else:
                 offset4a = int(offset4)
@@ -3079,14 +2927,14 @@ while True:
              timp += str(auto_win) + str(auto_t) + str(zoom)
              timp += fil[len(str(rpibr)):len(str(rpibr))+4] + str(rpibr)
              if rpico < 0:
-                rpicoa = 0-rpico
+                rpicoa = -rpico
                 timp += "9"
              else:
                 rpicoa = rpico
                 timp += "0"
              timp += fil[len(str(rpicoa))+1:len(str(rpicoa))+4] + str(rpicoa)
              if rpiev < 0:
-                rpieva = 0-rpiev
+                rpieva = -rpiev
                 timp += "9"
              else:
                 rpieva = rpiev
@@ -3098,9 +2946,8 @@ while True:
              timp += fil[len(str(pcount))+1:len(str(pcount))+4] + str(pcount)
              timp += fil[len(str(ptime))+1:len(str(ptime))+4] + str(ptime)
 
-             file = open(deffile + ".txt", "w")
-             file.write(timp)
-             file.close()
+             with open(deffile + ".txt", "w") as file:
+                file.write(timp)
 
              if z == 155:
                 keys2(" S1", fs, 6, b3x, bw, 3, b3y, bh, 6, 1, 1)
@@ -3112,7 +2959,7 @@ while True:
              restart = 1
              change = 1
 
-          elif(z == 125 or z == 135 or z == 145 or kz == K_1 or kz == K_2 or kz == K_3):
+          elif (z == 125 or z == 135 or z == 145 or kz == K_1 or kz == K_2 or kz == K_3):
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
              if use_config > 0:
@@ -3130,47 +2977,47 @@ while True:
                 keys2(" R2", fs, 1, b3x, bw, 1, b3y, bh, 6, 1, 1)
              elif z == 145:
                 keys2(" R3", fs, 1, b3x, bw, 2, b3y, bh, 6, 1, 1)
-             if os.path.exists(deffile + ".txt") == True:
+             if os.path.exists(deffile + ".txt"):
                 file = open(deffile + ".txt", "r")
                 inputx = file.readline()
                 file.close()
-                auto_g = int(inputx[0:1])
-                nscale = int(inputx[1:5])
-                sscale = int(inputx[5:9])
-                escale = int(inputx[9:13])
-                wscale = int(inputx[13:17])
-                ewi = int(inputx[17:18])
-                nsi = int(inputx[18:19])
-                crop = int(inputx[19:23])
-                offset3 = int(inputx[23:27])
+                auto_g =     int(inputx[ 0: 1])
+                nscale =     int(inputx[ 1: 5])
+                sscale =     int(inputx[ 5: 9])
+                escale =     int(inputx[ 9:13])
+                wscale =     int(inputx[13:17])
+                ewi =        int(inputx[17:18])
+                nsi =        int(inputx[18:19])
+                crop =       int(inputx[19:23])
+                offset3 =    int(inputx[23:27])
                 if offset3 > 9000:
-                   offset3 = 0-(offset3-9000)
-                offset5 = int(inputx[27:31])
+                   offset3 = 9000 - offset3
+                offset5 =    int(inputx[27:31])
                 if offset5 > 9000:
-                   offset5 = 0-(offset5-9000)
-                offset6 = int(inputx[31:35])
+                   offset5 = 9000 - offset5
+                offset6 =    int(inputx[31:35])
                 if offset6 > 9000:
-                   offset6 = 0-(offset6-9000)
-                offset4 = int(inputx[35:39])
+                   offset6 = 9000 - offset6
+                offset4 =    int(inputx[35:39])
                 if offset4 > 9000:
-                   offset4 = 0-(offset4-9000)
-                Intervals = int(inputx[39:43])
-                log2 = log
-                log = int(inputx[43:44])
+                   offset4 = 9000 - offset4
+                Intervals =  int(inputx[39:43])
+                log2 =       log
+                log =        int(inputx[43:44])
                 if log and not log2:
                    now = datetime.datetime.now()
                    timestamp = now.strftime("%y%m%d%H%M%S")
                    logfile = "/tmp/" + str(timestamp) + ".txt"
-                rgbw = int(inputx[44:45])
-                threshold = int(inputx[45:49])
-                thres = int(inputx[49:50])
-                graph = int(inputx[50:51])
-                auto_i = int(inputx[51:52])
-                plot = int(inputx[52:53])
-                auto_win = int(inputx[53:54])
-                auto_t = int(inputx[54:55])
-                if camera_connected :
-                   zoom = int(inputx[55:56])
+                rgbw =       int(inputx[44:45])
+                threshold =  int(inputx[45:49])
+                thres =      int(inputx[49:50])
+                graph =      int(inputx[50:51])
+                auto_i =     int(inputx[51:52])
+                plot =       int(inputx[52:53])
+                auto_win =   int(inputx[53:54])
+                auto_t =     int(inputx[54:55])
+                if camera_connected:
+                   zoom =    int(inputx[55:56])
                 Image_window = max(Image_window, zoom)
                 if not zoom:
                    w = width
@@ -3200,42 +3047,42 @@ while True:
                       cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
                    cam.start()
                 if not camera_connected:
-                   zoom = int(inputx[55:56])
+                   zoom =    int(inputx[55:56])
                    wd = 20 + zoom*4
                    hd = wd
-                rpibr = int(inputx[56:60])
-                rpico = int(inputx[60:64])
+                rpibr =      int(inputx[56:60])
+                rpico =      int(inputx[60:64])
                 if rpico > 9000:
-                   rpico = 0-(rpico-9000)
-                rpiev = int(inputx[64:68])
+                   rpico = 9000 - rpico
+                rpiev =      int(inputx[64:68])
                 if rpiev > 9000:
-                   rpiev = 0-(rpiev-9000)
-                rpiss = int(inputx[68:72])*1000
-                rpiISO = int(inputx[72:76])
-                rpiexno = int(inputx[76:77])
-                rpiex = rpimodes[rpiexno]
+                   rpiev = 9000 - rpiev
+                rpiss =      int(inputx[68:72])*1000
+                rpiISO =     int(inputx[72:76])
+                rpiexno =    int(inputx[76:77])
+                rpiex =   rpimodes[rpiexno]
                 rpiexa = rpimodesa[rpiexno]
                 if len(inputx) > 77:
-                   binn = int(inputx[77:78])
-                   nr = int(inputx[78:79])
-                   decN = int(inputx[79:80])
-                   decS = int(inputx[80:81])
-                   rpired = int(inputx[81:84])
+                   binn =    int(inputx[77:78])
+                   nr =      int(inputx[78:79])
+                   decN =    int(inputx[79:80])
+                   decS =    int(inputx[80:81])
+                   rpired =  int(inputx[81:84])
                    rpiblue = int(inputx[84:87])
-                   rpiredx = Decimal(rpired)/Decimal(100)
+                   rpiredx =   Decimal(rpired)/Decimal(100)
                    rpibluex = Decimal(rpiblue)/Decimal(100)
-                   pcount = int(inputx[87:90])
-                   ptime = int(inputx[90:93])
+                   pcount =  int(inputx[87:90])
+                   ptime =   int(inputx[90:93])
 
              if z == 125:
-                keys2(" R1", fs, 6, b3x, bw, 0, b3y, bh, 6, 1, 1)
-                keys2("1", fs, 5, b3x+fs, bw, 0, b3y, bh, 6, 1, 1)
+                keys2(" R1", fs, 6, b3x,    bw, 0, b3y, bh, 6, 1, 1)
+                keys2("1",   fs, 5, b3x+fs, bw, 0, b3y, bh, 6, 1, 1)
              elif z == 135:
-                keys2(" R2", fs, 6, b3x, bw, 1, b3y, bh, 6, 1, 1)
-                keys2("2", fs, 5, b3x+fs, bw, 1, b3y, bh, 6, 1, 1)
+                keys2(" R2", fs, 6, b3x,    bw, 1, b3y, bh, 6, 1, 1)
+                keys2("2",   fs, 5, b3x+fs, bw, 1, b3y, bh, 6, 1, 1)
              elif z == 145:
-                keys2(" R3", fs, 6, b3x, bw, 2, b3y, bh, 6, 1, 1)
-                keys2("3", fs, 5, b3x+fs, bw, 2, b3y, bh, 6, 1, 1)
+                keys2(" R3", fs, 6, b3x,    bw, 2, b3y, bh, 6, 1, 1)
+                keys2("3",   fs, 5, b3x+fs, bw, 2, b3y, bh, 6, 1, 1)
 
              restart = 1
              change = 1
@@ -3288,22 +3135,22 @@ while True:
          keys2("AutoG", fs, auto_g, b1x, bw, 0, b1y, bh, 2, 1, 1)
          keys2("A", fs, 5, b1x, bw, 0, b1y, bh, 2, 1, 1)
          oldauto_g = auto_g
-      if oldlog != log :
+      if oldlog != log:
          button2(b1x, 1, b1y, 4, bw, 1, bh, log)
          keys2("Log", fs, log, b1x, bw, 0, b1y, bh, 4, 1, 1)
          keys2("L", fs, 5, b1x, bw, 0, b1y, bh, 4, 1, 1)
          oldlog = log
-      if oldgraph != graph :
+      if oldgraph != graph:
          button2(b1x, 2, b1y, 3, bw, 1, bh, graph)
          keys2("Gph", fs, graph, b1x, bw, 1, b1y, bh, 3, 1, 1)
          keys2("G", fs, 5, b1x, bw, 1, b1y, bh, 3, 1, 1)
          oldgraph = graph
-      if oldplot != plot :
+      if oldplot != plot:
          button2(b1x, 1, b1y, 3, bw, 1, bh, plot)
          keys2("Plot", fs, plot, b1x, bw, 0, b1y, bh, 3, 1, 1)
          keys2("P", fs, 5, b1x, bw, 0, b1y, bh, 3, 1, 1)
          oldplot = plot
-      if oldthres != thres :
+      if oldthres != thres:
          button2(b1x, 2, b1y, 4, bw, 1, bh, thres)
          keys2("Thr", fs, thres, b1x, bw, 1, b1y, bh, 4, 1, 1)
          keys2("h", fs, 5, b1x+fs/1.5, bw, 1, b1y, bh, 4, 1, 1)
@@ -3351,13 +3198,13 @@ while True:
          else:
             keys2(msg, fs, rgbw + 1, b1x, bw, 5, b1y, bh, 2, 3, 1)
          oldrgbw = rgbw
-      if oldcrop  != crop :
+      if oldcrop != crop:
          if crop != maxwin:
             keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 1)
          else:
             keys2("max", fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 1)
-         oldcrop  = crop
-      if oldrpibr != rpibr :
+         oldcrop = crop
+      if oldrpibr != rpibr:
          keys2(str(rpibr), fs, 3, b2x, bw, 1, b2y, bh, 2, 3, 1)
          oldrpibr = rpibr
       if oldrpico != rpico and camera_connected and use_Pi_Cam:
@@ -3373,11 +3220,11 @@ while True:
             keys2(str(int(rpiev)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 1)
          else:
             keys2(str(int(rpiss/1000)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 1)
-         if rpiexa == ' off' or rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa== 'vlon2' or rpiexa == 'spor2':
+         if rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa== 'vlon2' or rpiexa == 'spor2':
             keys2("Exp Time", fs-1, 6, b2x, bw, 0, b2y, bh, 4, 0, 1)
          else:
             keys2("     eV", fs, 6, b2x, bw, 0, b2y, bh, 4, 0, 1)
-         if rpiexa == ' off' or  rpiexa == 'nigh2' or  rpiexa == 'fwor2' or  rpiexa == 'vlon2' or rpiexa == 'spor2':
+         if rpiexa == ' off' or rpiexa == 'nigh2' or rpiexa == 'fwor2' or rpiexa == 'vlon2' or rpiexa == 'spor2':
             keys2(str(int(rpiss/1000)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 1)
          else:
             keys2(str(int(rpiev)), fs, 3, b2x, bw, 1, b2y, bh, 4, 3, 1)
@@ -3412,37 +3259,37 @@ while True:
       if oldcls != cls:
          button2(b2x, 5, b2y, 6, bw, 1, bh, cls)
          keys2("CLS", fs, cls, b2x, bw, 4, b2y, bh, 6, 1, 1)
-         keys2("C", fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 1)
+         keys2("C",   fs, 5, b2x, bw, 4, b2y, bh, 6, 1, 1)
          oldcls = cls
       oldave = ave
 
-   if use_Pi_Cam == 1 and restart == 1 and camera_connected == 1:
-      if os.path.exists('/run/shm/test.jpg') == True:
-         os.rename('/run/shm/test.jpg','/run/shm/oldtest.jpg')
+   if use_Pi_Cam and restart and camera_connected:
+      if os.path.exists('/run/shm/test.jpg'):
+         os.rename('/run/shm/test.jpg', '/run/shm/oldtest.jpg')
       try:
          os.remove('/run/shm/test.jpg')
       except OSError:
          pass
-             
+
       rpistr = "raspistill -o /run/shm/test.jpg -co " + str(rpico) + " -br " + str(rpibr)
-      if rpiexa != ' off' and  rpiexa != 'nigh2' and  rpiexa != 'fwor2' and  rpiexa != 'vlon2' and rpiexa != 'spor2':
-         rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+      if rpiexa != ' off' and rpiexa != 'nigh2' and rpiexa != 'fwor2' and rpiexa != 'vlon2' and rpiexa != 'spor2':
+         rpistr += " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
       elif rpiexa == ' off':
-         rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+         rpistr += " -t " + str(rpit) + " -tl 0 -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
       else:
-         rpistr = rpistr + " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
+         rpistr += " -t " + str(rpit) + " -tl 0 -ex " + rpiex + " -ss " + str(rpiss) + " -fp -bm -awb off -awbg " + str(rpiredx)+","+str(rpibluex)
       if rpiISO > 0:
-         rpistr = rpistr + " -ISO " + str(rpiISO)
+         rpistr += " -ISO " + str(rpiISO)
       if rpiev != 0:
-         rpistr = rpistr + " -ev " + str(rpiev)
-      rpistr = rpistr + " -q 100 -n -sa " + str(rpisa)
+         rpistr += " -ev " + str(rpiev)
+      rpistr += " -q 100 -n -sa " + str(rpisa)
       off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))
       off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
       widx = Decimal(width)/Decimal(w)
       heiy = Decimal(height)/Decimal(h)
-      rpistr = rpistr + " -w " + str(width) + " -h " + str(height) + " -roi " +  str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
-      if rpineg == 1:
-         rpistr = rpistr + " -ifx negative "
+      rpistr += " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
+      if rpineg:
+         rpistr += " -ifx negative "
       #print rpistr
-      p=subprocess.Popen(rpistr,shell=True, preexec_fn=os.setsid)
+      p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
       restart = 0
