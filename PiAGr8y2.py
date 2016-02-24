@@ -709,7 +709,7 @@ def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(fx,        fy+1, bw*2 - 3, bh/2.4))
    if vo == 3:
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(fx-2-bw/2, fy,   bw+4,     bh/2.2))
-      fx -= 2 - (len(msg)*fsize)/4
+      fx -= 2 + (len(msg)*fsize)/4
    elif vo == 4:
       fy -= 2
    colors =        [dgryColor, greenColor, yellowColor, redColor, greenColor, blueColor, whiteColor, greyColor, blackColor, purpleColor]
