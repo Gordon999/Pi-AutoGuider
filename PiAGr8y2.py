@@ -169,7 +169,7 @@ if use_config > 0 and use_config < 4:
    deffile = "config" + str((z - 115)/10)
    if os.path.exists(deffile + ".txt"):
       with open(deffile + ".txt", "r") as file:
-          inputx = file.readline()
+         inputx = file.readline()
       auto_g =              int(inputx[  0:  1])
       nscale =              int(inputx[  1:  5])
       sscale =              int(inputx[  5:  9])
@@ -642,7 +642,7 @@ def button2(bx1, x, by1, y, bw, z, by2, bColor):
    pygame.draw.line(windowSurfaceObj, whiteColor, (bx1,   by1),   (bx1+bx2-1, by1   ))
    pygame.draw.line(windowSurfaceObj, whiteColor, (bx1+1, by1+1), (bx1+bx2-2, by1+1 ))
    pygame.draw.line(windowSurfaceObj, whiteColor, (bx1,   by1),   (bx1,       by1+bh))
-   return()
+   return
 
 button2(b1x, 1, b1y, 2, bw, 2, bh, auto_g)
 button2(b1x, 3, b1y, 2, bw, 1, bh, binn)
@@ -721,7 +721,7 @@ def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
    windowSurfaceObj.blit(msgSurfaceObj, msgRectobj)
    if upd:
       pygame.display.update(pygame.Rect(int(fx/bw)*bw, int(fy/bh)*bh, bw*3, bh))
-   return()
+   return
 
 keys2(str(int(nscale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 2, 3, 0)
 keys2(str(int(sscale)),           fs,       3,        b2x,         bw,   3,     b2y, bh, 3, 3, 0)
@@ -1635,7 +1635,7 @@ while True:
          if serial_connected:
             if decN and vdir == "n":
                ser.write(bytes(Vcorrt.encode('ascii')))
-            if decS == 1 and vdir == "s":
+            if decS and vdir == "s":
                ser.write(bytes(Vcorrt.encode('ascii')))
             time.sleep(0.2)
             ser.write(bytes(Hcorrt.encode('ascii')))
@@ -1643,15 +1643,14 @@ while True:
          if log:
             now = datetime.datetime.now()
             timestamp = now.strftime("%y/%m/%d-%H:%M:%S")
-            timp = str(timestamp) + ", " + Vcorrt + ", " + Hcorrt + ", " + str(acorrect) + ", " + str(bcorrect) + "\n"
-            file = open(logfile, "a")
-            file.write(timp)
-            file.close()
+            timp = str(timestamp) + "," + Vcorrt + "," + Hcorrt + "," + str(acorrect) + "," + str(bcorrect) + "\n"
+            with open(logfile, "a") as file:
+               file.write(timp)
          if not camera_connected:
             posx -= bcorrect/100
             posy -= acorrect/100
 
-      if auto_i == 1:
+      if auto_i:
          acor = int(Vcorrt[4:8])
          bcor = int(Hcorrt[4:8])
          if acor >= bcor and acor > 0:
@@ -2457,14 +2456,11 @@ while True:
              if plot > 2:
                 plot = 0
              change = 1
-
           elif z == 22 or z == 32 or kz == K_w:
              auto_win = not auto_win
-                change = 1
              change = 1
           elif z == 23 or z == 33 or kz == K_t:
              auto_t = not auto_t
-                change = 1
              change = 1
           elif z == 74 and use_Pi_Cam:
              if rpiexno < 9:
@@ -2478,7 +2474,6 @@ while True:
              if rpiexno > 9:
                 rpiexno = 0
              rpiex = rpimodes[rpiexno]
-
              restart = 1
              change = 1
           elif z == 64 and use_Pi_Cam:
@@ -2486,7 +2481,6 @@ while True:
                 rpiexno -= 1
                 rpiex = rpimodes[rpiexno]
                 rpiexa = rpimodesa[rpiexno]
-
              restart = 1
              change = 1
           elif (z == 3 or kz == K_l) and auto_g:
@@ -2892,59 +2886,68 @@ while True:
              elif z == 175:
                 keys2(" S3",                   fs,   1,        b3x,         bw,   5,     b3y, bh, 6, 1, 1)
              fil = "0000"
-             timp = str(auto_g) + fil[len(str(int(nscale))):len(str(int(nscale)))+4] + str(int(nscale)) + fil[len(str(int(sscale))):len(str(int(sscale)))+4] + str(int(sscale))
-             timp += fil[len(str(int(escale))):len(str(int(escale)))+4] + str(int(escale)) + fil[len(str(int(wscale))):len(str(int(wscale)))+4] +str(int(wscale)) + str(ewi)
-             timp += str(nsi) +fil[len(str(crop)):len(str(crop))+4] + str(crop)
+             timp = str(int(auto_g))
+             timp += fil[len(str(int(nscale)))    :len(str(int(nscale)))+4    ] + str(int(nscale))
+             timp += fil[len(str(int(sscale)))    :len(str(int(sscale)))+4    ] + str(int(sscale))
+             timp += fil[len(str(int(escale)))    :len(str(int(escale)))+4    ] + str(int(escale))
+             timp += fil[len(str(int(wscale)))    :len(str(int(wscale)))+4    ] + str(int(wscale))
+             timp += str(int(ewi)) + str(int(nsi))
+             timp += fil[len(str(crop))           :len(str(crop))+4           ] + str(crop)
              if offset3 < 0:
                 offset3a = -int(offset3)
                 timp += "9"
              else:
                 offset3a = int(offset3)
                 timp += "0"
-             timp += fil[len(str(offset3a))+1:len(str(offset3a))+4] + str(offset3a)
+             timp += fil[len(str(offset3a))+1     :len(str(offset3a))+4       ] + str(offset3a)
              if offset5 < 0:
                 offset5a = -int(offset5)
                 timp += "9"
              else:
                 offset5a = int(offset5)
                 timp += "0"
-             timp += fil[len(str(offset5a))+1:len(str(offset5a))+4] + str(offset5a)
+             timp += fil[len(str(offset5a))+1     :len(str(offset5a))+4       ] + str(offset5a)
              if offset6 < 0:
                 offset6a = -int(offset6)
                 timp += "9"
              else:
                 offset6a = int(offset6)
                 timp += "0"
-             timp += fil[len(str(offset6a))+1:len(str(offset6a))+4] + str(offset6a)
+             timp += fil[len(str(offset6a))+1     :len(str(offset6a))+4       ] + str(offset6a)
              if offset4 < 0:
                 offset4a = -int(offset4)
                 timp += "9"
              else:
                 offset4a = int(offset4)
                 timp += "0"
-             timp += fil[len(str(offset4a))+1:len(str(offset4a))+4] + str(offset4a) + fil[len(str(Intervals)):len(str(Intervals))+4] + str(Intervals) + str(log)
-             timp += str(rgbw) + fil[len(str(threshold)):len(str(threshold))+4] + str(threshold) + str(thres) + str(graph) + str(auto_i) + str(plot)
-             timp += str(auto_win) + str(auto_t) + str(zoom)
-             timp += fil[len(str(rpibr)):len(str(rpibr))+4] + str(rpibr)
+             timp += fil[len(str(offset4a))+1     :len(str(offset4a))+4       ] + str(offset4a)
+             timp += fil[len(str(Intervals))      :len(str(Intervals))+4      ] + str(Intervals)
+             timp += str(int(log)) + str(rgbw)
+             timp += fil[len(str(threshold))      :len(str(threshold))+4  ] + str(threshold)
+             timp += str(int(thres)) + str(graph) + str(int(auto_i)) + str(plot)
+             timp += str(int(auto_win)) + str(int(auto_t)) + str(zoom)
+             timp += fil[len(str(rpibr))          :len(str(rpibr))+4          ] + str(rpibr)
              if rpico < 0:
                 rpicoa = -rpico
                 timp += "9"
              else:
                 rpicoa = rpico
                 timp += "0"
-             timp += fil[len(str(rpicoa))+1:len(str(rpicoa))+4] + str(rpicoa)
+             timp += fil[len(str(rpicoa))+1       :len(str(rpicoa))+4         ] + str(rpicoa)
              if rpiev < 0:
                 rpieva = -rpiev
                 timp += "9"
              else:
                 rpieva = rpiev
                 timp += "0"
-             timp += fil[len(str(rpieva))+1:len(str(rpieva))+4] + str(rpieva) + fil[len(str(int(rpiss/1000))):len(str(int(rpiss/1000)))+4] + str(int(rpiss/1000)) + fil[len(str(rpiISO)):len(str(rpiISO))+4] + str(rpiISO) +str(rpiexno)
-             timp += str(binn) + str(nr) + str(decN) + str(decS)
-             timp += fil[len(str(rpired))+1:len(str(rpired))+4] + str(rpired)
-             timp += fil[len(str(rpiblue))+1:len(str(rpiblue))+4] + str(rpiblue)
-             timp += fil[len(str(pcount))+1:len(str(pcount))+4] + str(pcount)
-             timp += fil[len(str(ptime))+1:len(str(ptime))+4] + str(ptime)
+             timp += fil[len(str(rpieva))+1       :len(str(rpieva))+4         ] + str(rpieva)
+             timp += fil[len(str(int(rpiss/1000))):len(str(int(rpiss/1000)))+4] + str(int(rpiss/1000))
+             timp += fil[len(str(rpiISO))         :len(str(rpiISO))+4         ] + str(rpiISO)
+             timp += str(rpiexno) + str(int(binn)) + str(int(nr)) + str(int(decN)) + str(int(decS))
+             timp += fil[len(str(rpired))+1       :len(str(rpired))+4         ] + str(rpired)
+             timp += fil[len(str(rpiblue))+1      :len(str(rpiblue))+4        ] + str(rpiblue)
+             timp += fil[len(str(pcount))+1       :len(str(pcount))+4         ] + str(pcount)
+             timp += fil[len(str(ptime))+1        :len(str(ptime))+4          ] + str(ptime)
 
              with open(deffile + ".txt", "w") as file:
                 file.write(timp)
@@ -2970,7 +2973,7 @@ while True:
                 z = 135
              elif kz == K_3 or z == 144:
                 z = 145
-             deffile = "config" + str((z-115)/10)
+             deffile = "config" + str((z - 115)/10)
              if z == 125:
                 keys2(" R1", fs, 1, b3x, bw, 0, b3y, bh, 6, 1, 1)
              elif z == 135:
@@ -2978,9 +2981,8 @@ while True:
              elif z == 145:
                 keys2(" R3", fs, 1, b3x, bw, 2, b3y, bh, 6, 1, 1)
              if os.path.exists(deffile + ".txt"):
-                file = open(deffile + ".txt", "r")
-                inputx = file.readline()
-                file.close()
+                with open(deffile + ".txt", "r") as file:
+                   inputx = file.readline()
                 auto_g =     int(inputx[ 0: 1])
                 nscale =     int(inputx[ 1: 5])
                 sscale =     int(inputx[ 5: 9])
