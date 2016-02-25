@@ -1666,52 +1666,56 @@ while True:
          pox = width - 110
       else:
          pox = width + 10
-      poy =  20
-      pov =  50
+      poy = 20
+      pov = 50
       pol = 256
-      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
-      limg += 1
+      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1,poy-1,52,258),1)
+      limg +=1
       val2 = pov/2
       val3 = pov/2
       if acorrect >= 0:
-         val2 = pov/2 + int(math.sqrt(acorrect))/4
+         val2 = (pov/2) + int(math.sqrt(acorrect))/4
       else:
-         val2 = pov/2 - int(math.sqrt(-acorrect))/4
+         val2 = (pov/2) - int(math.sqrt(0-acorrect))/4
       if bcorrect >= 0:
-         val3 = pov/2 + int(math.sqrt(bcorrect))/4
+         val3 = (pov/2) + int(math.sqrt(bcorrect))/4
       else:
-         val3 = pov/2 - int(math.sqrt(-bcorrect))/4
+         val3 = (pov/2) - int(math.sqrt(0-bcorrect))/4
       if val2 < val3:
-         rimg = blankline[0:val2*3]
-         if not Night:
-            rimg += red
-            rimg += grn
+         rimg = blankline[0:(val2)*3]
+         if Night == 0:
+            rimg = rimg + red
          else:
-            rimg += dred
-            rimg += dgrn
-         rimg += blankline[val2*3:val3*3]
-         rimg += blankline
-         pimg += rimg[0:pov*3]
+            rimg = rimg + dred
+         rimg = rimg + blankline[(val2)*3:(val3)*3]
+         if Night == 0:
+            rimg = rimg + grn
+         else:
+            rimg = rimg + dgrn
+         rimg = rimg + blankline
+         pimg = pimg + rimg[0:pov*3]
       else:
-         rimg = blankline[0:val3*3]
-         if not Night:
-            rimg += grn
-            rimg += red
+         rimg = blankline[0:(val3)*3]
+         if Night == 0:
+            rimg = rimg + grn
          else:
-            rimg += dgrn
-            rimg += dred
-         rimg += blankline[val3*3:val2*3]
-         rimg += blankline
-         pimg += rimg[0:pov*3]
+            rimg = rimg + dgrn
+         rimg = rimg + blankline[(val3)*3:(val2)*3]
+         if Night == 0:
+            rimg = rimg + red
+         else:
+            rimg = rimg + dred
+         rimg = rimg + blankline
+         pimg = pimg + rimg[0:pov*3]
       if limg > pol:
-         yt = (limg - pol)*pov*3
+         yt = (limg-pol)*pov*3
          yu = limg*pov*3
          pimg = pimg[yt:yu]
          limg = pol
-      imageg = pygame.image.fromstring(pimg, (pov, limg), "RGB", 1)
+      imageg = pygame.image.fromstring(pimg,(pov,limg),"RGB",1)
       if plot == 1:
          imageg.set_alpha(127)
-      windowSurfaceObj.blit(imageg, (pox, poy))
+      windowSurfaceObj.blit(imageg,(pox,poy))
 
    w2 =  width/2 + offset3
    h2 = height/2 + offset4
