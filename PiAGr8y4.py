@@ -1184,13 +1184,13 @@ while True:
             ptime4 = ptime3
       if ptime2 < t3 and photo and camera:
          pcount2 -= 1
-         keys2(str((pcount + 1) - pcount2),  fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+         keys2(str((pcount + 1) - pcount2),  fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
          if not pcount2:
             photo = 0
             camera = 0
             keys2("PHOTO",                   fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
             keys2("O",                       fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-            keys2("",                        fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2("",                        fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
             keys2("",                        fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.LOW)
@@ -1201,7 +1201,7 @@ while True:
       if ptime2 < t3 and photo and not camera:
          camera = 1
          ptime2 = time.time() + ptime
-         keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+         keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
          if use_RPiGPIO or photoon:
             GPIO.output(C_OP, GPIO.HIGH)
 
@@ -1267,13 +1267,13 @@ while True:
             ptime4 = ptime3
          if ptime2 < t3 and camera:
             pcount2 -= 1
-            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
             if not pcount2:
                photo = 0
                camera = 0
                keys2("PHOTO",                fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
                keys2("O",                    fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-               keys2("",                     fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+               keys2("",                     fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
                keys2("",                     fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
                if use_RPiGPIO or photoon:
                   GPIO.output(C_OP, GPIO.LOW)
@@ -1284,7 +1284,7 @@ while True:
          if ptime2 < t3 and photo and not camera:
             camera = 1
             ptime2 = time.time() + ptime
-            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+17,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.HIGH)
 
