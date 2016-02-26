@@ -26,12 +26,7 @@ Works with a Raspberry Pi (http://www.raspberrypi.org) with 'Jessie' using the R
 Use the latest RPi Raspian Jessie download.
 http://www.raspberrypi.org/downloads
 
-then do 
-
-sudo apt-get update
-sudo apt-get upgrade
-
-to get the latest upgrades if required.
+then do sudo apt-get update and sudo apt-get upgrade, to get the latest upgrades if required.
 
 Uses IDLE/Python 2.7 . You must start IDLE by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' at the prompt, if not the GPIO won't work
 
@@ -68,7 +63,7 @@ click on Open
 Choose 'Run'
 Choose 'Run Module'
 
-You can get the script to auto run at boot, see details within the pyhton script.
+You can get the script to auto run at boot, see details within the python script.
 
 The RPI camera will be enabled (assumed you've installed one and have it enabled in Raspi-Config and working)
 
@@ -169,10 +164,10 @@ PHOTO - switches ON/OFF the commands to a DSLR etc (requires interface) and coun
 p-time - sets exposure time for DSLR
 p-count - sets numbers of shots by DSLR
 
+Night / Day - will change the screen colours for night vision
 
 SAVE config S1/S2/S3 will save configs to file
 RELOAD config R1/R2/R3 will reload saved configs
-
 
 You will also see controls for the RPI camera if you are using that.
 
@@ -182,7 +177,7 @@ Adjust brightness, contrast, ISO, Exp-Time etc to get the best image.
 If you have interfaced a DSLR you can use PHOTO to set it to take photos. Set P-Time to required exposure in seconds (set camera to Bulb) and P-count to required
 number of shots, then press PHOTO.
 
-In the program you will see several setting you can make including
+In the program you will see several setting you can make including :-
 
 camera_connected = 1
 If you set this to 0 the program will go into simulation mode and show a simulated star and you can try some of the program functions (default = 1)
