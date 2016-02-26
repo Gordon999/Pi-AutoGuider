@@ -1468,7 +1468,7 @@ while True:
          line = sum(mz[loc:loc+crop])
          ltot += line
          acorrect += 1
-      acorrect -= ((Decimal(ltot)-(Decimal(ttot)/Decimal(2)))/Decimal(line))
+      acorrect -= (Decimal(ltot) - Decimal(ttot)/Decimal(2))/Decimal(line)
 
       bcorrect = 0
       ctot = 0
@@ -1476,7 +1476,7 @@ while True:
          col = sum(mz[bcorrect:crop*crop:crop])
          ctot += col
          bcorrect += 1
-      bcorrect -= ((Decimal(ctot)-(Decimal(ttot)/Decimal(2)))/Decimal(col))
+      bcorrect -= (Decimal(ctot) - Decimal(ttot)/Decimal(2))/Decimal(col)
 
       acorrect = 100 * (acorrect - crop/2)
       bcorrect = 100 * (bcorrect - crop/2)
@@ -1669,53 +1669,41 @@ while True:
       poy = 20
       pov = 50
       pol = 256
-      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1,poy-1,52,258),1)
-      limg +=1
+      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
+      limg += 1
       val2 = pov/2
       val3 = pov/2
       if acorrect >= 0:
-         val2 = (pov/2) + int(math.sqrt(acorrect))/4
+         val2 = pov/2 + int(math.sqrt(acorrect))/4
       else:
-         val2 = (pov/2) - int(math.sqrt(0-acorrect))/4
+         val2 = pov/2 - int(math.sqrt(-acorrect))/4
       if bcorrect >= 0:
-         val3 = (pov/2) + int(math.sqrt(bcorrect))/4
+         val3 = pov/2 + int(math.sqrt(bcorrect))/4
       else:
-         val3 = (pov/2) - int(math.sqrt(0-bcorrect))/4
+         val3 = pov/2 - int(math.sqrt(-bcorrect))/4
       if val2 < val3:
          rimg = blankline[0:(val2)*3]
-         if Night == 0:
-            rimg = rimg + red
-         else:
-            rimg = rimg + dred
-         rimg = rimg + blankline[(val2)*3:(val3)*3]
-         if Night == 0:
-            rimg = rimg + grn
-         else:
-            rimg = rimg + dgrn
-         rimg = rimg + blankline
-         pimg = pimg + rimg[0:pov*3]
+         rimg += dred if Night else red
+         rimg += blankline[val2*3:val3*3]
+         rimg += dgrn if Night else grn
+         rimg += blankline
+         pimg += rimg[0:pov*3]
       else:
          rimg = blankline[0:(val3)*3]
-         if Night == 0:
-            rimg = rimg + grn
-         else:
-            rimg = rimg + dgrn
-         rimg = rimg + blankline[(val3)*3:(val2)*3]
-         if Night == 0:
-            rimg = rimg + red
-         else:
-            rimg = rimg + dred
-         rimg = rimg + blankline
-         pimg = pimg + rimg[0:pov*3]
+         rimg += dgrn if Night else grn
+         rimg += blankline[val3*3:val2*3]
+         rimg += dred if Night else red
+         rimg += blankline
+         pimg += rimg[0:pov*3]
       if limg > pol:
-         yt = (limg-pol)*pov*3
+         yt = (limg - pol)*pov*3
          yu = limg*pov*3
          pimg = pimg[yt:yu]
          limg = pol
-      imageg = pygame.image.fromstring(pimg,(pov,limg),"RGB",1)
+      imageg = pygame.image.fromstring(pimg, (pov, limg), "RGB", 1)
       if plot == 1:
          imageg.set_alpha(127)
-      windowSurfaceObj.blit(imageg,(pox,poy))
+      windowSurfaceObj.blit(imageg, (pox, poy))
 
    w2 =  width/2 + offset3
    h2 = height/2 + offset4
@@ -2804,8 +2792,8 @@ while True:
              keys2(" S1",                      fs,   6,        b3x,         bw,   3,     b3y, bh, 6, 1, 0)
              keys2(" S2",                      fs,   6,        b3x,         bw,   4,     b3y, bh, 6, 1, 0)
              keys2(" S3",                      fs,   6,        b3x,         bw,   5,     b3y, bh, 6, 1, 0)
-             keys2("RELOAD cfg",               fs-2,     7,        b3x+bw/6,    bw,   0,     b3y, bh, 5, 4, 0)
-             keys2("SAVE cfg",                 fs-2,     7,        b3x+bw/6,    bw,   3,     b3y, bh, 5, 4, 0)
+             keys2("RELOAD cfg",               fs-2, 7,        b3x+bw/6,    bw,   0,     b3y, bh, 5, 4, 0)
+             keys2("SAVE cfg",                 fs-2, 7,        b3x+bw/6,    bw,   3,     b3y, bh, 5, 4, 0)
              if Night:
                 keys2("Day",                   fs-1, 6,        b3x,         bw,   5,     b3y, bh, 5, 1, 0)
              else:
@@ -3285,5 +3273,4 @@ while True:
       #print rpistr
       p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
       restart = 0
-
 
