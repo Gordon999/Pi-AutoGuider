@@ -704,7 +704,7 @@ button2(b3x, 6, b3y, 6, bw, 1, bh, 0)
 button2(b3x, 6, b3y, 5, bw, 1, bh, 0)
 
 def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
-   fy += 2 + (vp - 1)*bh + vo*bh/6
+   fy += 2 + (vp - 1)*bh + vo*(bh/6)
    fx += 2 + hp*bw
    if msg == "Exp Time" or msg == "     eV":
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(fx,        fy+1, bw*2 - 3, bh/2.4))
