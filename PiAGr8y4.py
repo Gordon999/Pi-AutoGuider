@@ -1906,7 +1906,7 @@ while True:
                 pygame.quit()
                 sys.exit()
              esc1 += 1
-                   elif z == 114 or kz == K_s:
+          elif z == 114 or kz == K_s:
              keys2("scr", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
              keys2("cap", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
              now = datetime.datetime.now()
