@@ -1067,6 +1067,7 @@ if serial_connected:
    ser = serial.Serial('/dev/ttyACM0', 9600)
 start = time.time()
 start2 =   start
+esc1 =         0
 totvcor =      0
 tothcor =      0
 avevcor =      0
@@ -1877,31 +1878,40 @@ while True:
                       offset4 = offset4o
           if ((z > 60 and z < 76) or z == 5 or z == 4 or z == 15 or z == 14 or z == 154) and use_Pi_Cam and camera_connected:
              os.killpg(p.pid, signal.SIGTERM)
+          if esc1 > 0 and z != 141 and kz != K_ESCAPE:
+             esc1 = 0
+             keys2("Esc",                      fs,       5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
           if z == 115 or kz == 304 or kz == 303:
              con_cap += 1
              if con_cap > 1:
                 con_cap = 0
              change = 1
           elif z == 141 or kz == K_ESCAPE:
-             if use_Pi_Cam and camera_connected:
-                os.killpg(p.pid, signal.SIGTERM)
-             if serial_connected:
-                lx200(':Q#', ':Q#', decN, decS)
-             if use_RPiGPIO or use_Seeed:
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-             keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-             keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
-             keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-             keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
-             pygame.quit()
-             sys.exit()
-          elif z == 114 or kz == K_s:
+             if esc1 == 0:
+                keys2("Esc",                      fs,       2,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
+             if esc1 > 0:
+                if use_Pi_Cam and camera_connected:
+                   os.killpg(p.pid, signal.SIGTERM)
+                if serial_connected:
+                   lx200(':Q#', ':Q#', decN, decS)
+                if use_RPiGPIO or use_Seeed:
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                pygame.quit()
+                sys.exit()
+             esc1 += 1
+                   elif z == 114 or kz == K_s:
              keys2("scr", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
              keys2("cap", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
-             pygame.image.save(windowSurfaceObj, 'scr_pic' + str(pct) + '.jpg')
+             now = datetime.datetime.now()
+             timestamp = now.strftime("%y%m%d%H%M%S")
+             pygame.image.save(windowSurfaceObj, '/home/pi/scr' + str(timestamp) + "_"  + str(pct) + '.bmp')
              keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
              keys2("s",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
              keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
@@ -2182,13 +2192,13 @@ while True:
              photo = not photo
              if not photo:
                 camera = 0
-                keys2("",  fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+                keys2("",  fs, photo, b2x+18, bw, 4, b2y, bh, 2, 3, 1)
                 keys2("",  fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
                 if use_RPiGPIO or photoon:
                    GPIO.output(C_OP, GPIO.LOW)
              if photo:
                 pcount2 = pcount
-                keys2("1", fs, photo, b2x+17, bw, 4, b2y, bh, 2, 3, 1)
+                keys2("1", fs, photo, b2x+18, bw, 4, b2y, bh, 2, 3, 1)
                 ptime2 = time.time() + ptime
                 camera = 1
                 if use_RPiGPIO or photoon:
