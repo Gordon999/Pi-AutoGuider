@@ -3009,7 +3009,7 @@ while True:
                 auto_t =     int(inputx[54:55])
                 if camera_connected:
                    zoom =    int(inputx[55:56])
-                Image_window = max(Image_window, zoom)
+                zoom = max(Image_window, zoom)
                 if not zoom:
                    w = width
                    h = height
