@@ -2795,6 +2795,8 @@ while True:
              button2(b2x, 5, b2y, 6, bw, 1, bh, cls)
              keys2("CLS",                      fs,   cls,      b2x,         bw,   4,     b2y, bh, 6, 1, 0)
              keys2("C",                        fs,   5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
+             if photo == 1:
+                keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
              pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
              pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
              pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
