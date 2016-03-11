@@ -141,6 +141,8 @@ interval +/- sets the time (frames) between commands sent to the scope
 
 Zoom - will switch to from 320x240 upto max Pi camera resolution in 7 steps , and crop it to selected frame size giving some magnification. 
 
+Min Corr - minimum correction in pixels.
+
 scale N/S/E/W - sets the required movements of the scope in mSeconds/pixel. 
 
 scale all - will increment / decrement all scales together
