@@ -124,7 +124,7 @@ Plot - will show a plot of the movement commands required to the Scope.
 
 2x2 - This will do 2x2 binning increasing the detected image. It won't change the display but will be seen on the Graph.
 
-nr - Noise Reduction. Reduces the noise by averaging 2 frames.
+nr - Noise Reduction. Reduces the noise by averaging frames. Off or 3 levels of averaging
 
 Thr (Threshold) - will show the detected area of the star (red/green/blue/yellow), adjusting threshold or enabling A-Thr will change this.
 
