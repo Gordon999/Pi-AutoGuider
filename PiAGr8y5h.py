@@ -682,7 +682,7 @@ keys2(" -",                       fs,       6,        b1x,         bw,   4,     
 keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 3, 4, 0)
 keys2("threshold",                fs-1,     6,        b1x,         bw,   4,     b1y, bh, 4, 0, 0)
 keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 4, 4, 0)
-keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   4,     b1y, bh, 4, 4, 0)
+keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 4, 4, 0)
 keys2("interval",                 fs,       6,        b1x,         bw,   4,     b1y, bh, 5, 0, 0)
 keys2(" -",                       fs,       6,        b1x,         bw,   4,     b1y, bh, 5, 4, 0)
 keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     b1y, bh, 5, 4, 0)
