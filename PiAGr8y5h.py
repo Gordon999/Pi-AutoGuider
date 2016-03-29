@@ -14,7 +14,7 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
-#Pi Autoguider r8y5h
+#Pi Autoguider r8y6
 
 #ONLY WORKS WITH PYTHON 2.7
 
@@ -1081,13 +1081,13 @@ while True:
       strim = pygame.image.tostring(image, "RGB", 1)
       t3 = time.time()
       if vtime < t3:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
          keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t3:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
@@ -1135,7 +1135,7 @@ while True:
       while not os.path.exists('/run/shm/test.jpg') and not mkey:
          t2 = time.time()
          if vtime < t2 and not rpistopNS:
-            if use_RPiGPIO or use_Seeed:
+            if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             keys2("N",                       fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
@@ -1168,14 +1168,14 @@ while True:
 
       t3 = time.time()
       if vtime < t3 and not rpistopNS:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
          keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
          rpistopNS = 1
       if htime < t3 and not rpistopEW:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
@@ -1241,13 +1241,13 @@ while True:
       imb = imu
       t2 = time.time()
       if vtime < t2:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
          keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t2:
-         if use_RPiGPIO or use_Seeed:
+         if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
          keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
@@ -1540,13 +1540,13 @@ while True:
          ht = 1
          start = time.time()
          if vdir == "n" and vcor > 0 and decN:
-            if use_RPiGPIO or use_Seeed:
+            if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
             keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
          if hdir == "e" and hcor > 0:
-            if use_RPiGPIO or use_Seeed:
+            if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
@@ -1753,12 +1753,12 @@ while True:
           xhcor = [0]*11
           keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
           keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
-          if use_RPiGPIO or use_Seeed:
+          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
           keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
           keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
-          if use_RPiGPIO or use_Seeed:
+          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
           restart = 0
@@ -1833,7 +1833,7 @@ while True:
                    os.killpg(p.pid, signal.SIGTERM)
                 if serial_connected:
                    lx200(':Q#', ':Q#', decN, decS)
-                if use_RPiGPIO or use_Seeed:
+                if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2258,7 +2258,7 @@ while True:
                 keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 lx200(move, ':Mgw0000', decN, decS)
                 keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
-             if use_RPiGPIO or use_Seeed:
+             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2276,7 +2276,7 @@ while True:
                 keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 lx200(move, ':Mgw0000', decN, decS)
                 keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-             if use_RPiGPIO or use_Seeed:
+             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2294,7 +2294,7 @@ while True:
                 keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 lx200(move, ':Mgs0000', decN, decS)
                 keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-             if use_RPiGPIO or use_Seeed:
+             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2312,7 +2312,7 @@ while True:
                 keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 lx200(move, ':Mgs0000', decN, decS)
                 keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
-             if use_RPiGPIO or use_Seeed:
+             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2326,7 +2326,7 @@ while True:
              auto_g = 0
              if serial_connected:
                 lx200(':Q#', ':Q#', decN, decS)
-             if use_RPiGPIO or use_Seeed:
+             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
