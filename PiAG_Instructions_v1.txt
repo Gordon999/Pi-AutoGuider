@@ -124,7 +124,7 @@ Plot - will show a plot of the movement commands required to the Scope.
 
 2x2 - This will do 2x2 binning increasing the detected image. It won't change the display but will be seen on the Graph.
 
-nr - Noise Reduction. Reduces the noise by averaging 2 frames.
+nr - Noise Reduction. Reduces the noise by averaging frames. Off or 3 levels of averaging
 
 Thr (Threshold) - will show the detected area of the star (red/green/blue/yellow), adjusting threshold or enabling A-Thr will change this.
 
@@ -140,6 +140,8 @@ interval +/- sets the time (frames) between commands sent to the scope
 (note at times this may automatically increase as required)
 
 Zoom - will switch to from 320x240 upto max Pi camera resolution in 7 steps , and crop it to selected frame size giving some magnification. 
+
+Min Corr - minimum correction in pixels.
 
 scale N/S/E/W - sets the required movements of the scope in mSeconds/pixel. 
 

@@ -14,7 +14,11 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
+<<<<<<< HEAD:PiAG.py
 #Pi Autoguider r8y7a
+=======
+#Pi Autoguider r8y6
+>>>>>>> origin/master:PiAGr8y5h.py
 
 #ONLY WORKS WITH PYTHON 2.7
 

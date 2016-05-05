@@ -18,4 +18,4 @@ Please take care when interfacing your telescope. At your own risk.
 
 ## Screenshot
 
-![screenshot](scr_pic.jpg)
+![screenshot](scr_pic8.jpg)
