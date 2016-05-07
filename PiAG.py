@@ -14,11 +14,7 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
-<<<<<<< HEAD:PiAG.py
-#Pi Autoguider r8y7a
-=======
-#Pi Autoguider r8y6
->>>>>>> origin/master:PiAGr8y5h.py
+#Pi Autoguider r8y8
 
 #ONLY WORKS WITH PYTHON 2.7
 
@@ -48,7 +44,7 @@ serial_connected =    0
 use_Pi_Cam =          1
 
 # Pi camera version, 1 or 2
-Pi_Cam = 2#
+Pi_Cam = 2
 
 # if using the RPi.GPIO on the Pi set use_RPiGPIO = 1, not required if only using the DSLR GPIO O/P (photoon = 1).
 use_RPiGPIO =         1
@@ -168,10 +164,10 @@ rpineg =              0 # negative image
 
 rpimodes =  ['off',  'auto', 'night', 'night', 'sports', 'sports', 'verylong', 'verylong', 'fireworks', 'fireworks']
 rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport',  'spor2',  'vlong',    'vlon2',    'fwork',     'fwor2']
-rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592, 3280]#
-rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944, 2464]#
-rpiscalex = [1, 1.1, 1.818, 1.25, 1.2, 1.333, 1.5, 1.35, 1.265]#
-rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35, 1.267]#
+rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592, 3280, 5184]#
+rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944, 2464, 3688]#
+rpiscalex = [1, 1.1, 1.818, 1.25, 1.2, 1.333, 1.5, 1.35, 1.265, 1.580]#
+rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35, 1.267, 1.497]#
 
 # Load pre-stored config at startup
 
@@ -412,8 +408,8 @@ if not use_Pi_Cam and zoom > usb_max_res:
    zoom = Image_window = usb_max_res
 
 if Display == 0:
-   width = Disp_Width
-   b1x = b2x = b3x = width
+   width = 640#
+   b1x = b2x = b3x = Disp_Width#
    b1y = -bh
    b2y = bh*4
    b3y = bh*9
@@ -442,7 +438,7 @@ if Display == 1:
    hplus = 192
 
 if Display > 1:
-   width =   rpiwidth[Image_window]
+   width =  rpiwidth[Image_window]
    height = rpiheight[Image_window]
    b1x = b2x = b3x = width
    b1y = -bh
@@ -471,7 +467,7 @@ h = rpiheight[zoom]
 if width <= 352:
    modewidth = 640
 else:
-   modewidth = width + bw*6
+   modewidth = Disp_Width + bw*6#
 
 if not Frame:
    windowSurfaceObj = pygame.display.set_mode((modewidth, height + hplus), pygame.NOFRAME, bits)
@@ -515,11 +511,11 @@ if use_Pi_Cam and camera_connected:
       rpistr += " -ISO " + str(rpiISO)
    if rpiev != 0:
       rpistr += " -ev " + str(rpiev)
-   off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))
+   off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))#
    off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
-   widx =  Decimal(width)/Decimal(w)
+   widx =  Decimal(width)/Decimal(w)#
    heiy = Decimal(height)/Decimal(h)
-   rpistr += " -q 100 -n -sa " + str(rpisa) + " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
+   rpistr += " -q 100 -n -sa " + str(rpisa) + " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)#
    if rpineg:
       rpistr += " -ifx negative "
    p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
@@ -817,21 +813,22 @@ button2(b2x, 5, b2y, 6, bw, 1, bh, cls)
 keys2("CLS",                      fs,       cls,      b2x,         bw,   4,     b2y, bh, 6, 1, 0)
 keys2("C",                        fs,       5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
 use_config = 0
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
-
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
-
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
-
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
-pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10) ,2)
+if Display != 1:
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
+                                                                                                                                               
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
+                                                                                                                                              
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (Disp_Width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
+                                                                                                                                                   
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
+   pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
 
 pygame.display.update()
 
@@ -1171,7 +1168,13 @@ while True:
       except pygame.error:
          imagefile = '/run/shm/oldtest.jpg'
          image = pygame.image.load(imagefile)
-      windowSurfaceObj.blit(image, (0, 0))
+      catSurfaceObj = image
+      # crop picam picture to suit Display Width
+      if width != Disp_Width:#
+         cropped = pygame.Surface((Disp_Width, height))#
+         cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))#
+         catSurfaceObj = cropped#
+      windowSurfaceObj.blit(catSurfaceObj, (0, 0))#
 
       t3 = time.time()
       if vtime < t3 and not rpistopNS:
@@ -1610,9 +1613,9 @@ while True:
 # Display
    if plot > 0:
       if Display == 0 or Display > 1:
-         pox = width - 110
+         pox = Disp_Width - 110
       else:
-         pox = width + 10
+         pox = Disp_Width + 10
       poy = 20
       pov = 50
       pol = 256
@@ -1652,7 +1655,7 @@ while True:
          imageg.set_alpha(127)
       windowSurfaceObj.blit(imageg, (pox, poy))
 
-   w2 =  width/2 + offset3
+   w2 = width/2 + offset3
    h2 = height/2 + offset4
    c1 = crop/2
    c2 = crop/2
@@ -1660,9 +1663,9 @@ while True:
 #display graph if enabled
    if graph > 0:
       if Display == 0 or Display > 1:
-         pox = width - 55
+         pox = Disp_Width - 55
       else:
-         pox = width + 65
+         pox = Disp_Width + 65
       poy = 20
       pov = 50
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
@@ -1725,19 +1728,19 @@ while True:
       pygame.draw.line(windowSurfaceObj,    bredColor, (w2,     h2 - 4), (w2,     h2 + 4))
       if not auto_g:
          keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
-         keys2(Hcorrt,    16, 9, width - 80, 0, 0, 0, 0, 0, 0, 0)
+         keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
       else:
          if ttot > 1:
             keys2(Vcorrt, 16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 1, width - 80, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Hcorrt, 16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
          else:
             keys2(Vcorrt, 16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 2, width - 80, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Hcorrt, 16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
 
    if Display == 1:
-      pygame.display.update(0, 0, width + 150, height)
+      pygame.display.update(0, 0, Disp_Width + 150, height)
    else:
-      pygame.display.update(0, 0, width,       height)
+      pygame.display.update(0, 0, Disp_Width,       height)
 
 # read mouse or keyboard
 
@@ -1782,26 +1785,26 @@ while True:
                    y = (mousey-height)/bh
                    z = 10*x + y
              else:
-                if mousex > width:
+                if mousex > Disp_Width:#
                    if mousey < bh * 5:
-                      x = int((mousex - width)/bw)
+                      x = int((mousex - Disp_Width)/bw)
                       y = int(mousey/bh) + 1
                       z = 10*x + y
                    if mousey > bh*5 and mousey < bh*10:
-                      x = int((mousex - width)/bw) + 6
+                      x = int((mousex - Disp_Width)/bw) + 6
                       y = int((mousey - 5*bh)/bh) + 1
                       z = 10*x + y
                    if mousey > bh*10:
-                      x = int((mousex - width)/bw) + 12
+                      x = int((mousex - Disp_Width)/bw) + 12
                       y = int((mousey - 10*bh)/bh) + 1
                       z = 10*x + y
-             if ((Display != 1 and mousex > (width - 55)) or (Display == 1 and mousex > width + 60)) and ((Display != 1 and mousex < (width - 5)) or (Display == 1 and mousex < width +110)) and mousey > 20 and mousey < 276 and graph > 0:
-                if ((Display != 1 and mousex > (width - 55)) or (Display == 1 and mousex > width + 60)) and ((Display != 1 and mousex < (width - 5)) or (Display == 1 and mousex < width +110)) and mousey > (256 - maxtot) and mousey < 276:
+             if ((Display != 1 and mousex > (Disp_Width - 55)) or (Display == 1 and mousex > Disp_Width + 60)) and ((Display != 1 and mousex < (Disp_Width - 5)) or (Display == 1 and mousex < Disp_Width +110)) and mousey > 20 and mousey < 276 and graph > 0:
+                if ((Display != 1 and mousex > (Disp_Width - 55)) or (Display == 1 and mousex > Disp_Width + 60)) and ((Display != 1 and mousex < (Disp_Width - 5)) or (Display == 1 and mousex < Disp_Width +110)) and mousey > (256 - maxtot) and mousey < 276:
                    level = 276 - mousey
                    threshold = maxtot - level
                    threshold = max(threshold, 1)
              else:
-                if mousex < width and mousey < height:
+                if mousex < Disp_Width and mousey < height:
                    start = time.time()
                    xcount =  0
                    ycount =  0
@@ -1816,7 +1819,7 @@ while True:
                    offset4o = offset4
                    offset3 = mousex - width/2
                    offset4 = mousey - height/2
-                   if (width/2 + offset3 + crop/2) >= width or (width/2 + offset3 - crop/2) <= 1:
+                   if (width/2 + offset3 + crop/2) >= Disp_Width or (width/2 + offset3 - crop/2) <= 1:
                       offset3 = offset3o
                       offset4 = offset4o
                    if (height/2 + offset4 + crop/2) >= height or (height/2 + offset4 - crop/2) <= 1:
@@ -1879,7 +1882,10 @@ while True:
              if rpiev != 0:
                 rpistr += " -ev " + str(rpiev)
              rpistr += " -n -sa " + str(rpisa)
-             path = rpistr + ' -w 2592 -h 1944'
+             if Pi_Cam == 2:
+                path = rpistr + ' -w 3280 -h 2464'#
+             if Pi_Cam == 1:
+                path = rpistr + ' -w 2592 -h 1944'#
              os.system(path)
              keys2("pic", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 1)
              keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 1)
@@ -2444,7 +2450,7 @@ while True:
           elif z == 55 or kz == K_z:
              if use_Pi_Cam and camera_connected:
                 os.killpg(p.pid, signal.SIGTERM)
-             if (not use_Pi_Cam and zoom < usb_max_res) or (use_Pi_Cam and Pi_Cam == 1 and zoom < 7) or (use_Pi_Cam and Pi_Cam == 2 and zoom < 8):#
+             if (not use_Pi_Cam and zoom < usb_max_res) or (use_Pi_Cam and Pi_Cam == 2 and zoom < 9):#
                 zoom += 1
                 if camera_connected:
                    w = rpiwidth[zoom]
@@ -2804,21 +2810,22 @@ while True:
              keys2("C",                        fs,   5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
              if photo == 1:
                 keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
+             if Display != 1:
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
                                                                                                                                                  
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
                                                                                                                                                  
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 5,  bh*12 + bh/3),      (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*12 + bh/3 + 10), (Disp_Width + bw*5 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
                                                                                                                                                     
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
-             pygame.draw.line(windowSurfaceObj, greyColor, (width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
              pygame.display.update()
              change = 1
           elif z == 23 or kz == K_e:
@@ -3254,13 +3261,14 @@ while True:
       if rpiev != 0:
          rpistr += " -ev " + str(rpiev)
       rpistr += " -q 100 -n -sa " + str(rpisa)
-      off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))
+      off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))#
       off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
-      widx = Decimal(width)/Decimal(w)
+      widx = Decimal(width)/Decimal(w)#
       heiy = Decimal(height)/Decimal(h)
-      rpistr += " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)
+      rpistr += " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)#
       if rpineg:
          rpistr += " -ifx negative "
+      #print w,h,rpistr
       p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
       restart = 0
 
