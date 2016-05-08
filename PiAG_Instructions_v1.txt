@@ -65,7 +65,10 @@ Choose 'Run Module'
 
 You can get the script to auto run at boot, see details within the python script.
 
-The RPI camera will be enabled (assumed you've installed one and have it enabled in Raspi-Config and working)
+The RPI camera will be enabled (assuming you've installed one and have it enabled in Raspi-Config and working)
+use_RPiwebcam = 1
+
+Dependent on your Pi Camera version set Pi_Cam = 1 or 2.
 
 To enable a usb webcam instead change the line in the PiAGr***.py program to 
 
