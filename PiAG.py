@@ -44,7 +44,7 @@ serial_connected =    0
 use_Pi_Cam =          1
 
 # Pi camera version, 1 or 2
-Pi_Cam = 1
+Pi_Cam =              1
 
 # if using the RPi.GPIO on the Pi set use_RPiGPIO = 1, not required if only using the DSLR GPIO O/P (photoon = 1).
 use_RPiGPIO =         1
