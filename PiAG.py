@@ -44,7 +44,7 @@ serial_connected =    0
 use_Pi_Cam =          1
 
 # Pi camera version, 1 or 2
-Pi_Cam = 2
+Pi_Cam = 1
 
 # if using the RPi.GPIO on the Pi set use_RPiGPIO = 1, not required if only using the DSLR GPIO O/P (photoon = 1).
 use_RPiGPIO =         1
@@ -166,8 +166,8 @@ rpimodes =  ['off',  'auto', 'night', 'night', 'sports', 'sports', 'verylong', '
 rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport',  'spor2',  'vlong',    'vlon2',    'fwork',     'fwor2']
 rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592, 3280, 5184]#
 rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944, 2464, 3688]#
-rpiscalex = [1, 1.1, 1.818, 1.25, 1.2, 1.333, 1.5, 1.35, 1.265, 1.580]#
-rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35, 1.267, 1.497]#
+rpiscalex = [1, 1.15, 1.742, 1.25, 1.2, 1.333, 1.5, 1.35, 1.266, 1.538]#
+rpiscaley = [1, 1.15, 1.742, 1.25, 1.2, 1.333, 1.5, 1.35, 1.266, 1.538]#
 
 # Load pre-stored config at startup
 
