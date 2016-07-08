@@ -72,7 +72,7 @@ use_PiFaceRP =        0
 # if using 0 and a 840x480 HDMI LCD then change /boot/config.txt for hmdi group = 2 and hdmi mode = 14
 Display =             0
 
-Disp_Width =        640 #Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
+Disp_Width =        608 #Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
 
 Night =               0 # Night Colours, 1 = ON
 
