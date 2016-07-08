@@ -14,7 +14,7 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
-#Pi Autoguider r8y8
+#Pi Autoguider r8y9
 
 #ONLY WORKS WITH PYTHON 2.7
 
@@ -72,7 +72,7 @@ use_PiFaceRP =        0
 # if using 0 and a 840x480 HDMI LCD then change /boot/config.txt for hmdi group = 2 and hdmi mode = 14
 Display =             0
 
-Disp_Width =        608 #Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
+Disp_Width =        640 #Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
 
 Night =               0 # Night Colours, 1 = ON
 
@@ -93,6 +93,8 @@ Frame =               0 # Frame - frame displayed or not, 0 = no, 1 = yes
 
 bh =                 32 # button height
 bw =                 32 # button width
+
+DKeys =               0 # Choose direction keys setting, 0 = Dec and RA, 1 = N,E,S,W 
 
 #SETUP GPIO and Seeed
 #===================================================================================
@@ -116,10 +118,10 @@ escale =            150 # e/wscale - East / West scaling in milliSecs/pixel
 wscale =            150
 ewi =                 0 # ewi - Invert East <> West invert = 1, non-invert = 0
 nsi =                 0 # nsi - Invert North<>South invert = 1, non-invert = 0
-crop =               30 # crop - Tracking Window size in pixels.
-minwin =             20 # minwin - set minimum Tracking window size
-maxwin =            200 # maxwin - set maximum Tracking window size
-offset3 =             0 # offset3/4 - Tracking Window offset from centre of screen
+crop =               30 # crop - TracDkey[8]ng Window size in pixels.
+minwin =             20 # minwin - set minimum TracDkey[8]ng window size
+maxwin =            200 # maxwin - set maximum TracDkey[8]ng window size
+offset3 =             0 # offset3/4 - TracDkey[8]ng Window offset from centre of screen
 offset4 =             0
 Intervals =           5 # Intervals - Guiding Interval in frames
 log =                 0 # log - Log commands to /run/shm/YYMMDDHHMMSS.txt file, on = 1, off = 0
@@ -128,7 +130,7 @@ threshold =          20 # threshold value
 thres =               0 # threshold - on = 1,off = 0. Displays detected star pixels
 graph =               0 # graph - on = 1, off = 0. shows brightness of star, and threshold value
 plot =                0 # plot - plot movements, on = 1, off = 0
-auto_win =            0 # auto_win - auto size tracking window, on = 1, off = 0
+auto_win =            0 # auto_win - auto size tracDkey[8]ng window, on = 1, off = 0
 auto_wlos =           1 # auto_wlos - auto window increase on loss of guide star, when using auto_win, on = 1, off = 0
 auto_t =              0 # auto_t - auto threshold, on = 1, off = 0
 zoom =                0 # zoom - set to give cropped image, higher magnification, pi camera max = 7.
@@ -143,7 +145,7 @@ minc =                1 # minimum correction in pixels
 #===================================================================================
 pwait =              10 # pwait - wait in seconds between multiple photos
 ptime =              60 # ptime - exposure time in seconds
-pcount =              1 # pcount - number of photos to take
+pcount =              1 # pcount - number of photos to taDkey[4]
 # pmlock - if using mirrorlock on the DSLR set = 1, set pwait to a suitable value to settle.
 # tested only on a Canon DSLR, triggers shutter to lock mirror and then triggers exposure.
 pmlock =              0
@@ -164,10 +166,10 @@ rpineg =              0 # negative image
 
 rpimodes =  ['off',  'auto', 'night', 'night', 'sports', 'sports', 'verylong', 'verylong', 'fireworks', 'fireworks']
 rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport',  'spor2',  'vlong',    'vlon2',    'fwork',     'fwor2']
-rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592, 3280, 5184]#
-rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944, 2464, 3688]#
-rpiscalex = [1, 1.1, 1.818, 1.25, 1.2, 1.333, 1.5, 1.35, 1.265, 1.580]#
-rpiscaley = [1, 1.2, 1.666, 1.25, 1.2, 1.333, 1.5, 1.35, 1.267, 1.497]#
+rpiwidth =  [352, 640, 800, 960, 1280, 1620, 1920, 2592, 3280, 5184]
+rpiheight = [288, 480, 600, 720, 960, 1215, 1440, 1944, 2464, 3688]
+rpiscalex = [1, 1.527, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
+rpiscaley = [1, 1.527, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
 
 # Load pre-stored config at startup
 
@@ -380,6 +382,12 @@ ht =                      0
 h_corr =                  1
 w_corr =                  1
 rgb = ['X', 'R', 'G', 'B', 'W1', 'W2']
+
+if DKeys == 0:
+   Dkey = ["Dec+","RA-","RA+","Dec-","Up","Left","Right","Down","scale Dec+","scale Dec-","scale RA+","scale RA-","Deci","RAi"]
+else:
+   Dkey = ["N","W","E","S","N","W","E","S","scale N","scale S","scale E","scale W","NSi","EWi"]
+
 fontObj = pygame.font.Font(None, 16)
 global greyColor, redColor, greenColor, blueColor, dgryColor, lgryColor, blackColor, whiteColor, purpleColor, yellowColor
 bredColor =   pygame.Color(200,   0,   0)
@@ -413,14 +421,14 @@ if Display == 0:
    b1y = -bh
    b2y = bh*4
    b3y = bh*9
-   Image_window = 2
+   Image_window = 1
    height = 480
    if bh <= 32:
       hplus = 0
    else:
       hplus = bh*15 - 480
    if use_config == 0:
-      zoom = 2
+      zoom = 1
 
 if Display == 1:
    bh = bw = 32
@@ -431,10 +439,10 @@ if Display == 1:
    b2x = 192
    b3x = 385
    hplus = 192
-   Image_window = 1
+   Image_window = 0
    modewidth = 640
    if use_config == 0:
-      zoom = 1
+      zoom = 0
    hplus = 192
 
 if Display > 1:
@@ -670,10 +678,15 @@ keys2("Plot",                     fs,       plot,     b1x,         bw,   0,     
 keys2("P",                        fs,       5,        b1x,         bw,   0,     b1y, bh, 3, 1, 0)
 keys2("Thr",                      fs,       thres,    b1x,         bw,   1,     b1y, bh, 4, 1, 0)
 keys2("h",                        fs,       5,        b1x+fs/1.5,  bw,   1,     b1y, bh, 4, 1, 0)
-keys2("NSi",                      fs,       nsi,      b1x,         bw,   2,     b1y, bh, 3, 1, 0)
-keys2("N",                        fs,       5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
-keys2("EWi",                      fs,       ewi,      b1x,         bw,   2,     b1y, bh, 4, 1, 0)
-keys2("E",                        fs,       5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+keys2(Dkey[12],                   fs,       nsi,      b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+keys2(Dkey[13],                   fs,       ewi,      b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+if DKeys == 1:
+   keys2("N",                        fs,       5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+   keys2("E",                        fs,       5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+else:
+   keys2("D",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+   keys2("R",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+
 keys2("AInt",                     fs-1,     auto_i,   b1x,         bw,   3,     b1y, bh, 5, 1, 0)
 keys2("I",                        fs-1,     5,        b1x+fs/1.5,  bw,   3,     b1y, bh, 5, 1, 0)
 keys2("rgbw",                     fs,       6,        b1x,         bw,   4,     b1y, bh, 2, 0, 0)
@@ -695,16 +708,16 @@ keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   5,     
 keys2("Min Corr",                 fs,       6,        b1x,         bw,   2,     b1y, bh, 6, 0, 0)
 keys2(" -",                       fs,       6,        b1x,         bw,   2,     b1y, bh, 6, 4, 0)
 keys2("+",                        fs,       6,        b1x+bw-fs,   bw,   3,     b1y, bh, 6, 4, 0)
-keys2("scale N",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
+keys2(Dkey[8],                    fs-1,     6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
 keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 2, 4, 0)
 keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 2, 4, 0)
-keys2("scale S",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
+keys2(Dkey[9],                    fs-1,     6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
 keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 3, 4, 0)
 keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 3, 4, 0)
-keys2("scale E",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
+keys2(Dkey[11],                   fs,       6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
 keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 4, 4, 0)
 keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 4, 4, 0)
-keys2("scale W",                  fs,       6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
+keys2(Dkey[10],                   fs,       6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
 keys2(" -",                       fs,       6,        b2x,         bw,   2,     b2y, bh, 5, 4, 0)
 keys2("+",                        fs,       6,        b2x+bw-fs,   bw,   3,     b2y, bh, 5, 4, 0)
 keys2("scale all",                fs,       6,        b2x,         bw,   2,     b2y, bh, 6, 0, 0)
@@ -751,13 +764,11 @@ if use_Pi_Cam and camera_connected:
    keys2(str(rpiredx),            fs,       3,        b1x,         bw,   1,     b1y, bh, 5, 3, 0)
    keys2(str(rpibluex),           fs,       3,        b1x,         bw,   1,     b1y, bh, 6, 3, 0)
 
-hor = 0
-while hor < 4:
-   keys2("N",                     fs,       6,        b3x,         bw,   1+hor, b3y, bh, 2, 2, 0)
-   keys2("E",                     fs,       6,        b3x,         bw,   2+hor, b3y, bh, 3, 2, 0)
-   keys2("S",                     fs,       6,        b3x,         bw,   1+hor, b3y, bh, 4, 2, 0)
-   keys2("W",                     fs,       6,        b3x,         bw,   hor,   b3y, bh, 3, 2, 0)
-   hor += 3
+keys2(Dkey[4],                         fs-1,     6,        b3x,         bw,   4,     b3y, bh, 2, 2, 0)
+keys2(Dkey[6],                         fs-2,     6,        b3x,         bw,   5,     b3y, bh, 3, 2, 0)
+keys2(Dkey[7],                         fs-2,     6,        b3x,         bw,   4,     b3y, bh, 4, 2, 0)
+keys2(Dkey[5],                         fs-2,     6,        b3x,         bw,   3,     b3y, bh, 3, 2, 0)
+
 keys2("Esc",                      fs,       5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
 keys2("DEC",                      fs-1,     decN,     b3x,         bw,   0,     b3y, bh, 2, 0, decN)
 keys2("  N",                      fs-1,     decN,     b3x,         bw,   0,     b3y, bh, 2, 2, decN)
@@ -794,7 +805,7 @@ if use_Pi_Cam:
    keys2("pic",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
    keys2("cap",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
 keys2("scr",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
-keys2("s",                        fs,       5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+keys2("S",                        fs,       5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
 keys2("cap",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
 if photoon:
     keys2("PHOTO",                fs,       photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
@@ -1088,14 +1099,14 @@ while True:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
+         keys2(Dkey[0],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2(Dkey[3],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t3:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
+         keys2(Dkey[1],                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2(Dkey[2],                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
       if photo:
          ptime3 = int(ptime2 - t3) + 1
          if pmlock == 1 and pmlock2 == 1 and ptime3 == pwait - 3 and not camera:
@@ -1142,15 +1153,15 @@ while True:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("N",                       fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
-            keys2("S",                       fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
+            keys2(Dkey[0],                       fs-1, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+            keys2(Dkey[3],                       fs-1, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
             rpistopNS = 1
          if htime < t2 and not rpistopEW:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("W",                       fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
-            keys2("E",                       fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
+            keys2(Dkey[1],                       fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+            keys2(Dkey[2],                       fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
             rpistopEW = 1
 
          for event in pygame.event.get():
@@ -1170,26 +1181,26 @@ while True:
          image = pygame.image.load(imagefile)
       catSurfaceObj = image
       # crop picam picture to suit Display Width
-      if width != Disp_Width:#
-         cropped = pygame.Surface((Disp_Width, height))#
-         cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))#
-         catSurfaceObj = cropped#
-      windowSurfaceObj.blit(catSurfaceObj, (0, 0))#
+      if width != Disp_Width:
+         cropped = pygame.Surface((Disp_Width, height))
+         cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))
+         catSurfaceObj = cropped
+      windowSurfaceObj.blit(catSurfaceObj, (0, 0))
 
       t3 = time.time()
       if vtime < t3 and not rpistopNS:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
+         keys2(Dkey[0],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2(Dkey[3],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
          rpistopNS = 1
       if htime < t3 and not rpistopEW:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
+         keys2(Dkey[1],                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2(Dkey[2],                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
          rpistopEW = 1
 
       if photo:
@@ -1254,14 +1265,14 @@ while True:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("N",                          fs, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
-         keys2("S",                          fs, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
+         keys2(Dkey[0],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 2, 2, 1)
+         keys2(Dkey[3],                          fs-1, 6,     b3x,        bw, 1, b3y, bh, 4, 2, 1)
       if htime < t2:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
             DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-         keys2("W",                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
-         keys2("E",                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
+         keys2(Dkey[1],                          fs, 6,     b3x,        bw, 0, b3y, bh, 3, 2, 1)
+         keys2(Dkey[2],                          fs, 6,     b3x,        bw, 2, b3y, bh, 3, 2, 1)
 
 # crop picture
    if crop == maxwin:
@@ -1553,30 +1564,30 @@ while True:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
-            keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+            keys2(Dkey[0], fs-1, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
+            keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
          if hdir == "e" and hcor > 0:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-            keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
+            keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+            keys2(Dkey[2], fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
          if vdir == "s" and vcor > 0 and decS == 1:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-            keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
+            keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+            keys2(Dkey[3], fs-1, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
          if hdir == "w" and hcor > 0:
             if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-            keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
-            keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+            keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
+            keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
          if serial_connected:
-            if decN and vdir == "n":
+            if decN and vdir == "N":
                ser.write(bytes(Vcorrt.encode('ascii')))
-            if decS and vdir == "s":
+            if decS and vdir == "S":
                ser.write(bytes(Vcorrt.encode('ascii')))
             time.sleep(0.2)
             ser.write(bytes(Hcorrt.encode('ascii')))
@@ -1727,22 +1738,60 @@ while True:
       pygame.draw.line(windowSurfaceObj,    bredColor, (w2 - 4, h2),     (w2 + 4, h2))
       pygame.draw.line(windowSurfaceObj,    bredColor, (w2,     h2 - 4), (w2,     h2 + 4))
       if not auto_g:
-         keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
-         keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+         if DKeys == 1:
+            keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+            keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+         else:
+            if Vcorrt[3:4] == "n":
+               vdr = "+"
+            else:
+               vdr = "-"
+            keys2("Dec" + vdr + Vcorrt[4:9],    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+            if Hcorrt[3:4] == "e":
+               hdr = "+"
+            else:
+               hdr = "-"
+            keys2(" RA" + hdr + Hcorrt[4:9],    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            
       else:
          if ttot > 1:
-            keys2(Vcorrt, 16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            if DKeys == 1:
+               keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+               keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            else:
+               if Vcorrt[3:4] == "n":
+                  vdr = "+"
+               else:
+                  vdr = "-"
+            keys2("Dec" + vdr + Vcorrt[4:9],    16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
+            if Hcorrt[3:4] == "e":
+               hdr = "+"
+            else:
+               hdr = "-"
+            keys2(" RA" + hdr + Hcorrt[4:9],    16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            
          else:
-            keys2(Vcorrt, 16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt, 16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
-
+            if DKeys == 1:
+               keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+               keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            else:
+               if Vcorrt[3:4] == "n":
+                  vdr = "+"
+               else:
+                  vdr = "-"
+            keys2("Dec" + vdr + Vcorrt[4:9],    16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
+            if Hcorrt[3:4] == "e":
+               hdr = "+"
+            else:
+               hdr = "-"
+            keys2(" RA" + hdr + Hcorrt[4:9],    16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            
    if Display == 1:
       pygame.display.update(0, 0, Disp_Width + 150, height)
    else:
       pygame.display.update(0, 0, Disp_Width,       height)
 
-# read mouse or keyboard
+# read mouse or Dkey[4]yboard
 
    for event in pygame.event.get():
        if event.type == QUIT:
@@ -1761,13 +1810,13 @@ while True:
           count =      1
           xvcor = [0]*11
           xhcor = [0]*11
-          keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-          keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+          keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+          keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
           if use_RPiGPIO or use_Seeed or use_PiFaceRP:
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-          keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-          keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+          keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+          keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
           if use_RPiGPIO or use_Seeed or use_PiFaceRP:
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -1785,7 +1834,7 @@ while True:
                    y = (mousey-height)/bh
                    z = 10*x + y
              else:
-                if mousex > Disp_Width:#
+                if mousex > Disp_Width:
                    if mousey < bh * 5:
                       x = int((mousex - Disp_Width)/bw)
                       y = int(mousey/bh) + 1
@@ -1848,10 +1897,10 @@ while True:
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                    DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-                keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
-                keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-                keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 pygame.quit()
                 sys.exit()
              esc1 += 1
@@ -1862,7 +1911,7 @@ while True:
              timestamp = now.strftime("%y%m%d%H%M%S")
              pygame.image.save(windowSurfaceObj, '/home/pi/scr' + str(timestamp) + "_"  + str(pct) + '.bmp')
              keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
-             keys2("s",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
+             keys2("S",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
              keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
              pct += 1
           elif z == 104 and use_Pi_Cam and camera_connected:
@@ -2113,7 +2162,7 @@ while True:
           elif z == 123:
              decS = not decS
              change = 1
-          elif z == 31 or kz == K_r:
+          elif z == 31:
              nr +=1
              if nr > 3:
                 nr = 0
@@ -2136,7 +2185,7 @@ while True:
                 crop -= 5
              change = 1
 
-          elif z == 42 or kz == K_d:
+          elif z == 42 or kz == K_w:
              auto_win = 0
              crop -= 5
              crop = max(crop, minwin)
@@ -2268,16 +2317,16 @@ while True:
                 tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgs' + blan[(len(blan))-4:len(blan)]
-                keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[3], fs-1, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 lx200(move, ':Mgw0000', decN, decS)
-                keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
              if use_RPiGPIO or use_Seeed or use_PiFaceRP:
-                keys2("S", fs, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[3], fs-1, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 time.sleep(mincor/100)
-                keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              change = 1
 
@@ -2286,16 +2335,16 @@ while True:
                 tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgn' + blan[(len(blan))-4:len(blan)]
-                keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[0], fs-1, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 lx200(move, ':Mgw0000', decN, decS)
-                keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
              if use_RPiGPIO or use_Seeed or use_PiFaceRP:
-                keys2("N", fs, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[0], fs-1, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 time.sleep(mincor/100)
-                keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              change = 1
 
@@ -2304,16 +2353,16 @@ while True:
                 tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mgw' + blan[(len(blan))-4:len(blan)]
-                keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 lx200(move, ':Mgs0000', decN, decS)
-                keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
              if use_RPiGPIO or use_Seeed or use_PiFaceRP:
-                keys2("W", fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[0], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
-                keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              change = 1
 
@@ -2322,16 +2371,16 @@ while True:
                 tim = mincor*10
                 blan = "0000" + str(int(tim))
                 move = ':Mge' + blan[(len(blan))-4:len(blan)]
-                keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 lx200(move, ':Mgs0000', decN, decS)
-                keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[0], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
              if use_RPiGPIO or use_Seeed or use_PiFaceRP:
-                keys2("E", fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
-                keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
              change = 1
 
@@ -2344,10 +2393,10 @@ while True:
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-             keys2("N", fs, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
-             keys2("S", fs, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
-             keys2("W", fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
-             keys2("E", fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+             keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+             keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+             keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+             keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
              change = 1
 
           elif z == 34 or kz == K_i:
@@ -2555,7 +2604,7 @@ while True:
                    hd = wd
              restart = 1
              change = 1
-          elif z == 22 or kz == K_n:
+          elif z == 22 or kz == K_n or kz == K_d:
              nsi = not nsi
              change = 1
           elif z == 24:
@@ -2671,10 +2720,14 @@ while True:
              keys2("P",                        fs,   5,        b1x,         bw,   0,     b1y, bh, 3, 1, 0)
              keys2("Thr",                      fs,   thres,    b1x,         bw,   1,     b1y, bh, 4, 1, 0)
              keys2("h",                        fs,   5,        b1x+fs/1.5,  bw,   1,     b1y, bh, 4, 1, 0)
-             keys2("NSi",                      fs,   nsi,      b1x,         bw,   2,     b1y, bh, 3, 1, 0)
-             keys2("N",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
-             keys2("EWi",                      fs,   ewi,      b1x,         bw,   2,     b1y, bh, 4, 1, 0)
-             keys2("E",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)  
+             keys2(Dkey[12],                      fs,   nsi,      b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+             keys2(Dkey[13],                      fs,   ewi,      b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+             if DKeys == 1:
+                keys2("N",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+                keys2("E",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)
+             else:
+                keys2("D",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 3, 1, 0)
+                keys2("R",                        fs,   5,        b1x,         bw,   2,     b1y, bh, 4, 1, 0)
              keys2("AInt",                     fs-1, auto_i,   b1x,         bw,   3,     b1y, bh, 5, 1, 0)
              keys2("I",                        fs-1, 5,        b1x+fs/1.5,  bw,   3,     b1y, bh, 5, 1, 0)
              keys2("rgbw",                     fs,   6,        b1x,         bw,   4,     b1y, bh, 2, 0, 0)
@@ -2696,16 +2749,16 @@ while True:
              keys2("Min Corr",                 fs,   6,        b1x,         bw,   2,     b1y, bh, 6, 0, 0)
              keys2(" -",                       fs,   6,        b1x,         bw,   2,     b1y, bh, 6, 4, 0)
              keys2("+",                        fs,   6,        b1x+bw-fs,   bw,   3,     b1y, bh, 6, 4, 0)
-             keys2("scale N",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
+             keys2(Dkey[8],               fs-1, 6,        b2x,         bw,   2,     b2y, bh, 2, 0, 0)
              keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 2, 4, 0)
              keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 2, 4, 0)
-             keys2("scale S",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
+             keys2(Dkey[9],               fs-1, 6,        b2x,         bw,   2,     b2y, bh, 3, 0, 0)
              keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 3, 4, 0)
              keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 3, 4, 0)
-             keys2("scale E",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
+             keys2(Dkey[11],                fs,   6,        b2x,         bw,   2,     b2y, bh, 4, 0, 0)
              keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 4, 4, 0)
              keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 4, 4, 0)
-             keys2("scale W",                  fs,   6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
+             keys2(Dkey[10],                fs,   6,        b2x,         bw,   2,     b2y, bh, 5, 0, 0)
              keys2(" -",                       fs,   6,        b2x,         bw,   2,     b2y, bh, 5, 4, 0)
              keys2("+",                        fs,   6,        b2x+bw-fs,   bw,   3,     b2y, bh, 5, 4, 0)
              keys2("scale all",                fs,   6,        b2x,         bw,   2,     b2y, bh, 6, 0, 0)
@@ -2751,13 +2804,17 @@ while True:
                 rpibluex = Decimal(rpiblue)/Decimal(100)
                 keys2(str(rpiredx),            fs,   3,        b1x,         bw,   1,     b1y, bh, 5, 3, 0)
                 keys2(str(rpibluex),           fs,   3,        b1x,         bw,   1,     b1y, bh, 6, 3, 0)
-             hor = 0
-             while hor < 4:
-                keys2("N",                     fs,   6,        b3x,         bw,   1+hor, b3y, bh, 2, 2, 0)
-                keys2("E",                     fs,   6,        b3x,         bw,   2+hor, b3y, bh, 3, 2, 0)
-                keys2("S",                     fs,   6,        b3x,         bw,   1+hor, b3y, bh, 4, 2, 0)
-                keys2("W",                     fs,   6,        b3x,         bw,   hor,   b3y, bh, 3, 2, 0)
-                hor += 3
+
+             keys2(Dkey[0],                     fs-1, 6,        b3x,         bw,   1,     b3y, bh, 2, 2, 0)
+             keys2(Dkey[2],                      fs,   6,        b3x,         bw,   2,     b3y, bh, 3, 2, 0)
+             keys2(Dkey[3],                     fs-1, 6,        b3x,         bw,   1,     b3y, bh, 4, 2, 0)
+             keys2(Dkey[1],                      fs,   6,        b3x,         bw,   0,    b3y, bh, 3, 2, 0)
+
+             keys2(" Up",                      fs-1, 6,        b3x,         bw,   4,     b3y, bh, 2, 2, 0)
+             keys2("Right",                    fs-2, 6,        b3x,         bw,   5,     b3y, bh, 3, 2, 0)
+             keys2("Down",                     fs-2, 6,        b3x,         bw,   4,     b3y, bh, 4, 2, 0)
+             keys2("Left",                     fs-2, 6,        b3x,         bw,   3,     b3y, bh, 3, 2, 0)
+
              keys2("Esc",                      fs,   5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
              keys2("DEC",                      fs-1, decN,     b3x,         bw,   0,     b3y, bh, 2, 0, decN)
              keys2("  N",                      fs-1, decN,     b3x,         bw,   0,     b3y, bh, 2, 2, decN)
@@ -2792,7 +2849,7 @@ while True:
                 keys2("pic",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
                 keys2("cap",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
              keys2("scr",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
-             keys2("s",                        fs,   5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+             keys2("S",                        fs,   5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
              keys2("cap",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
              if photoon:
                  keys2("PHOTO",                fs,   photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
@@ -2828,7 +2885,7 @@ while True:
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
              pygame.display.update()
              change = 1
-          elif z == 23 or kz == K_e:
+          elif z == 23 or kz == K_e or kz == K_r:
              ewi = not ewi
              change = 1
           elif (z == 155 or z == 165 or z == 175 or kz == K_4 or kz == K_5 or kz == K_6):
@@ -3092,13 +3149,19 @@ while True:
          oldauto_i = auto_i
       if oldnsi != nsi:
          button2(b1x, 3, b1y, 3, bw, 1, bh, nsi)
-         keys2("NSi", fs, nsi, b1x, bw, 2, b1y, bh, 3, 1, 1)
-         keys2("N", fs, 5, b1x, bw, 2, b1y, bh, 3, 1, 1)
+         keys2(Dkey[12], fs, nsi, b1x, bw, 2, b1y, bh, 3, 1, 1)
+         if DKeys == 1:
+            keys2("N", fs, 5, b1x, bw, 2, b1y, bh, 3, 1, 1)
+         else:
+            keys2("D", fs, 5, b1x, bw, 2, b1y, bh, 3, 1, 1)
          oldnsi = nsi
       if oldewi != ewi:
          button2(b1x, 3, b1y, 4, bw, 1, bh, ewi)
-         keys2("EWi", fs, ewi, b1x, bw, 2, b1y, bh, 4, 1, 1)
-         keys2("E", fs, 5, b1x, bw, 2, b1y, bh, 4, 1, 1)
+         keys2(Dkey[13], fs, ewi, b1x, bw, 2, b1y, bh, 4, 1, 1)
+         if DKeys == 1:
+            keys2("E", fs, 5, b1x, bw, 2, b1y, bh, 4, 1, 1)
+         else:
+            keys2("R", fs, 5, b1x, bw, 2, b1y, bh, 4, 1, 1)
          oldewi = ewi
       if oldauto_t != auto_t:
          button2(b1x, 4, b1y, 4, bw, 1, bh, auto_t)
