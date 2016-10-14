@@ -1592,9 +1592,9 @@ while True:
             keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
             keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
          if serial_connected:
-            if decN and vdir == "N":
+            if decN and vdir == "n":
                ser.write(bytes(Vcorrt.encode('ascii')))
-            if decS and vdir == "S":
+            if decS and vdir == "s":
                ser.write(bytes(Vcorrt.encode('ascii')))
             time.sleep(0.2)
             ser.write(bytes(Hcorrt.encode('ascii')))
