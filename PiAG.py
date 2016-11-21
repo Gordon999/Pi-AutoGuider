@@ -14,7 +14,7 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
-#Pi Autoguider r8y9
+#Pi Autoguider r9a6
 
 #ONLY WORKS WITH PYTHON 2.7
 
@@ -28,6 +28,9 @@ getcontext().prec = 8
 
 #==================================================================================================
 use_config =          0 # set pre-stored config to load at startup, 1, 2 or 3.
+                        # !!! to use a pre-stored config ensure you saved it when use_config was set = 0
+#==================================================================================================
+power_down =          0 # set = 1 to power down the Pi when you exit the script, using Esc
 
 #==================================================================================================
 # CONNECTION SETTINGS
@@ -44,7 +47,7 @@ serial_connected =    0
 use_Pi_Cam =          1
 
 # Pi camera version, 1 or 2
-Pi_Cam =              1
+Pi_Cam = 2
 
 # if using the RPi.GPIO on the Pi set use_RPiGPIO = 1, not required if only using the DSLR GPIO O/P (photoon = 1).
 use_RPiGPIO =         1
@@ -70,18 +73,20 @@ use_PiFaceRP =        0
 # 2 = other as set by parameters below
 # if using 1 for PAL composite then adjust /boot/config.txt to suit
 # if using 0 and a 840x480 HDMI LCD then change /boot/config.txt for hmdi group = 2 and hdmi mode = 14
+
 Display =             0
 
-Disp_Width =        640 #Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
+Disp_Width =        608
+#Disp_Width - sets image width when using Display = 0, set 608 for Pi Display (800x480), set 640 for 840x480 display
 
 Night =               0 # Night Colours, 1 = ON
 
 # Image_window - sets image window size, either 0 = 320x240, 1 = 352x288,2 = 640x480, 3 = 800x600, 4 = 960x720, 5 = 1280x960,
 # Any for HDMI but recommend 0 for Composite (PAL)
-Image_window =        5
+Image_window =        0
 
 # usb_max_res - webcam max available resolution, depends on your webcam
-# 0 = 320x240, 1 = 352x288, 2 = 640x480, 3 = 800x600, 4 = 960x720, 5 = 1280x960,
+# 0 = 320x240, 1 = 480x320, 2 = 640x480, 3 = 800x600, 4 = 960x720, 5 = 1280x960,
 # 6 = 1920x1440, 7 = 2592x1944
 # eg. Logitech C270 won't work above 4, Philips NC900 won't work above 2
 # (Pi camera uses a max of 7 automatically)
@@ -99,14 +104,14 @@ DKeys =               0 # Choose direction keys setting, 0 = Dec and RA, 1 = N,E
 #SETUP GPIO and Seeed
 #===================================================================================
 #Telescope control GPIO pins
-N_OP =               22
-S_OP =               18
-E_OP =               24
-W_OP =               16
+N_OP =               22 #22
+S_OP =               18 #18
+E_OP =               24 #24
+W_OP =               16 #16
 # External camera control GPIO pin, eg DSLR
-C_OP =               26
+C_OP =               26 #26
 # Alternative camera control GPIO pin if C_OP = 26 and using SPI
-AC_OP =              13
+AC_OP =              13 #13
 
 #==================================================================================================
 # SET DEFAULT VALUES
@@ -123,6 +128,8 @@ minwin =             20 # minwin - set minimum TracDkey[8]ng window size
 maxwin =            200 # maxwin - set maximum TracDkey[8]ng window size
 offset3 =             0 # offset3/4 - TracDkey[8]ng Window offset from centre of screen
 offset4 =             0
+offset5 =             0 # offset3/4 - TracDkey[8]ng Window offset from centre of screen
+offset6 =             0
 Intervals =           5 # Intervals - Guiding Interval in frames
 log =                 0 # log - Log commands to /run/shm/YYMMDDHHMMSS.txt file, on = 1, off = 0
 rgbw =                5 # rgbw - R,G,B,W1,W2 = 1,2,3,4,5
@@ -166,17 +173,10 @@ rpineg =              0 # negative image
 
 rpimodes =  ['off',  'auto', 'night', 'night', 'sports', 'sports', 'verylong', 'verylong', 'fireworks', 'fireworks']
 rpimodesa = [' off', 'auto', 'night', 'nigh2', 'sport',  'spor2',  'vlong',    'vlon2',    'fwork',     'fwor2']
-<<<<<<< HEAD
-rpiwidth =  [352, 640, 800, 960, 1280, 1620, 1920, 2592, 3280, 5184]
-rpiheight = [288, 480, 600, 720, 960, 1215, 1440, 1944, 2464, 3688]
-rpiscalex = [1, 1.527, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
-rpiscaley = [1, 1.527, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
-=======
-rpiwidth =  [320, 352, 640, 800, 960, 1280, 1920, 2592, 3280, 5184]#
-rpiheight = [240, 288, 480, 600, 720,  960, 1440, 1944, 2464, 3688]#
-rpiscalex = [1, 1.15, 1.742, 1.25, 1.2, 1.333, 1.5, 1.35, 1.266, 1.538]#
-rpiscaley = [1, 1.15, 1.742, 1.25, 1.2, 1.333, 1.5, 1.35, 1.266, 1.538]#
->>>>>>> origin/master
+rpiwidth =  [320, 640, 800, 960, 1280, 1620, 1920, 2592, 3280, 5184]
+rpiheight = [240, 480, 600, 720, 960, 1215, 1440, 1944, 2464, 3688]
+rpiscalex = [1, 2, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
+rpiscaley = [1, 2, 1.25, 1.2, 1.333, 1.265, 1.185, 1.35, 1.266, 1.538]
 
 # Load pre-stored config at startup
 
@@ -235,18 +235,16 @@ if use_config > 0 and use_config < 4:
          if not zoom:
             cam = pygame.camera.Camera("/dev/video0", (320, 240))
          elif zoom == 1 and usb_max_res >= 1:
-            cam = pygame.camera.Camera("/dev/video0", (352, 288))
-         elif zoom == 2 and usb_max_res >= 2:
             cam = pygame.camera.Camera("/dev/video0", (640, 480))
-         elif zoom == 3 and usb_max_res >= 3:
+         elif zoom == 2 and usb_max_res >= 2:
             cam = pygame.camera.Camera("/dev/video0", (800, 600))
-         elif zoom == 4 and usb_max_res >= 4:
+         elif zoom == 3 and usb_max_res >= 3:
             cam = pygame.camera.Camera("/dev/video0", (960, 720))
-         elif zoom == 5 and usb_max_res >= 5:
+         elif zoom == 4 and usb_max_res >= 4:
             cam = pygame.camera.Camera("/dev/video0", (1280, 960))
-         elif zoom == 6 and usb_max_res >= 6:
+         elif zoom == 5 and usb_max_res >= 5:
             cam = pygame.camera.Camera("/dev/video0", (1920, 1440))
-         elif zoom == 7 and usb_max_res >= 7:
+         elif zoom == 6 and usb_max_res >= 6:
             cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
          cam.start()
       if not camera_connected:
@@ -358,6 +356,8 @@ rpiex = rpimodes[rpiexno]
 rpiexa = rpimodesa[rpiexno]
 
 pygame.init()
+menu = 0
+switch = 0
 imu =                    ""
 limg =                    0
 Interval =        Intervals
@@ -388,6 +388,8 @@ vt =                      0
 ht =                      0
 h_corr =                  1
 w_corr =                  1
+bho = bh
+bwo = bw
 rgb = ['X', 'R', 'G', 'B', 'W1', 'W2']
 
 if DKeys == 0:
@@ -423,8 +425,8 @@ if not use_Pi_Cam and zoom > usb_max_res:
    zoom = Image_window = usb_max_res
 
 if Display == 0:
-   width = 640#
-   b1x = b2x = b3x = Disp_Width#
+   width = 640
+   b1x = b2x = b3x = Disp_Width
    b1y = -bh
    b2y = bh*4
    b3y = bh*9
@@ -439,8 +441,8 @@ if Display == 0:
 
 if Display == 1:
    bh = bw = 32
-   width = 352
-   height = 288
+   width = 320
+   height = 240
    b1x = 0
    b1y = b2y = b3y = height
    b2x = 192
@@ -451,8 +453,9 @@ if Display == 1:
    if use_config == 0:
       zoom = 0
    hplus = 192
+   Disp_Width = width
 
-if Display > 1:
+if Display == 2:
    width =  rpiwidth[Image_window]
    height = rpiheight[Image_window]
    b1x = b2x = b3x = width
@@ -462,6 +465,7 @@ if Display > 1:
    hplus = 0
    Disp_Width = width
 
+   
 min_res = Image_window
 
 while z <= zoom:
@@ -479,10 +483,10 @@ mincor = int(Decimal(minc)*Decimal((nscale + sscale + wscale + escale)/4))
 
 w =  rpiwidth[zoom]
 h = rpiheight[zoom]
-if width <= 352:
+if width <= 352 and Display == 1:
    modewidth = 640
 else:
-   modewidth = Disp_Width + bw*6#
+   modewidth = Disp_Width + bw*6
 
 if not Frame:
    windowSurfaceObj = pygame.display.set_mode((modewidth, height + hplus), pygame.NOFRAME, bits)
@@ -495,18 +499,16 @@ if camera_connected and not use_Pi_Cam:
    if not zoom:
       cam = pygame.camera.Camera("/dev/video0", (320, 240))
    elif zoom == 1 and usb_max_res >= 1:
-      cam = pygame.camera.Camera("/dev/video0", (352, 288))
-   elif zoom == 2 and usb_max_res >= 2:
       cam = pygame.camera.Camera("/dev/video0", (640, 480))
-   elif zoom == 3 and usb_max_res >= 3:
+   elif zoom == 2 and usb_max_res >= 2:
       cam = pygame.camera.Camera("/dev/video0", (800, 600))
-   elif zoom == 4 and usb_max_res >= 4:
+   elif zoom == 3 and usb_max_res >= 3:
       cam = pygame.camera.Camera("/dev/video0", (960, 720))
-   elif zoom == 5 and usb_max_res >= 5:
+   elif zoom == 4 and usb_max_res >= 4:
       cam = pygame.camera.Camera("/dev/video0", (1280, 960))
-   elif zoom == 6 and usb_max_res >= 6:
+   elif zoom == 5 and usb_max_res >= 5:
       cam = pygame.camera.Camera("/dev/video0", (1920, 1440))
-   elif zoom == 7 and usb_max_res >= 7:
+   elif zoom == 6 and usb_max_res >= 6:
       cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
    cam.start()
    cam.set_controls(0, 0, rpibr)
@@ -526,13 +528,14 @@ if use_Pi_Cam and camera_connected:
       rpistr += " -ISO " + str(rpiISO)
    if rpiev != 0:
       rpistr += " -ev " + str(rpiev)
-   off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))#
+   off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))
    off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
-   widx =  Decimal(width)/Decimal(w)#
+   widx =  Decimal(width)/Decimal(w)
    heiy = Decimal(height)/Decimal(h)
    rpistr += " -q 100 -n -sa " + str(rpisa) + " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)#
    if rpineg:
       rpistr += " -ifx negative "
+   #print rpistr
    p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
 
 def R_ON(RD, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA):
@@ -628,6 +631,8 @@ if use_config > 0:
 button2(b3x, 4, b3y, 6, bw, 1, bh, 0)
 button2(b3x, 5, b3y, 6, bw, 1, bh, 0)
 button2(b3x, 6, b3y, 6, bw, 1, bh, 0)
+if Display == 0:
+   button2(b3x, 6, b3y, 5, bw, 1, bh, 0)
 
 def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
    fy += 2 + (vp - 1)*bh + vo*(bh/6)
@@ -646,7 +651,7 @@ def keys2(msg, fsize, fcolor, fx, bw, hp, fy, bh, vp, vo, upd):
    msgRectobj =    msgSurfaceObj.get_rect()
    msgRectobj.topleft = (fx, fy)
    windowSurfaceObj.blit(msgSurfaceObj, msgRectobj)
-   if upd:
+   if upd :
       pygame.display.update(pygame.Rect(int(fx/bw)*bw, int(fy/bh)*bh, bw*3, bh))
    return
 
@@ -791,15 +796,17 @@ keys2("3",                        fs,       5,        b3x+fs,      bw,   2,     
 keys2(" S1",                      fs,       6,        b3x,         bw,   3,     b3y, bh, 6, 1, 0)
 keys2(" S2",                      fs,       6,        b3x,         bw,   4,     b3y, bh, 6, 1, 0)
 keys2(" S3",                      fs,       6,        b3x,         bw,   5,     b3y, bh, 6, 1, 0)
+if Display == 0:
+   keys2("Menu",                      fs-2,       6,        b3x,         bw,   5,     b3y, bh, 5, 1, 0)
 keys2("RELOAD cfg",               fs-2,     7,        b3x+bw/6,    bw,   0,     b3y, bh, 5, 4, 0)
-keys2("SAVE cfg",                 fs-2,     7,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 4, 0)
+keys2("SAVE cfg",                 fs-2,     7,        b3x+bw/4,    bw,   3,     b3y, bh, 5, 4, 0)
 if Night:
    keys2("Day",                   fs-1,     6,        b1x,         bw,   2,     b1y, bh, 5, 1, 0)
 else:
    keys2("Night",                 fs-1,     6,        b1x,         bw,   2,     b1y, bh, 5, 1, 0)
    
 keys2("TELESCOPE",                fs,       1,        b3x+bw/5,    bw,   0,     b3y, bh, 5, 0, 0)
-keys2("WINDOW",                   fs,       1,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 0, 0)
+keys2("WINDOW",                   fs,       1,        b3x+bw/6,    bw,   3,     b3y, bh, 5, 0, 0)
 keys2("Stop",                     fs,       7,        b3x,         bw,   2,     b3y, bh, 4, 1, 0)
 keys2("cen",                      fs,       7,        b3x,         bw,   1,     b3y, bh, 3, 0, 0)
 keys2(" tre",                     fs,       7,        b3x,         bw,   1,     b3y, bh, 3, 2, 0)
@@ -811,9 +818,10 @@ keys2("cap",                      fs,       con_cap,  b2x,         bw,   5,     
 if use_Pi_Cam:
    keys2("pic",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
    keys2("cap",                   fs,       6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
-keys2("scr",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
-keys2("S",                        fs,       5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+keys2("Scr",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
 keys2("cap",                      fs,       6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
+keys2("S",                        fs,       5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+
 if photoon:
     keys2("PHOTO",                fs,       photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
     keys2("O",                    fs,       5,        b2x+fs*1.5,  bw,   4,     b2y, bh, 2, 0, 0)
@@ -835,7 +843,7 @@ if Display != 1:
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
-                                                                                                                                               
+                                                                                              
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 5,  bh*10 + bh/3 + 10), 2)
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3 + 5),  2)
    pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*5 + bw/4 + 15, bh*10 + bh/3),      (Disp_Width + bw*5 + bw/4 + 10, bh*10 + bh/3),      2)
@@ -1099,7 +1107,12 @@ while True:
          cropped = pygame.Surface((Disp_Width, height))
          cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))
          catSurfaceObj = cropped
-         windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+         if menu != 1:
+            windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+         if menu == 1:
+            catSurfacesmall = pygame.transform.scale(catSurfaceObj, (Disp_Width/2,240))
+            windowSurfaceObj.blit(catSurfacesmall, (318, 238))
+       
       strim = pygame.image.tostring(image, "RGB", 1)
       t3 = time.time()
       if vtime < t3:
@@ -1128,13 +1141,13 @@ while True:
             ptime4 = ptime3
       if ptime2 < t3 and photo and camera:
          pcount2 -= 1
-         keys2(str((pcount + 1) - pcount2),  fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+         keys2(str((pcount + 1) - pcount2),  fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
          if not pcount2:
             photo = 0
             camera = 0
             keys2("PHOTO",                   fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
             keys2("O",                       fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-            keys2("",                        fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2("",                        fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
             keys2("",                        fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.LOW)
@@ -1145,7 +1158,7 @@ while True:
       if ptime2 < t3 and photo and not camera:
          camera = 1
          ptime2 = time.time() + ptime
-         keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+         keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
          if use_RPiGPIO or photoon:
             GPIO.output(C_OP, GPIO.HIGH)
 
@@ -1192,8 +1205,14 @@ while True:
          cropped = pygame.Surface((Disp_Width, height))
          cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))
          catSurfaceObj = cropped
-      windowSurfaceObj.blit(catSurfaceObj, (0, 0))
-
+      if menu != 1:
+         windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+         
+      if menu == 1:
+         catSurfacesmall = pygame.transform.scale(catSurfaceObj, (Disp_Width/2,240))
+         windowSurfaceObj.blit(catSurfacesmall, (318, 238))
+              
+         
       t3 = time.time()
       if vtime < t3 and not rpistopNS:
          if use_RPiGPIO or use_Seeed or use_PiFaceRP:
@@ -1224,13 +1243,13 @@ while True:
             ptime4 = ptime3
          if ptime2 < t3 and camera:
             pcount2 -= 1
-            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
             if not pcount2:
                photo = 0
                camera = 0
                keys2("PHOTO",                fs, photo, b2x,        bw, 4, b2y, bh, 2, 0, 1)
                keys2("O",                    fs, 5,     b2x+fs*1.5, bw, 4, b2y, bh, 2, 0, 1)
-               keys2("",                     fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+               keys2("",                     fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
                keys2("",                     fs, photo, b2x+14,     bw, 5, b2y, bh, 2, 3, 1)
                if use_RPiGPIO or photoon:
                   GPIO.output(C_OP, GPIO.LOW)
@@ -1243,7 +1262,7 @@ while True:
          if ptime2 < t3 and photo and not camera:
             camera = 1
             ptime2 = time.time() + ptime
-            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
+            keys2(str(pcount + 1 - pcount2), fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
             if use_RPiGPIO or photoon:
                GPIO.output(C_OP, GPIO.HIGH)
 
@@ -1264,8 +1283,15 @@ while True:
 # simulation demo
    if not camera_connected:
       image = pygame.image.fromstring(imu, (width, height), "RGB", 1)
-      catSurfaceObj = image
-      windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+      cropped = pygame.Surface((Disp_Width, height))
+      cropped.blit(image, (0, 0), (0, 0, Disp_Width, height))
+      catSurfaceObj = cropped
+      if menu != 1:
+         windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+      if menu == 1:
+         catSurfacesmall = pygame.transform.scale(catSurfaceObj, (Disp_Width/2,240))
+         windowSurfaceObj.blit(catSurfacesmall, (318, 238))
+       
       imb = imu
       t2 = time.time()
       if vtime < t2:
@@ -1412,11 +1438,23 @@ while True:
       imagep = pygame.image.fromstring(pic, (crop, crop), "RGB", 1)
       if crop != maxwin:
          catSurfaceObj = imagep
-         windowSurfaceObj.blit(catSurfaceObj, (width/2 - crop/2 + offset3, height/2 - crop/2 + offset4))
+         if menu != 1:
+            windowSurfaceObj.blit(catSurfaceObj, (width/2 - crop/2 + offset3, height/2 - crop/2 + offset4))
+         else:
+            imagep = pygame.transform.scale(imagep, [crop/2, crop/2])
+            catSurfaceObj = imagep
+            windowSurfaceObj.blit(catSurfaceObj, (478 - crop/4 + offset3/2, 358 - crop/4 + offset4/2))
+            
       else:
-         imagep = pygame.transform.scale(imagep, [width, height])
-         catSurfaceObj = imagep
-         windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+         if menu == 0:
+            imagep = pygame.transform.scale(imagep, [width, height])
+            catSurfaceObj = imagep
+            windowSurfaceObj.blit(catSurfaceObj, (0, 0))
+         else:
+            imagep = pygame.transform.scale(imagep, [width/2, height/2])
+            catSurfaceObj = imagep
+            windowSurfaceObj.blit(catSurfaceObj, (318, 238))
+            
 
 
 # calculate corrections
@@ -1501,7 +1539,8 @@ while True:
             crop -= 1
          elif (height/2 + offset4 - crop/2) <= 1:
             crop -= 1
-      keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 1)
+      if menu != 1: 
+         keys2(str(crop), fs, 3, b1x, bw, 5, b1y, bh, 3, 3, 1)
 
    if crop == maxwin:
       acorrect = Decimal(acorrect) * Decimal(h_corr)
@@ -1592,9 +1631,9 @@ while True:
             keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
             keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
          if serial_connected:
-            if decN and vdir == "N":
+            if decN and vdir == "n":
                ser.write(bytes(Vcorrt.encode('ascii')))
-            if decS and vdir == "S":
+            if decS and vdir == "s":
                ser.write(bytes(Vcorrt.encode('ascii')))
             time.sleep(0.2)
             ser.write(bytes(Hcorrt.encode('ascii')))
@@ -1630,48 +1669,50 @@ while True:
 
 # Display
    if plot > 0:
-      if Display == 0 or Display > 1:
-         pox = Disp_Width - 110
+      if (Display == 0 and menu ==0) or Display > 1:
+         poxd = Disp_Width - 105
       else:
-         pox = Disp_Width + 10
-      poy = 20
-      pov = 50
-      pol = 256
-      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
+         poxd = Disp_Width + 18
+      poyd = 10
+      povd = 50
+      pold = 256
+      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(poxd-1, poyd-1, 52, 258), 1)
       limg += 1
-      val2 = pov/2
-      val3 = pov/2
+      val2 = povd/2
+      val3 = povd/2
       if acorrect >= 0:
-         val2 = pov/2 + int(math.sqrt(acorrect))/4
+         val2 = povd/2 + int(math.sqrt(acorrect))/4
       else:
-         val2 = pov/2 - int(math.sqrt(-acorrect))/4
+         val2 = povd/2 - int(math.sqrt(-acorrect))/4
       if bcorrect >= 0:
-         val3 = pov/2 + int(math.sqrt(bcorrect))/4
+         val3 = povd/2 + int(math.sqrt(bcorrect))/4
       else:
-         val3 = pov/2 - int(math.sqrt(-bcorrect))/4
+         val3 = povd/2 - int(math.sqrt(-bcorrect))/4
       if val2 < val3:
          rimg = blankline[0:(val2)*3]
          rimg += dred if Night else red
          rimg += blankline[val2*3:val3*3]
          rimg += dgrn if Night else grn
          rimg += blankline
-         pimg += rimg[0:pov*3]
+         pimg += rimg[0:povd*3]
       else:
          rimg = blankline[0:(val3)*3]
          rimg += dgrn if Night else grn
          rimg += blankline[val3*3:val2*3]
          rimg += dred if Night else red
          rimg += blankline
-         pimg += rimg[0:pov*3]
-      if limg > pol:
-         yt = (limg - pol)*pov*3
-         yu = limg*pov*3
+         pimg += rimg[0:povd*3]
+      if limg > pold:
+         yt = (limg - pold)*povd*3
+         yu = limg*povd*3
          pimg = pimg[yt:yu]
-         limg = pol
-      imageg = pygame.image.fromstring(pimg, (pov, limg), "RGB", 1)
+         limg = pold
+      imageg = pygame.image.fromstring(pimg, (povd, limg), "RGB", 1)
       if plot == 1:
          imageg.set_alpha(127)
-      windowSurfaceObj.blit(imageg, (pox, poy))
+      windowSurfaceObj.blit(imageg, (poxd, poyd))
+      if graph == 0  and menu == 1 :
+         pygame.display.update(bw*12, 9, 800-(bw*12),461)
 
    w2 = width/2 + offset3
    h2 = height/2 + offset4
@@ -1680,11 +1721,11 @@ while True:
 
 #display graph if enabled
    if graph > 0:
-      if Display == 0 or Display > 1:
-         pox = Disp_Width - 55
+      if (Display == 0 and menu == 0) or Display > 1:
+         pox = Disp_Width - 52
       else:
-         pox = Disp_Width + 65
-      poy = 20
+         pox = Disp_Width + 70
+      poy = 10
       pov = 50
       pygame.draw.rect(windowSurfaceObj, greyColor, Rect(pox-1, poy-1, 52, 258), 1)
       count = 0
@@ -1727,78 +1768,151 @@ while True:
       if graph == 1:
          imageg.set_alpha(127)
       windowSurfaceObj.blit(imageg, (pox, poy))
+      if menu == 1:
+         pygame.display.update(bw*12, 9, 800-(bw*12),470)
 
    if not auto_g:
-      pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
-      pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+      if menu == 0:
+         pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+         pygame.draw.line(   windowSurfaceObj, purpleColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+      else:
+         pygame.draw.line(windowSurfaceObj, purpleColor, (318+(w2 + bcorrect/100 - 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 + 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
+         pygame.draw.line(windowSurfaceObj, purpleColor, (318+(w2 + bcorrect/100 + 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 - 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
    else:
       if ttot > 1:
-         pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
-         pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+         if menu == 0:
+            pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+            pygame.draw.line(windowSurfaceObj, greenColor,  (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+         else:
+            pygame.draw.line(windowSurfaceObj, greenColor, (318+(w2 + bcorrect/100 - 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 + 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
+            pygame.draw.line(windowSurfaceObj, greenColor, (318+(w2 + bcorrect/100 + 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 - 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
       else:
-         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
-         pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+         if menu == 0:
+            pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 - 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 + 5, h2 - acorrect/100 + 5))
+            pygame.draw.line(windowSurfaceObj, yellowColor, (w2 + bcorrect/100 + 5, h2 - acorrect/100 - 5), (w2 + bcorrect/100 - 5, h2 - acorrect/100 + 5))
+         else:
+            pygame.draw.line(windowSurfaceObj, yellowColor, (318+(w2 + bcorrect/100 - 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 + 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
+            pygame.draw.line(windowSurfaceObj, yellowColor, (318+(w2 + bcorrect/100 + 5)/2,238 + (h2 - acorrect/100 - 5)/2), (318 + (w2 + bcorrect/100 - 5)/2, 238 + (h2 - acorrect/100 + 5)/2))
 
    if not fc or use_Pi_Cam or not camera_connected or thres:
       if maxwin != crop:
-         pygame.draw.rect(windowSurfaceObj, bredColor, Rect(w2 - c1, h2 - c2, crop, crop), 1)
-      pygame.draw.line(windowSurfaceObj,    bredColor, (w2 - 4, h2),     (w2 + 4, h2))
-      pygame.draw.line(windowSurfaceObj,    bredColor, (w2,     h2 - 4), (w2,     h2 + 4))
+         if menu == 0:
+            pygame.draw.rect(windowSurfaceObj, bredColor, Rect(w2 - c1, h2 - c2, crop, crop), 1)
+         else:
+            pygame.draw.rect(windowSurfaceObj, bredColor, Rect(318+((w2 - c1)/2), 238+((h2 - c2)/2), crop/2, crop/2), 1)
+         
+      if menu == 0:
+         pygame.draw.line(windowSurfaceObj,    bredColor, (w2 - 4, h2),     (w2 + 4, h2))
+         pygame.draw.line(windowSurfaceObj,    bredColor, (w2,     h2 - 4), (w2,     h2 + 4))
+      else:
+         pygame.draw.rect(windowSurfaceObj,    bredColor, Rect(318+((w2 - c1)/2) + (crop/4) - 1, 238+((h2 - c2)/2) + (crop/4) - 1, 2, 2), 1)
+            
       if not auto_g:
          if DKeys == 1:
-            keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
-            keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            if menu == 0:
+               keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+               keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            else:
+               pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+               keys2(Vcorrt,    16, 9, 630, 0, 0, 450, 0, 0, 0, 0)
+               keys2(Hcorrt,    16, 9, 715, 0, 0, 450, 0, 0, 0, 0)
+               pygame.display.update(625,450, 800,500)
          else:
             if Vcorrt[3:4] == "n":
                vdr = "+"
             else:
                vdr = "-"
-            keys2("Dec" + vdr + Vcorrt[4:9],    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+            if menu == 0:
+               keys2("Dec" + vdr + Vcorrt[4:9],    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
+            else:
+               pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+               keys2("Dec" + vdr + Vcorrt[4:9], 16, 9, 630, 1, 1, 450, 1, 1, 1, 1)
+               
             if Hcorrt[3:4] == "e":
                hdr = "+"
             else:
                hdr = "-"
-            keys2(" RA" + hdr + Hcorrt[4:9],    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            if menu == 0:
+               keys2(" RA" + hdr + Hcorrt[4:9],    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+            else:
+               keys2(" RA" + hdr + Hcorrt[4:9],    16, 9, 715, 0, 0, 450, 0, 0, 0, 0)
+               pygame.display.update(625,450, 800,500)
             
       else:
          if ttot > 1:
             if DKeys == 1:
-               keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
-               keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               if menu == 0:
+                  keys2(Vcorrt,    16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
+                  keys2(Hcorrt,    16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+                  keys2(Vcorrt,    16, 1, 630, 0, 0, 450, 0, 0, 0, 0)
+                  keys2(Hcorrt,    16, 1, 715, 0, 0, 450, 0, 0, 0, 0)
+                  pygame.display.update(625,450, 800,500)
             else:
                if Vcorrt[3:4] == "n":
                   vdr = "+"
                else:
                   vdr = "-"
-            keys2("Dec" + vdr + Vcorrt[4:9],    16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
-            if Hcorrt[3:4] == "e":
-               hdr = "+"
-            else:
-               hdr = "-"
-            keys2(" RA" + hdr + Hcorrt[4:9],    16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               if menu == 0:
+                  keys2("Dec" + vdr + Vcorrt[4:9],    16, 1,          0, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+                  keys2("Dec" + vdr + Vcorrt[4:9], 16, 1, 630, 1, 1, 450, 1, 1, 1, 1)
+               
+               if Hcorrt[3:4] == "e":
+                  hdr = "+"
+               else:
+                  hdr = "-"
+               if menu == 0:
+                  keys2(" RA" + hdr + Hcorrt[4:9],    16, 1, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  keys2(" RA" + hdr + Hcorrt[4:9],    16, 1, 715, 0, 0, 450, 0, 0, 0, 0)
+                  pygame.display.update(625,450, 800,500)
+               
             
          else:
             if DKeys == 1:
-               keys2(Vcorrt,    16, 9,          0, 0, 0, 0, 0, 0, 0, 0)
-               keys2(Hcorrt,    16, 9, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               if menu == 0:
+                  keys2(Vcorrt,    16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
+                  keys2(Hcorrt,    16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+                  keys2(Vcorrt,    16, 2, 630, 0, 0, 450, 0, 0, 0, 0)
+                  keys2(Hcorrt,    16, 2, 715, 0, 0, 450, 0, 0, 0, 0)
+                  pygame.display.update(625,450, 800,500)
             else:
                if Vcorrt[3:4] == "n":
                   vdr = "+"
                else:
                   vdr = "-"
-            keys2("Dec" + vdr + Vcorrt[4:9],    16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
-            if Hcorrt[3:4] == "e":
-               hdr = "+"
-            else:
-               hdr = "-"
-            keys2(" RA" + hdr + Hcorrt[4:9],    16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               if menu == 0:
+                  keys2("Dec" + vdr + Vcorrt[4:9],    16, 2,          0, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  pygame.draw.rect(windowSurfaceObj, blackColor, Rect(625, 450, 710, 500), 0)
+                  keys2("Dec" + vdr + Vcorrt[4:9], 16, 2, 630, 1, 1, 450, 1, 1, 1, 1)
+               
+               if Hcorrt[3:4] == "e":
+                  hdr = "+"
+               else:
+                  hdr = "-"
+               if menu == 0:
+                  keys2(" RA" + hdr + Hcorrt[4:9],    16, 2, Disp_Width - 80, 0, 0, 0, 0, 0, 0, 0)
+               else:
+                  keys2(" RA" + hdr + Hcorrt[4:9],    16, 2, 715, 0, 0, 450, 0, 0, 0, 0)
+                  pygame.display.update(625,450, 800,500)
+               
+               
             
    if Display == 1:
       pygame.display.update(0, 0, Disp_Width + 150, height)
    else:
-      pygame.display.update(0, 0, Disp_Width,       height)
+      if menu == 0:
+         pygame.display.update(0, 0, Disp_Width,       height)
+      else:
+         pygame.display.update(318, 238, Disp_Width/2,240)
 
-# read mouse or Dkey[4]yboard
+# read mouse or Keyboard
 
    for event in pygame.event.get():
        if event.type == QUIT:
@@ -1841,7 +1955,7 @@ while True:
                    y = (mousey-height)/bh
                    z = 10*x + y
              else:
-                if mousex > Disp_Width:
+                if menu == 0 and mousex > Disp_Width:
                    if mousey < bh * 5:
                       x = int((mousex - Disp_Width)/bw)
                       y = int(mousey/bh) + 1
@@ -1854,13 +1968,62 @@ while True:
                       x = int((mousex - Disp_Width)/bw) + 12
                       y = int((mousey - 10*bh)/bh) + 1
                       z = 10*x + y
-             if ((Display != 1 and mousex > (Disp_Width - 55)) or (Display == 1 and mousex > Disp_Width + 60)) and ((Display != 1 and mousex < (Disp_Width - 5)) or (Display == 1 and mousex < Disp_Width +110)) and mousey > 20 and mousey < 276 and graph > 0:
-                if ((Display != 1 and mousex > (Disp_Width - 55)) or (Display == 1 and mousex > Disp_Width + 60)) and ((Display != 1 and mousex < (Disp_Width - 5)) or (Display == 1 and mousex < Disp_Width +110)) and mousey > (256 - maxtot) and mousey < 276:
-                   level = 276 - mousey
-                   threshold = maxtot - level
-                   threshold = max(threshold, 1)
+                if menu == 1:
+                   if mousey < bh * 5 and mousex < bw * 6:
+                      x = int((mousex)/bw)
+                      y = int(mousey/bh) + 1
+                      z = 10*x + y
+                   if mousey > bh*5 and mousey < bh*10 and mousex < bw * 6:
+                      x = int((mousex)/bw) + 6
+                      y = int((mousey - 5*bh)/bh) + 1
+                      z = 10*x + y
+                   if mousey < bh*5 and mousex > bw*6:
+                      x = int((mousex)/bw) + 6
+                      y = int((mousey)/bh) + 1
+                      z = 10*x + y
+                     
+             if graph > 0 and mousex > pox and mousex < pox + pov and mousey > poy and mousey < poy + 258:
+                level = 266 - mousey
+                threshold = maxtot - level
+                threshold = max(threshold, 1)
+                change = 1
              else:
-                if mousex < Disp_Width and mousey < height:
+                if menu == 1 and mousex > 318 and mousex < 638 and mousey > 238 and mousey < 478 :
+                   offset3 = ((mousex - 318) - (160)) * 2
+                   offset4 = ((mousey - 238) - (120)) * 2
+                   
+                if (Display == 0 and mousex > 736  and mousex < 800 and mousey > 416 and mousey < 448) :
+                   menu +=1
+                   if menu > 1:
+                      menu = 0
+                   if menu == 0:
+                      bh = 32
+                      bw = 32
+                      b1x = b2x = b3x = Disp_Width
+                      b1y = -bh
+                      b2y = bh*4
+                      b3y = bh*9
+                      pygame.draw.rect(windowSurfaceObj, blackColor, Rect(0,0,800, 480), 0)
+                      z = 24
+                      switch = 1
+                   else:
+                      bh = 46
+                      bw = 52
+                      b1x = b2x = 0
+                      b3x = bw*6 
+                      b1y = -bh
+                      b2y = bh*4 + 1
+                      b3y = -bh
+                      pygame.draw.rect(windowSurfaceObj, blackColor, Rect(0,0,800,480), 0)
+                      pygame.draw.rect(windowSurfaceObj, greyColor, Rect(736,416,64,32), 0)
+                      pygame.draw.rect(windowSurfaceObj, lgryColor, Rect(736,416,64,2), 0)
+                      pygame.draw.rect(windowSurfaceObj, lgryColor, Rect(736,416,1,32), 0)
+                      keys2(" FULL", 12, 6, 748, 0, 0, 416, 0, 0, 0, 0)
+                      keys2("Display", 12, 6, 748, 0, 0, 432, 0, 0, 0, 0)
+                      z = 24
+                      switch = 1
+
+                if mousex < Disp_Width and mousey < height and menu == 0:
                    start = time.time()
                    xcount =  0
                    ycount =  0
@@ -1883,7 +2046,7 @@ while True:
                       offset4 = offset4o
           if ((z > 60 and z < 76) or z == 5 or z == 4 or z == 15 or z == 14 or z == 154) and use_Pi_Cam and camera_connected:
              os.killpg(p.pid, signal.SIGTERM)
-          if esc1 > 0 and z != 141 and kz != K_ESCAPE:
+          if esc1 > 0 and z != 141 and z != 124 and z != 134 and z != 144 and kz != K_ESCAPE:
              esc1 = 0
              keys2("Esc",                      fs,       5,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
           if z == 115 or kz == 304 or kz == 303:
@@ -1891,6 +2054,25 @@ while True:
              if con_cap > 1:
                 con_cap = 0
              change = 1
+             
+          elif z == 124 or z == 134 or z == 144:
+             if esc1 > 0:
+                if use_Pi_Cam and camera_connected:
+                   os.killpg(p.pid, signal.SIGTERM)
+                if serial_connected:
+                   lx200(':Q#', ':Q#', decN, decS)
+                if use_RPiGPIO or use_Seeed or use_PiFaceRP:
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                   DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
+                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
+                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
+                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                pygame.quit()
+                sys.exit()
+             
           elif z == 141 or kz == K_ESCAPE:
              if esc1 == 0:
                 keys2("Esc",                      fs,       2,        b3x,         bw,   2,     b3y, bh, 2, 2, 0)
@@ -1909,22 +2091,37 @@ while True:
                 keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 pygame.quit()
-                sys.exit()
+                if power_down == 0:
+                   sys.exit()
+                else:
+                   os.system("sudo shutdown -h now")
              esc1 += 1
           elif z == 114 or kz == K_s:
-             keys2("scr", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
-             keys2("cap", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
+             if menu == 0:
+                keys2("Scr", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
+                keys2("cap", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
+             else:
+                keys2("Screen", fs, 1, b2x, bw, 5, b2y, bh, 5, 0, 1)
+                keys2("capture", fs, 1, b2x, bw, 5, b2y, bh, 5, 2, 1)
              now = datetime.datetime.now()
              timestamp = now.strftime("%y%m%d%H%M%S")
              pygame.image.save(windowSurfaceObj, '/home/pi/scr' + str(timestamp) + "_"  + str(pct) + '.bmp')
-             keys2("scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
-             keys2("S",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 0)
-             keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
+             if menu == 0:
+                keys2("Scr", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
+                keys2("cap", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
+             else:
+                keys2("Screen", fs, 6, b2x, bw, 5, b2y, bh, 5, 0, 1)
+                keys2("capture", fs, 6, b2x, bw, 5, b2y, bh, 5, 2, 1)
+             keys2("S",   fs, 5, b2x, bw, 5, b2y, bh, 5, 0, 1)
              pct += 1
           elif z == 104 and use_Pi_Cam and camera_connected:
              os.killpg(p.pid, signal.SIGTERM)
-             keys2("pic", fs, 1, b2x, bw, 4, b2y, bh, 5, 0, 1)
-             keys2("cap", fs, 1, b2x, bw, 4, b2y, bh, 5, 2, 1)
+             if menu == 0:
+                keys2("pic", fs, 1, b2x, bw, 4, b2y, bh, 5, 0, 1)
+                keys2("cap", fs, 1, b2x, bw, 4, b2y, bh, 5, 2, 1)
+             else:
+                keys2("picture", fs, 1, b2x, bw, 4, b2y, bh, 5, 0, 1)
+                keys2("capture", fs, 1, b2x, bw, 4, b2y, bh, 5, 2, 1)
              now = datetime.datetime.now()
              timestamp = now.strftime("%y%m%d%H%M%S")
              fname = '/home/pi/pic' + str(timestamp) + "_" + str(pcu) + '.jpg'
@@ -1939,15 +2136,19 @@ while True:
                 rpistr += " -ev " + str(rpiev)
              rpistr += " -n -sa " + str(rpisa)
              if Pi_Cam == 2:
-                path = rpistr + ' -w 3280 -h 2464'#
+                path = rpistr + ' -w 3280 -h 2464'
              if Pi_Cam == 1:
-                path = rpistr + ' -w 2592 -h 1944'#
+                path = rpistr + ' -w 2592 -h 1944'
              os.system(path)
-             keys2("pic", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 1)
-             keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 1)
+             if menu == 0:
+                keys2("pic", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 1)
+                keys2("cap", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 1)
+             else:
+                keys2("picture", fs, 6, b2x, bw, 4, b2y, bh, 5, 0, 1)
+                keys2("capture", fs, 6, b2x, bw, 4, b2y, bh, 5, 2, 1)
              pcu += 1
              restart = 1
-          elif (z == 151 or z == 161 or z == 171 or kz == K_0) and zoom == Image_window:
+          elif (z == 151 or z == 161 or z == 171 or kz == K_0) and zoom == Image_window : 
              offset4 -= 5
              if ((height/2 + offset4 + crop/2) >= height) or ((height/2 + offset4 - crop/2) <= 1):
                 offset4 += 5
@@ -1959,7 +2160,7 @@ while True:
                 offset3 += 5
                 if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 -= 5
-          elif (z == 153 or z == 163 or z == 173 or kz == K_9) and zoom == Image_window:
+          elif (z == 153 or z == 163 or z == 173 or kz == K_9) and zoom == Image_window :
              offset4 += 5
              if ((height/2 + offset4 + crop/2) >= height) or ((height/2 + offset4 - crop/2) <= 1):
                 offset4 -= 5
@@ -1971,11 +2172,11 @@ while True:
                 offset3 += 5
                 if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                    offset3 -= 5
-          elif (z == 172 or kz == K_8) and zoom == Image_window:
+          elif (z == 172 or kz == K_8) and zoom == Image_window : 
              offset3 += 5
              if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                 offset3 -= 5
-          elif (z == 152 or kz == K_7) and zoom == Image_window:
+          elif (z == 152 or kz == K_7) and zoom == Image_window :
              offset3 -= 5
              if ((width/2 + offset3 + crop/2) >= width) or ((width/2 + offset3 - crop/2) <= 1):
                 offset3 += 5
@@ -2202,13 +2403,13 @@ while True:
              photo = not photo
              if not photo:
                 camera = 0
-                keys2("",  fs, photo, b2x+18, bw, 4, b2y, bh, 2, 3, 1)
+                keys2("",  fs, photo, b2x+ (bw/1.5), bw, 4, b2y, bh, 2, 3, 1)
                 keys2("",  fs, photo, b2x+14, bw, 5, b2y, bh, 2, 3, 1)
                 if use_RPiGPIO or photoon:
                    GPIO.output(C_OP, GPIO.LOW)
              if photo:
                 pcount2 = pcount
-                keys2("1", fs, photo, b2x+18, bw, 4, b2y, bh, 2, 3, 1)
+                keys2("1", fs, photo, b2x+ (bw/1.5), bw, 4, b2y, bh, 2, 3, 1)
                 ptime2 = time.time() + ptime
                 camera = 1
                 if use_RPiGPIO or photoon:
@@ -2331,7 +2532,6 @@ while True:
                 keys2(Dkey[3], fs-1, 1, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 time.sleep(mincor/100)
                 keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2349,7 +2549,6 @@ while True:
                 keys2(Dkey[0], fs-1, 1, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(1, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2(Dkey[3], fs-1, 6, b3x, bw, 1, b3y, bh, 4, 2, 1)
                 time.sleep(mincor/100)
                 keys2(Dkey[0], fs-1, 6, b3x, bw, 1, b3y, bh, 2, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(0, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2367,7 +2566,6 @@ while True:
                 keys2(Dkey[1], fs, 1, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2(Dkey[0], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
                 keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2380,12 +2578,11 @@ while True:
                 move = ':Mge' + blan[(len(blan))-4:len(blan)]
                 keys2(Dkey[2], fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 lx200(move, ':Mgs0000', decN, decS)
-                keys2(Dkey[0], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
+                keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
              if use_RPiGPIO or use_Seeed or use_PiFaceRP:
                 keys2(Dkey[2], fs, 1, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(3, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA =  R_ON(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
-                keys2(Dkey[1], fs, 6, b3x, bw, 0, b3y, bh, 3, 2, 1)
                 time.sleep(mincor/100)
                 keys2(Dkey[2], fs, 6, b3x, bw, 2, b3y, bh, 3, 2, 1)
                 DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA = R_OFF(2, DEVICE_ADDRESS, DEVICE_REG_MODE1, DEVICE_REG_DATA)
@@ -2463,11 +2660,17 @@ while True:
              graph += 1
              if graph > 2:
                 graph = 0
+                if menu == 1:
+                   pygame.draw.rect(windowSurfaceObj, blackColor, Rect(Disp_Width + 69, 9, 54, 269), 0)
+                   pygame.display.update()
              change = 1
           elif z == 2 or kz == K_p:
              plot += 1
              if plot > 2:
                 plot = 0
+                if menu == 1:
+                   pygame.draw.rect(windowSurfaceObj, blackColor, Rect(Disp_Width + 16, 9, 54, 269), 0)
+                   pygame.display.update()
              change = 1
           elif z == 32 or kz == K_w:
              auto_win = not auto_win
@@ -2535,18 +2738,16 @@ while True:
                       if not zoom:
                          cam = pygame.camera.Camera("/dev/video0", (320, 240))
                       elif zoom == 1 and usb_max_res >= 1:
-                         cam = pygame.camera.Camera("/dev/video0", (352, 288))
-                      elif zoom == 2 and usb_max_res >= 2:
                          cam = pygame.camera.Camera("/dev/video0", (640, 480))
-                      elif zoom == 3 and usb_max_res >= 3:
+                      elif zoom == 2 and usb_max_res >= 2:
                          cam = pygame.camera.Camera("/dev/video0", (800, 600))
-                      elif zoom == 4 and usb_max_res >= 4:
+                      elif zoom == 3 and usb_max_res >= 3:
                          cam = pygame.camera.Camera("/dev/video0", (960, 720))
-                      elif zoom == 5 and usb_max_res >= 5:
+                      elif zoom == 4 and usb_max_res >= 4:
                          cam = pygame.camera.Camera("/dev/video0", (1280, 960))
-                      elif zoom == 6 and usb_max_res >= 6:
+                      elif zoom == 5 and usb_max_res >= 5:
                          cam = pygame.camera.Camera("/dev/video0", (1920, 1440))
-                      elif zoom == 7 and usb_max_res >= 7:
+                      elif zoom == 6 and usb_max_res >= 6:
                          cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
                       cam.start()
                    if not zoom:
@@ -2589,18 +2790,16 @@ while True:
                       if not zoom:
                          cam = pygame.camera.Camera("/dev/video0", (320, 240))
                       elif zoom == 1 and usb_max_res >= 1:
-                         cam = pygame.camera.Camera("/dev/video0", (352, 288))
-                      elif zoom == 2 and usb_max_res >= 2:
                          cam = pygame.camera.Camera("/dev/video0", (640, 480))
-                      elif zoom == 3 and usb_max_res >= 3:
+                      elif zoom == 2 and usb_max_res >= 2:
                          cam = pygame.camera.Camera("/dev/video0", (800, 600))
-                      elif zoom == 4 and usb_max_res >= 4:
+                      elif zoom == 3 and usb_max_res >= 3:
                          cam = pygame.camera.Camera("/dev/video0", (960, 720))
-                      elif zoom == 5 and usb_max_res >= 5:
+                      elif zoom == 4 and usb_max_res >= 4:
                          cam = pygame.camera.Camera("/dev/video0", (1280, 960))
-                      elif zoom == 6 and usb_max_res >= 6:
+                      elif zoom == 5 and usb_max_res >= 5:
                          cam = pygame.camera.Camera("/dev/video0", (1920, 1440))
-                      elif zoom == 7 and usb_max_res >= 7:
+                      elif zoom == 6 and usb_max_res >= 6:
                          cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
                       cam.start()
                    if not zoom:
@@ -2615,7 +2814,9 @@ while True:
              nsi = not nsi
              change = 1
           elif z == 24:
-             Night = not Night
+             if switch == 0:
+                Night = not Night
+             switch = 0
              if not Night:
                 redColor =    pygame.Color(255,   0,   0)
                 greenColor =  pygame.Color(  0, 255,   0)
@@ -2695,6 +2896,8 @@ while True:
              button2(      b3x, 4,          b3y, 6,  bw, 1, bh, 0)
              button2(      b3x, 5,          b3y, 6,  bw, 1, bh, 0)
              button2(      b3x, 6,          b3y, 6,  bw, 1, bh, 0)
+             if Display == 0 and menu == 0:
+                button2(b3x, 6, b3y, 5, bw, 1, bh, 0)
              keys2(str(int(nscale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 2, 3, 0)
              keys2(str(int(sscale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 3, 3, 0)
              keys2(str(int(escale)),           fs,   3,        b2x,         bw,   3,     b2y, bh, 4, 3, 0)
@@ -2837,27 +3040,44 @@ while True:
              keys2(" S1",                      fs,   6,        b3x,         bw,   3,     b3y, bh, 6, 1, 0)
              keys2(" S2",                      fs,   6,        b3x,         bw,   4,     b3y, bh, 6, 1, 0)
              keys2(" S3",                      fs,   6,        b3x,         bw,   5,     b3y, bh, 6, 1, 0)
+             if Display == 0 and menu == 0:
+                keys2("Menu",                      fs-2,       6,        b3x,         bw,   5,     b3y, bh, 5, 1, 0)
              keys2("RELOAD cfg",               fs-2, 7,        b3x+bw/6,    bw,   0,     b3y, bh, 5, 4, 0)
-             keys2("SAVE cfg",                 fs-2, 7,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 4, 0)
+             keys2("SAVE cfg",                 fs-2, 7,        b3x+bw/4,    bw,   3,     b3y, bh, 5, 4, 0)
              if Night:
                 keys2("Day",                   fs-1, 6,        b1x,         bw,   2,     b1y, bh, 5, 1, 0)
              else:
                 keys2("Night",                 fs-1, 6,        b1x,         bw,   2,     b1y, bh, 5, 1, 0)
              keys2("TELESCOPE",                fs,   1,        b3x+bw/5,    bw,   0,     b3y, bh, 5, 0, 0)
-             keys2("WINDOW",                   fs,   1,        b3x+bw/2,    bw,   3,     b3y, bh, 5, 0, 0)
+             keys2("WINDOW",                   fs,   1,        b3x+bw/6,    bw,   3,     b3y, bh, 5, 0, 0)
              keys2("Stop",                     fs,   7,        b3x,         bw,   2,     b3y, bh, 4, 1, 0)
              keys2("cen",                      fs,   7,        b3x,         bw,   1,     b3y, bh, 3, 0, 0)
              keys2(" tre",                     fs,   7,        b3x,         bw,   1,     b3y, bh, 3, 2, 0)
              keys2("cen",                      fs,   7,        b3x,         bw,   4,     b3y, bh, 3, 0, 0)
              keys2(" tre",                     fs,   7,        b3x,         bw,   4,     b3y, bh, 3, 2, 0)
-             keys2("con",                      fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 0, 0)
-             keys2("cap",                      fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 2, 0)
+             if menu == 0:
+                keys2("con",                      fs-1,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 0, 0)
+                keys2("cap",                      fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 2, 0)
+             else:
+                keys2("constant",                 fs-1,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 0, 0)
+                keys2("capture",                  fs,   con_cap,  b2x,         bw,   5,     b2y, bh, 6, 2, 0)
              if use_Pi_Cam:
-                keys2("pic",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
-                keys2("cap",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
-             keys2("scr",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+                if menu == 0:
+                   keys2("pic",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
+                   keys2("cap",                   fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
+                else:
+                   keys2("picture",               fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 0, 0)
+                   keys2("capture",               fs,   6,        b2x,         bw,   4,     b2y, bh, 5, 2, 0)
+                   
+             if menu == 0:
+                keys2("Scr",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+                keys2("cap",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
+             else:
+                keys2("Screen",                   fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
+                keys2("capture",                  fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
+                
              keys2("S",                        fs,   5,        b2x,         bw,   5,     b2y, bh, 5, 0, 0)
-             keys2("cap",                      fs,   6,        b2x,         bw,   5,     b2y, bh, 5, 2, 0)
+
              if photoon:
                  keys2("PHOTO",                fs,   photo,    b2x,         bw,   4,     b2y, bh, 2, 0, 0)
                  keys2("O",                    fs,   5,        b2x+fs*1.5,  bw,   4,     b2y, bh, 2, 0, 0)
@@ -2873,8 +3093,8 @@ while True:
              keys2("CLS",                      fs,   cls,      b2x,         bw,   4,     b2y, bh, 6, 1, 0)
              keys2("C",                        fs,   5,        b2x,         bw,   4,     b2y, bh, 6, 1, 0)
              if photo == 1:
-                keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+18,     bw, 4, b2y, bh, 2, 3, 1)
-             if Display != 1:
+                keys2(str(pcount + 1 - pcount2),    fs, photo, b2x+ (bw/1.5),     bw, 4, b2y, bh, 2, 3, 1)
+             if Display != 1 and menu == 0:
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 15, bh*10 + bh/3 + 10), 2)
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3 + 5),  2)
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*10 + bh/3),      (Disp_Width + bw*3 + bw/4 + 10, bh*10 + bh/3),      2)
@@ -2890,6 +3110,30 @@ while True:
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 15, bh*12 + bh/3),      (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), 2)
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 5),  2)
                 pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width + bw*3 + bw/4 + 5,  bh*12 + bh/3 + 10), (Disp_Width + bw*3 + bw/4 + 10, bh*12 + bh/3 + 10), 2)
+                
+             if Display != 1 and menu == 1:
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 25,  bh*1 - bh/2),      (Disp_Width - bw*3 + bw/4 + 35, bh*1 - bh/2 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 25,  bh*1 - bh/2),      (Disp_Width - bw*3 + bw/4 + 25,  bh*1 - bh/2 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 25,  bh*1 - bh/2),      (Disp_Width - bw*3 + bw/4 + 30, bh*1 - bh/2),      2)
+                                                                                                                                                 
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 35, bh*1 - bh/2),      (Disp_Width - bw*1 + bw/4 + 25,  bh*1 - bh/2 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 35, bh*1 - bh/2),      (Disp_Width - bw*1 + bw/4 + 35, bh*1 - bh/2 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 35, bh*1 - bh/2),      (Disp_Width - bw*1 + bw/4 + 30, bh*1 - bh/2),      2)
+                                                                                                                                                 
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 25,  bh*3 - bh/2),      (Disp_Width - bw*1 + bw/4 + 35, bh*3 - bh/2 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 35, bh*3 - bh/2 + 10), (Disp_Width - bw*1 + bw/4 + 35, bh*3 - bh/2 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*1 + bw/4 + 35, bh*3 - bh/2 + 10), (Disp_Width - bw*1 + bw/4 + 30, bh*3 - bh/2 + 10), 2)
+                                                                                                                                                    
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 35, bh*3 - bh/2),      (Disp_Width - bw*3 + bw/4 + 25,  bh*3 - bh/2 + 10), 2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 25,  bh*3 - bh/2 + 10), (Disp_Width - bw*3 + bw/4 + 25,  bh*3 - bh/2 + 5),  2)
+                pygame.draw.line(windowSurfaceObj, greyColor, (Disp_Width - bw*3 + bw/4 + 25,  bh*3 - bh/2 + 10), (Disp_Width - bw*3 + bw/4 + 30, bh*3 - bh/2 + 10), 2)
+
+                pygame.draw.rect(windowSurfaceObj, greyColor, Rect(736,416,64,32), 0)
+                pygame.draw.rect(windowSurfaceObj, lgryColor, Rect(736,416,64,2), 0)
+                pygame.draw.rect(windowSurfaceObj, lgryColor, Rect(736,416,1,32), 0)
+                keys2(" FULL", 12, 6, 748, 0, 0, 416, 0, 0, 0, 0)
+                keys2("Display", 12, 6, 748, 0, 0, 432, 0, 0, 0, 0)
+
              pygame.display.update()
              change = 1
           elif z == 23 or kz == K_e or kz == K_r:
@@ -2977,15 +3221,15 @@ while True:
              timp += str(camera_connected) + str(serial_connected) + str(use_Pi_Cam)
              timp += str(use_RPiGPIO) + str(photoon) + str(use_Seeed) + str(use_PiFaceRP) + str(use_config) + str(Display) 
              timp += fil[len(str(Disp_Width)):len(str(Disp_Width))+4] + str(Disp_Width) + str(Night)
-             timp += str(Image_window) + str(usb_max_res) + str(Frame) + str(bh) + str(bw)
+             timp += str(Image_window) + str(usb_max_res) + str(Frame) + str(bho) + str(bwo)
              timp += fil[len(str(N_OP)):len(str(N_OP))+4] + str(N_OP) + fil[len(str(E_OP)):len(str(E_OP))+4] + str(E_OP)
              timp += fil[len(str(S_OP)):len(str(S_OP))+4] + str(S_OP) + fil[len(str(W_OP)):len(str(W_OP))+4] + str(W_OP)
              timp += fil[len(str(C_OP)):len(str(C_OP))+4] + str(C_OP)
              timp += fil[len(str(AC_OP)):len(str(AC_OP))+4] + str(AC_OP) + str(rpineg) + fil[len(str(bits)):len(str(bits))+4] + str(bits)
              timp += fil[len(str(int(minc*10))) :len(str(int(minc*10)))+4   ] + str(int(minc*10))
-
-             with open(deffile + ".txt", "w") as file:
-                file.write(timp)
+             if len(timp) == 147:
+                with open(deffile + ".txt", "w") as file:
+                   file.write(timp)
 
              if z == 155:
                 keys2(" S1", fs, 6, b3x, bw, 3, b3y, bh, 6, 1, 1)
@@ -3066,21 +3310,20 @@ while True:
                 if not use_Pi_Cam:
                    cam.stop()
                    pygame.camera.init()
+
                    if not zoom:
                       cam = pygame.camera.Camera("/dev/video0", (320, 240))
                    elif zoom == 1 and usb_max_res >= 1:
-                      cam = pygame.camera.Camera("/dev/video0", (352, 288))
-                   elif zoom == 2 and usb_max_res >= 2:
                       cam = pygame.camera.Camera("/dev/video0", (640, 480))
-                   elif zoom == 3 and usb_max_res >= 3:
+                   elif zoom == 2 and usb_max_res >= 2:
                       cam = pygame.camera.Camera("/dev/video0", (800, 600))
-                   elif zoom == 4 and usb_max_res >= 4:
+                   elif zoom == 3 and usb_max_res >= 3:
                       cam = pygame.camera.Camera("/dev/video0", (960, 720))
-                   elif zoom == 5 and usb_max_res >= 5:
+                   elif zoom == 4 and usb_max_res >= 4:
                       cam = pygame.camera.Camera("/dev/video0", (1280, 960))
-                   elif zoom == 6 and usb_max_res >= 6:
+                   elif zoom == 5 and usb_max_res >= 5:
                       cam = pygame.camera.Camera("/dev/video0", (1920, 1440))
-                   elif zoom == 7 and usb_max_res >= 7:
+                   elif zoom == 6 and usb_max_res >= 6:
                       cam = pygame.camera.Camera("/dev/video0", (2592, 1944))
                    cam.start()
                 if not camera_connected:
@@ -3126,7 +3369,7 @@ while True:
              restart = 1
              change = 1
 
-   if change:
+   if change :
       change = 0
       if oldthreshold != threshold:
          pygame.draw.rect(windowSurfaceObj, greyColor, Rect(b1x+148, b1y+111, 26, 16))
@@ -3141,8 +3384,12 @@ while True:
          oldphoto = photo
       if oldcon_cap != con_cap:
          button2(b2x, 6, b2y, 6, bw, 1, bh, con_cap)
-         keys2("con", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 0, 1)
-         keys2("cap", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 2, 1)
+         if menu == 0:
+            keys2("con", fs-1, con_cap, b2x, bw, 5, b2y, bh, 6, 0, 1)
+            keys2("cap", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 2, 1)
+         else:
+            keys2("constant", fs-1, con_cap, b2x, bw, 5, b2y, bh, 6, 0, 1)
+            keys2("capture", fs, con_cap, b2x, bw, 5, b2y, bh, 6, 2, 1)
          oldcon_cap = con_cap
       if oldauto_win != auto_win:
          button2(b1x, 4, b1y, 3, bw, 1, bh, auto_win)
@@ -3333,12 +3580,11 @@ while True:
       rpistr += " -q 100 -n -sa " + str(rpisa)
       off5 = (Decimal(0.5) - (Decimal(width)/Decimal(2))/Decimal(w)) + (Decimal(offset5)/Decimal(w))#
       off6 = (Decimal(0.5) - (Decimal(height)/Decimal(2))/Decimal(h)) + (Decimal(offset6)/Decimal(h))
-      widx = Decimal(width)/Decimal(w)#
+      widx = Decimal(width)/Decimal(w)
       heiy = Decimal(height)/Decimal(h)
       rpistr += " -w " + str(width) + " -h " + str(height) + " -roi " + str(off5) + "," + str(off6) + ","+str(widx) + "," + str(heiy)#
       if rpineg:
          rpistr += " -ifx negative "
-      #print w,h,rpistr
       p = subprocess.Popen(rpistr, shell=True, preexec_fn=os.setsid)
       restart = 0
 
