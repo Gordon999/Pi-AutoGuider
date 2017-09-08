@@ -1,7 +1,7 @@
 # Pi-AutoGuider
 AutoGuider for a telescope using a Raspberry Pi, with RPi camera (v1 or v2) or suitable webcam.
 
-This script was developed to auto guide a telescope through a ST-4 port using a Raspberry Pi (Pi2B recommended) 
+This script was developed to auto guide a telescope through a ST-4 port using a Raspberry Pi (Pi2B or Pi3B recommended) 
 and a suitable interface.
 
 The interface can be an opto-isolator, relay card available for the Pi, eg Seeed Raspberry PI card, 
