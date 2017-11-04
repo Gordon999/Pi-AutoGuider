@@ -21,14 +21,15 @@ You could also use the PiNoIr camera, which is the same but has No IR filter
 Installing PiAutoguider
 -------------------------
 
-Works with a Raspberry Pi (http://www.raspberrypi.org) with 'Jessie' using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
+Works with a Raspberry Pi (http://www.raspberrypi.org) with latest Raspbian using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
 
 Use the latest RPi Raspian Jessie download.
 http://www.raspberrypi.org/downloads
 
 then do sudo apt-get update and sudo apt-get upgrade, to get the latest upgrades if required.
 
-Uses IDLE/Python 2.7 . You must start IDLE by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' at the prompt, if not the GPIO won't work
+Uses IDLE/Python 2.7 or IDLE3/Python 3.5. You must start IDLE / IDLE3 by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' or 'sudo idle3' at the prompt, if not the GPIO won't work.
+You can get the script to auto run at boot, see details within the python script.
 
 Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino Uno interface if you dont use the RPI camera. The B+ or Pi2B now have sufficient USB ports.
 
