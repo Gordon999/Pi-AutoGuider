@@ -14,7 +14,7 @@ import signal
 from decimal import *
 getcontext().prec = 8
 
-#Pi Autoguider r10c1
+#Pi Autoguider r10c2
 
 #WORKS WITH PYTHON 2 or 3 
 
@@ -2208,6 +2208,10 @@ while True:
                    totvcor = 0
                    tothcor = 0
                    count =   1
+                   if nr > 0:
+                      mxq = []
+                      mxp = []
+                      mxo = []
                    while count <= 10:
                       xvcor[count] = 0
                       xhcor[count] = 0
@@ -2556,6 +2560,9 @@ while True:
              nr +=1
              if nr > 3:
                 nr = 0
+                mxq = []
+                mxp = []
+                mxo = []
              change = 1
           elif (z == 105 or kz == K_c) and auto_g:
              cls = not cls
