@@ -18,5 +18,5 @@ Please take care when interfacing your telescope or camera. At your own risk.
 
 ## Screenshot
 
-![screenshot](scr_pic8.jpg)
+![screenshot](scr_pic7.jpg)
 ![screenshot](scr_pic9.jpg)
