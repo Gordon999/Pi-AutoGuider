@@ -16,7 +16,9 @@ The Pi can also control a Canon DSLR, via an interface, to allow long exposure p
 
 Please take care when interfacing your telescope or camera. At your own risk.
 
-## Screenshot
+## Screenshot, using 'Day' colours and 'normal' layout
 
 ![screenshot](scr_pic7.jpg)
+
+## Screenshot, using 'Night' colours and 'Pi Display' layout
 ![screenshot](scr_pic9.jpg)
