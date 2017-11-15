@@ -2055,7 +2055,7 @@ while True:
             if Cwindow == 0 :            
                pygame.draw.rect(windowSurfaceObj, bredColor, Rect(318 + ((w2 - c1)/2), 238 + ((h2 - c2)/2), crop/2, crop/2), 1)
             else:
-               pygame.draw.circle(windowSurfaceObj, bredColor, (319 + int((w2-c1)/2) + int(crop/4) + 1, 239 + int((h2-c2)/2) + int(crop/4) + 1), int(crop/4)+1,1)
+               pygame.draw.circle(windowSurfaceObj, bredColor, (319 + int((w2-c1)/2) + int(crop/4), 239 + int((h2-c2)/2) + int(crop/4)), int(crop/4)+1,1)
          
       if menu == 0:
          pygame.draw.line(windowSurfaceObj,    bredColor, (w2 - 4, h2),     (w2 + 4, h2))
