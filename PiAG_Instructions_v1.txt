@@ -138,7 +138,12 @@ rgbw +/- selects guide camera channel red/green/blue/white1/white2. White1 is th
 
 window +/- sets the size of the guide window
 
-Threshold +/- sets the detected level (switch ON Thr to see on display)
+Threshold +/- sets the detected level (switch ON Thr to see on display). Will show as a RED line on the Graph.
+Press Esc and then set the set the LOS_threshold levels, auto / manual, shown in YELLOW on the Graph.
+Set the window on the background, where there are no stars. Click on Esc then set the Treshold value (in yellow) to just above the GREEN line on the Graph, this will ensure the programme will detect if it loses the star it is guiding on.
+Click on Esc to return to normal and set the window back on the guide star.
+
+To EXIT the programme click on Esc twice in 2 seconds ( will shut down the Pi is set to) or click on Esc then Stop.
 
 interval +/- sets the time (frames) between commands sent to the scope
 (note at times this may automatically increase as required)
