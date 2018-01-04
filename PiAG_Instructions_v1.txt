@@ -136,7 +136,8 @@ NSi/EWi - inverts the required commands, use if the controls are inverted and gu
 
 rgbw +/- selects guide camera channel red/green/blue/white1/white2. White1 is the average of RGB, White2 is the brightest of RGB.
 
-window +/- sets the size of the guide window
+window +/- sets the size of the guide window. Window can be set by moving the mouse cursor to centre of required window, hold
+down Right Hand mouse button and move mouse until required size of window achieved. Release RH button.
 
 Threshold +/- sets the detected level (switch ON Thr to see on display). Will show as a RED line on the Graph.
 Press Esc and then set the set the LOS_threshold levels, auto / manual, shown in YELLOW on the Graph.
