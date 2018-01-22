@@ -21,19 +21,22 @@ You could also use the PiNoIr camera, which is the same but has No IR filter
 Installing PiAutoguider
 -------------------------
 
-Works with a Raspberry Pi (http://www.raspberrypi.org) with latest Raspbian using the RPi GPIO outputs (you'll need supply the relay interface) or driving my Arduino Uno interface with USB.
+Works with a Raspberry Pi (http://www.raspberrypi.org) with latest Raspbian using the RPi GPIO outputs (you'll need supply 
+the relay interface) or driving my Arduino Uno interface with USB.
 
 Use the latest RPi Raspian Jessie download.
 http://www.raspberrypi.org/downloads
 
 then do sudo apt-get update and sudo apt-get upgrade, to get the latest upgrades if required.
 
-Uses IDLE/Python 2.7 or IDLE3/Python 3.5. You must start IDLE / IDLE3 by using 'startx' to start the GUI, then choose 'LXterminal' and enter 'sudo idle' or 'sudo idle3' at the prompt, if not the GPIO won't work.
+Uses IDLE/Python 2.7 or IDLE3/Python 3.5. You must start IDLE / IDLE3 by using 'startx' ig you don't autostart the GUI, 
+then choose 'LXterminal' and enter 'sudo idle' or 'sudo idle3' at the prompt, if not the GPIO won't work.
 You can get the script to auto run at boot, see details within the python script.
 
-Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino Uno interface if you dont use the RPI camera. The B+ or Pi2B now have sufficient USB ports.
+Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino 
+Uno interface if you dont use the RPI camera. The B+ or Pi2B now have sufficient USB ports.
 
-Copy the PiAGr**.py file into /home/pi, 
+Copy the PiAG.py file into /home/pi, 
 
 You don't need to install any other software.
 
@@ -144,8 +147,6 @@ Press Esc and then set the set the LOS_threshold levels, auto / manual, shown in
 Set the window on the background, where there are no stars. Click on Esc then set the Treshold value (in yellow) to just above the GREEN line on the Graph, this will ensure the programme will detect if it loses the star it is guiding on.
 Click on Esc to return to normal and set the window back on the guide star.
 
-To EXIT the programme click on Esc twice in 2 seconds ( will shut down the Pi is set to) or click on Esc then Stop.
-
 interval +/- sets the time (frames) between commands sent to the scope
 (note at times this may automatically increase as required)
 
@@ -183,6 +184,26 @@ RELOAD config R1/R2/R3 will reload saved configs
 
 You will also see controls for the RPI camera if you are using that.
 
+To EXIT the programme click on Esc twice in 2 seconds ( will shut down the Pi is set to) or click on Esc then Stop.
+
+After clicking Esc the first time you also have some other options:
+
+You can set the threshold values for the Loss of the guide star. 
+Click on Graph.
+Set the window on the background where there are no stars, click on Esc, it will go YELLOW. You will see the threshold
+value go YELLOW. You can now set the threshold level, set it above the GREEN line on the graph so no pixels are detected. 
+You can switch on/off A-Thr and set 2 values for this. Click on Esc to return to normal.
+
+You can also CALIBRATE the telescope SCALE values and determine if you need to rotate the camera.
+
+Click on the guide star, hopefully near the centre of the display. Click on Esc then click on CAL...
+Auto_G will be switched OFF and a large window will appear. try to ensure only 1 star in the window.
+The telescope will now be moved to determine the scaling factors and any correction angle needed to the camera. 
+Ensure while this happens that the guide star doesn't move out of the window.
+When complete the scales will be set, Deci &/or RAi will be switched appropriately. There should also be a value displayed
+(above R3) this is the angle the camera needs to be rotated.
+
+=========================================================================================================================
 To get started start with Zoom  at 2, get an image of the guide star on the screen, as near as possible to the centre, click on the star and the click on Autoguide.
 Adjust brightness, contrast, ISO, Exp-Time etc to get the best image.
 
