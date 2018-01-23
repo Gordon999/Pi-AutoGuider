@@ -196,6 +196,8 @@ You can switch on/off A-Thr and set 2 values for this. Click on Esc to return to
 
 You can also CALIBRATE the telescope SCALE values and determine if you need to rotate the camera.
 
+Polar align you telescope first then...
+
 Click on the guide star, hopefully near the centre of the display. Click on Esc then click on CAL...
 Auto_G will be switched OFF and a large window will appear. try to ensure only 1 star in the window.
 The telescope will now be moved to determine the scaling factors and any correction angle needed to the camera. 
