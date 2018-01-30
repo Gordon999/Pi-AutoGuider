@@ -205,6 +205,8 @@ Ensure while this happens that the guide star doesn't move out of the window.
 When complete the scales will be set, Deci &/or RAi will be switched appropriately. There should also be a value displayed
 (above R3) this is the angle the camera needs to be rotated.
 
+If you have set "auto-rotate" in the display section the program will rotate the image to correct for the camera alignment angle. If NOT set then you can adjust it manually with the CAM Angle control. The alternative is you rotate the camera.
+
 =========================================================================================================================
 To get started start with Zoom  at 2, get an image of the guide star on the screen, as near as possible to the centre, click on the star and the click on Autoguide.
 Adjust brightness, contrast, ISO, Exp-Time etc to get the best image.
