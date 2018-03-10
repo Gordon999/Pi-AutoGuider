@@ -70,13 +70,18 @@ Choose 'Run Module'
 You can get the script to auto run at boot, see details within the python script.
 
 The RPI camera will be enabled (assuming you've installed one and have it enabled in Raspi-Config and working)
-use_RPiwebcam = 1
+use_Pi_Cam = 1
 
-Dependent on your Pi Camera version set Pi_Cam = 1 or 2.
+Your Pi Camera version,1 or 2, will be identified automatically
 
 To enable a usb webcam instead change the line in the PiAGr***.py program to 
 
-use_RPiwebcam = 0
+use_Pi_Cam = 0
+
+This will change the screen controls to suit a webcam, with brightness, contrast, exposure, gain, gamma, Auto Gain etc. 
+Note the controls are based on a Philips SPC900NC webcam, others may vary.
+If you have a diffferent model then try 'v4l2-ctl -L' command in terminal and see what controls it lists. 
+The PiAG script may need modifying to suit.
 
 If the camera is not connected and you enable it the program will stop with an error.
 
@@ -171,6 +176,8 @@ CLS - Correct on Loss of Star. Simply averages the last 10 commands and contimue
 
 scr-cap - will capture a screenshot, 
 pic-cap - will capture a full resolution picture from the RPi camera (not usb)
+** Note pic-cap will be replaced by Auto Gain if using a webcam and you have set use_Pi_Cam = 0
+
 con-cap - will capture every frame into /home/pi, pictures can be used by Registax etc later.
 
 PHOTO - switches ON/OFF the commands to a DSLR etc (requires interface) and counts down number of shots set. Set DSLR to Bulb setting.
@@ -223,7 +230,7 @@ If you set this to 0 the program will go into simulation mode and show a simulat
 serial_connected = 0
 This is if you use the Arduino Uno USB interface (default = 0)
 
-use_RPiwebcam = 1
+use_Pi_Cam = 1
 This will make the program use the Pi camera, 0 will use a usb camera, if attached (default = 1)
 
 use_RPiGPIO = 1
