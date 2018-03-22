@@ -134,6 +134,8 @@ Graph - will show a graph of the stars brightness, showing the max and min value
 
 Plot - will show a plot of the movement commands required to the Scope.
 
+Hist - Stretches the histogram. Works better with noisy pictures with low level star images.
+
 2x2 - This will do 2x2 binning increasing the detected image. It won't change the display but will be seen on the Graph.
 
 nr - Noise Reduction. Reduces the noise by averaging frames. Off or 3 levels of averaging
