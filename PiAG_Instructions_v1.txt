@@ -79,7 +79,7 @@ To enable a usb webcam instead change the line in the PiAG.py program to
 use_Pi_Cam = 0
 
 This will change the screen controls to suit a webcam, with brightness, contrast, exposure, gain, gamma, Auto Gain etc. 
-Note the controls are based on a Philips SPC900NC webcam and Logitech C270, change webcam = to 0 or 1, and set usb_max_res appropriately.
+Note the controls are based on a Philips SPC900NC webcam and Logitech C270, change webcam = to 0 or 1, and set usb_max_res appropriately. Set Webcam = 2 to use Pi Camera as a webcam (uesu v4l2), note NO ZOOM.
 
 If you have a diffferent model then try 'v4l2-ctl -L' command in terminal and see what controls it lists. 
 The PiAG script may need modifying to suit.
