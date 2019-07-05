@@ -29,8 +29,7 @@ http://www.raspberrypi.org/downloads
 
 then do sudo apt-get update and sudo apt-get upgrade, to get the latest upgrades if required.
 
-Uses IDLE/Python 2.7 or IDLE3/Python 3.5. You must start IDLE / IDLE3 by using 'startx' ig you don't autostart the GUI, 
-then choose 'LXterminal' and enter 'sudo idle' or 'sudo idle3' at the prompt, if not the GPIO won't work.
+Uses IDLE/Python 2.7 or IDLE3/Python 3.X. 
 You can get the script to auto run at boot, see details within the python script.
 
 Requires a powered USB hub for the old Raspberry Pi to allow connection of keyboard, mouse, suitable webcam and Arduino 
@@ -38,7 +37,7 @@ Uno interface if you dont use the RPI camera. The B+ or Pi2B now have sufficient
 
 Copy the PiAG.py file into /home/pi, 
 
-You don't need to install any other software.
+You don't need to install any other software, unless you want to use the Pi camera as a webcam (see options)
 
 The software is configured for the Pi 7" Display, giving a 800x480 image. Display = 0 in the python script.
 If using 7" HDMI screen then set hdmi group = 2, hdmi mode = 14 in /boot/config.txt.
@@ -56,16 +55,7 @@ overscan_bottom=10
 
 Running PiAutoguider 
 ----------------------
-
-from the prompt type startx, if you don't have the Pi automatically booting to the GUI
-double click LXTerminal
-enter 'sudo idle' at the prompt, and press enter
-On the Python Shell choose 'File'
-Choose 'open'
-Choose 'PiAGr***.py'
-click on Open
-Choose 'Run'
-Choose 'Run Module'
+Run python3 PiAG.py
 
 You can get the script to auto run at boot, see details within the python script.
 
@@ -79,7 +69,7 @@ To enable a usb webcam instead change the line in the PiAG.py program to
 use_Pi_Cam = 0
 
 This will change the screen controls to suit a webcam, with brightness, contrast, exposure, gain, gamma, Auto Gain etc. 
-Note the controls are based on a Philips SPC900NC webcam and Logitech C270, change webcam = to 0 or 1, and set usb_max_res appropriately. Set Webcam = 2 to use Pi Camera as a webcam (uesu v4l2), note NO ZOOM.
+Note the controls are based on a Philips SPC900NC webcam and Logitech C270, change webcam = to 0 or 1, and set usb_max_res appropriately. Set Webcam = 2 to use Pi Camera as a webcam using imutils, (uses v4l2), Set Webcam = 3 to use Pi Camera as a webcam using opencv ,note NO ZOOM.
 
 If you have a diffferent model then try 'v4l2-ctl -L' command in terminal and see what controls it lists. 
 The PiAG script may need modifying to suit.
