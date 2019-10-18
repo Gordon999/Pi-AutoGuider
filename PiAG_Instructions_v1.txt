@@ -24,7 +24,7 @@ Installing PiAutoguider
 Works with a Raspberry Pi (http://www.raspberrypi.org) with latest Raspbian using the RPi GPIO outputs (you'll need supply 
 the relay interface) or driving my Arduino Uno interface with USB.
 
-Use the latest RPi Raspian Jessie download.
+Use the latest RPi Raspian download.
 http://www.raspberrypi.org/downloads
 
 then do sudo apt-get update and sudo apt-get upgrade, to get the latest upgrades if required.
