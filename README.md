@@ -5,7 +5,7 @@ This script was developed to auto guide a telescope through a ST-4 port using a 
 and a suitable interface.
 
 The interface can be an opto-isolator, relay card available for the Pi, eg Seeed Raspberry PI card, 
-PiFace Relay Plus card or any 4 relay card you interface.
+PiFace Relay Plus card, USB 4 relay card or any 4 relay card you interface.
 
 The relay cards can also be modified, different wiring to scope, to auto-guide other scopes eg Meade LX-10.
 
