@@ -4,7 +4,7 @@ Using a Sony RM-SPR1 remote button
 Remove the 2 rear screws to open it.
 Remove the internal screw releasing the pcb.
 CAREFULLY solder 3 thin wires to the existing RED, GREEN and BLACK cables.
-Check the photos I uploaded to get the layout etc.
+Check the photos 'button_mod.png' I uploaded to get the layout etc.
 Modify the button rear case to let the new cable through.
 Modify the button front case to allow the pcb to reseat correctly (slot for black wire)
 Remount the pcb.
