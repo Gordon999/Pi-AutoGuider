@@ -17,6 +17,6 @@ Materials
 2 x 200ohm resistors
 wires to suit.
 
-Check the photos I uploaded for the schematic etc
+Check the photos 'button_interface.jpg' I uploaded for the schematic etc
 
 All at your own risk !!.
