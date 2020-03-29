@@ -1,0 +1,22 @@
+Interfacing to a Sony A6000 as external camera.
+
+Using a Sony RM-SPR1 remote button
+Remove the 2 rear screws to open it.
+Remove the internal screw releasing the pcb.
+CAREFULLY solder 3 thin wires to the existing RED, GREEN and BLACK cables.
+Check the photos I uploaded to get the layout etc.
+Modify the button rear case to let the new cable through.
+Modify the button front case to allow the pcb to reseat correctly (slot for black wire)
+Remount the pcb.
+Re-assemble the button case
+
+Building the interface.
+
+Materials
+2 x BC547C
+2 x 200ohm resistors
+wires to suit.
+
+Check the photos I uploaded for the schematic etc
+
+All at your own risk !!.
