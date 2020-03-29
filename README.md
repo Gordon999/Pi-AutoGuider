@@ -14,6 +14,9 @@ The Arduino Uno can also be controlled by a PC using software such as PHD. Detai
 
 The Pi can also control a Canon DSLR, via an interface, to allow long exposure photographs.
 
+Sony A6000 can also be controlled, extra FOCUS control gpio added (pin 23). See Sony.txt and photos for modifying 
+Sony RM-SPR1 remote button, and interface.
+
 Please take care when interfacing your telescope or camera. At your own risk.
 
 ## Screenshot, using 'Day' colours and 'normal' layout
