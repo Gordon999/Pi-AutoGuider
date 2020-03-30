@@ -28,3 +28,21 @@ Please take care when interfacing your telescope or camera. At your own risk.
 
 ## Screenshot, using 'Night' colours and 'Pi Display' layout
 ![screenshot](scr_pic9.jpg)
+
+History...
+
+10f2 USB webcam Auto_Gain added
+10f3 I found an issue with the webcam display and zoom, needs more work but OK with the 2 cameras above.
+10f4 Issue with USB webcam CAL, hopefully fixed
+10f5 Hist (stretch histogram) added for noisy images, main use webcams. Note still only supports webcams named above.
+10f6 one more option to Hist added, some bug fixes
+10f7 Control of Logitech C270 added. Set USE_PI_CAM = 0, WEBCAM = 1, USB_MAX_RES = 4.
+10f8 minor bug fix to user config
+10f9 control of Sainsmart USB 4 relay card added (you need to install crelay http://ondrej1024.github.io/crelay/ )
+See here for help installing crelay if required. https://www.raspberrypi.org/forums/view ... 0#p1336648
+11a1 minor fixes, Pi Camera added as webcam, set use_Pi_Cam = 0, Webcam = 2. Note NO zoom
+(You'll need to install imutils, sudo pip3 install imutils)
+12e minor fixes, Pi Camera added as webcam, set use_Pi_Cam = 0, Webcam = 3. Note NO zoom
+(You'll need to install opencv). ConfigX.txt changed format.
+12f Control of Sony A6000 camera using modified RMT-SPR1 button and interface
+12g Control of Sony A6000 camera using IR diode, directly or using RMT-VP1 receiver.
