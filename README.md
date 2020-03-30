@@ -47,7 +47,7 @@ History...
 
 10f9 control of Sainsmart USB 4 relay card added (you need to install crelay http://ondrej1024.github.io/crelay/ )
 
-See here for help installing crelay if required. https://www.raspberrypi.org/forums/view ... 0#p1336648
+See here for help installing crelay if required. https://www.raspberrypi.org/forums/viewtopic.php?t=216670#p1336648
 
 11a1 minor fixes, Pi Camera added as webcam, set use_Pi_Cam = 0, Webcam = 2. Note NO zoom
 
