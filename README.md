@@ -17,7 +17,9 @@ The Pi can also control a Canon DSLR, via an interface, to allow long exposure p
 Sony A6000* can also be used for long exposure photographs and controlled by 3 methods...
 
 *Note although A6000 is tested I have also tested on a A7R4 so should work on several Sony models.
-If you want to try your camera download my Pi-A6000-Remote scripts and try them. Connect an IR led to gpio pin number 36.
+
+If you want to try your camera download my Phttps://github.com/Gordon999/Pi-Sony-A6000-remote and try them.
+Connect an IR led to gpio pin number 36.
 
 1) Modifying Sony RM-SPR1 remote button (See Sony.txt and related photos) with extra FOCUS control gpio added (pin 23). 
 2) Use of Infra Red diode to a gpio and Sony RMT-VP1 receiver..
