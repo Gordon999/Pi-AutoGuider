@@ -17,6 +17,7 @@ The Pi can also control a Canon DSLR, via an interface, to allow long exposure p
 Sony A6000* can also be used for long exposure photographs and controlled by 3 methods...
 
 *Note although A6000 is tested I have also tested on a A7R4 so should work on several Sony models.
+ Note you can't use the Electronic shutter with BULB.
 
 If you want to try your camera download my https://github.com/Gordon999/Pi-Sony-A6000-remote and try them.
 Connect an IR led to gpio pin number 36.
