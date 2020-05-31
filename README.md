@@ -1,6 +1,8 @@
 # Pi-AutoGuider
 AutoGuider for a telescope using a Raspberry Pi, with RPi camera (v1 or v2) or suitable webcam.
 
+(Beta version of simpler PiAG_Lite at https://github.com/Gordon999/Pi-AG_Lite)
+
 This script was developed to auto guide a telescope through a ST-4 port using a Raspberry Pi (Pi2B/Pi3B/Pi3B+/Pi4 recommended) 
 and a suitable interface.
 
