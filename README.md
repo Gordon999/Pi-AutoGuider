@@ -1,7 +1,7 @@
 # Pi-AutoGuider
 AutoGuider for a telescope using a Raspberry Pi, with RPi camera (v1 or v2) or suitable webcam.
 
-# Note this will NOT work with Bullseye, alternative version in development at https://github.com/Gordon999/Pi-LC-Autoguider
+# Note this will NOT work with Bullseye, alternative version available at https://github.com/Gordon999/Pi-LC-Autoguider
 
 (Beta version of simpler PiAG_Lite at https://github.com/Gordon999/Pi-AG_Lite) - NOT for BULLSEYE !!
 
